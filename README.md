@@ -1,1 +1,0 @@
-# human_patterns_exploration

@@ -47,13 +47,14 @@ class SAM_Segmentation:
         self.predictor.set_image(self.image_data.image)
 
 
-    def compute_masks_with_prompt(self, X ,Y, ID):
+    def compute_masks_with_prompt(self, X ,Y, ID, save_mask=False, output_image_path=None, size_threshold = 100):
 
         prompt = np.array([X,Y], dtype=np.float32)
         prompt = prompt.flatten()
-        prompt = prompt.reshape(len(X), 2)
+        prompt = prompt.reshape(2, len(X))
+        prompt = prompt.T
         label = np.array([1]*len(X), dtype=np.int32)
-          
+            
         masks, scores, logits = self.predictor.predict(
                 point_coords=prompt,
                 point_labels=label,
@@ -66,7 +67,7 @@ class SAM_Segmentation:
         score = scores[mask_index]
         logits = logits[mask_index]
 
-        cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask = self.crop_mask(mask, threshold=0, save_mask=False, output_image_path=None)
+        cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask = self.crop_mask(mask, threshold=0, save_mask=save_mask, output_image_path=output_image_path, size_threshold = size_threshold)
 
         mask_preprocessed = {}
 
@@ -108,7 +109,7 @@ class SAM_Segmentation:
 
         return filtered_mask
     
-    def crop_mask(self, mask, threshold =0, save_mask=False, output_image_path=None):
+    def crop_mask(self, mask, threshold =0, save_mask=False, output_image_path=None, size_threshold = 100):
 
         if self.image_data.image.shape[:2] != mask.shape:
             raise ValueError("The mask and image must have the same dimensions.")
@@ -116,7 +117,7 @@ class SAM_Segmentation:
         y_dim, x_dim, c_dim = self.image_data.image.shape
 
         mask_non_zero = mask > 0
-        mask_non_zero = self.preprocess_mask( mask_non_zero )
+        mask_non_zero = self.preprocess_mask( mask_non_zero, size_threshold = size_threshold )
         coords = np.argwhere(mask_non_zero)
 
         if len(coords) == 0:
@@ -146,7 +147,6 @@ class SAM_Segmentation:
             Image.fromarray(cropped_image).save(output_image_path.replace("image_with_alpha", "mask") + "_thre_" + str(threshold) + ".png")
             with open(output_image_path + ".pkl", "wb") as f:
                 pickle.dump(cropped_mask, f)
-            # Optionally save the RGBA image
             Image.fromarray(cropped_image_with_alpha).save(output_image_path + ".png")
 
         return cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask

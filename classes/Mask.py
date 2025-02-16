@@ -40,12 +40,28 @@ class Mask:
                 size = figsize)
 
 
-    def plot(self, figsize=(2,2)):
+    def plot(self, figsize=(2,2), title=None):
         """Display the image"""
         plt.grid(False)
         plt.axis('off')
         plt.gcf().set_size_inches(figsize[0],figsize[1])
         plt.imshow(self.cropped_image_with_alpha)
+
+        if title is not None:
+            plt.title(title)
+
+        plt.show()
+        
+    def plot_cropped_mask(self, figsize=(2,2), title=None):
+        """Display the image"""
+        plt.grid(False)
+        plt.axis('off')
+        plt.gcf().set_size_inches(figsize[0],figsize[1])
+        plt.imshow(self.cropped_mask)
+
+        if title is not None:
+            plt.title(title)
+
         plt.show()
 
     

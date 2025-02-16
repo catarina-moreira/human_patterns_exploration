@@ -1,0 +1,6 @@
+*.pyc
+*.pyc
+/outputs/masks_gaze_driven/circle
+/outputs/masks_gaze_driven/cross
+/outputs/masks_gaze_driven/point
+/outputs/masks_gaze_driven/triangle

@@ -46,6 +46,16 @@ class ImageData:
         plt.imshow(self.image)
 
 
+    def get_best_mask(self):
+        """Returns the mask with the highest score for this image."""
+        if not self.masks:
+            return None  # No masks available
+
+        # Select the mask with the highest score
+        best_mask = max(self.masks.values(), key=lambda m: m.score)
+        return best_mask
+
+
     def draw_fixations(self, fix, alpha=0.5, figsize=(12, 8), dpi=100, savefilename=None, 
                     fix_color="#729fcf", fix_edge_color="#204a87", size = None):
 
@@ -70,42 +80,51 @@ class ImageData:
             plt.savefig(savefilename, bbox_inches='tight')
         plt.show()
 
+
+
     def draw_scanpath(self, fix, width=1, alpha=0.5, alpha_font=1, figsize=(12, 8), dpi=100, savefilename=None, 
-                  fix_color="#729fcf", fix_edge_color="#204a87", font_color="white", fontsize=10, size=None):
-    
+                    fix_color="#729fcf", fix_edge_color="#204a87", font_color="white", fontsize=10, size=None):
+        
         img = self.image
 
-        x = fix['X']
-        y = fix['Y']
+        if "Indx" in fix.columns:
+            fix_unique = fix.groupby('Indx').first().reset_index()
+            x_unique = fix_unique['X']
+            y_unique = fix_unique['Y']
 
-        if size is None:
-            size = fix['FixationDurationNorm']
+            x = fix['X']
+            y = fix['Y']
+            
+            if size is None:
+                size = fix['FixationDurationNorm']
+        else:
+            x_unique = fix['X']
+            y_unique = fix['Y']
+
+            x = fix['X']
+            y = fix['Y']
+
+            if size is None:
+                size = fix['FixationDurationNorm']
 
         fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
         ax.imshow(img)
         ax.scatter(x, y, s=size, facecolors=fix_color, edgecolors=fix_edge_color, alpha=alpha)
 
         # Draw annotations (fixation numbers)
-        for i in range(len(fix)):
-            ax.annotate(str(i+1), (x[i], y[i]-15), color=font_color, alpha=alpha_font, 
-                        ha='center', va='center', fontweight='bold', fontsize=fontsize)
-            
-            # Add stroke effect for outline (edge color)
-            ax.annotate(str(i+1), (x[i], y[i]-15), color=font_color, alpha=alpha_font,
+        for i in range(len(x_unique)):
+            ax.annotate(str(i+1), (x_unique.iloc[i], y_unique.iloc[i]-15), color=font_color, alpha=alpha_font, 
                         ha='center', va='center', fontweight='bold', fontsize=fontsize,
                         path_effects=[
                             path_effects.Stroke(linewidth=2, foreground='black'),  # Edge color
                             path_effects.Normal()  # Normal text rendering on top
                         ])
-        
-        # Draw arrows
-        for i in range(len(fix)-1):
-            start_x, start_y = x[i], y[i]
-            end_x, end_y = x[i+1], y[i+1]
 
-            ax.arrow(start_x, start_y, end_x - start_x, end_y - start_y, alpha=alpha,
-                    fc=fix_color, ec=fix_color, fill=True, shape='full',
-                    width=width, head_width=5, head_length=5, overhang=0.3)
+        # Draw arrows
+        for i in range(len(x_unique)-1):
+            ax.arrow(x_unique.iloc[i], y_unique.iloc[i], x_unique.iloc[i+1] - x_unique.iloc[i], y_unique.iloc[i+1] - y_unique.iloc[i], 
+                    alpha=alpha, fc=fix_color, ec=fix_color, fill=True, shape='full',
+                    width=width, head_width=8, head_length=8, overhang=0.3)
 
         ax.grid(False)
         ax.axis('off')
