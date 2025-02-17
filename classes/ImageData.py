@@ -21,6 +21,19 @@ class ImageData:
 
         self.masks = {}
 
+    def __str__(self):
+        info_str = f"ImageData:\n" + \
+                f"ID='{self.ID}'\n" + \
+                f"Path='{self.path}'\n" + \
+                f"Width={self.width}\n" + \
+                f"Height={self.height}\n" + \
+                f"#Participants={len(self.masks)}\n"
+        for mask in self.masks:
+            info_str += f"\tParticipant {mask}:\n"
+            for m in self.masks[mask]:
+                info_str += f"\t\t{m.__str__()}\n"
+        return info_str
+
     def load(self, img_type="rgb"):
         """Load and return the image as a numpy array"""
 

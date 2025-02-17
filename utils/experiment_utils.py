@@ -161,13 +161,38 @@ def get_participant_ids( path, img_type ):
     return participant_ids
 
 
-def load_image_data_types(img_id, participant_id, prompt_types, img_type):
+def load_masks_by_prompt(img_id, participant_id, prompt_types, img_type):
 
     res = {}
     for prompt_type in prompt_types:
         img_data, _ = load_image_data(img_id, img_type, participant_id=participant_id, prompt_type=prompt_type)
         res[prompt_type] = img_data.masks[participant_id]
     
+    return res
+
+def load_best_masks(img_id, participant_id, img_type):
+
+    res = {}
+
+    # list all files in the directory
+    files = os.listdir(os.path.join(RESULTS_DIR, "masks_gaze_driven", "best"))
+    # filter out the files that are not pickle files
+    participant_files = [file for file in files if file.split("_")[4] == str(participant_id)]
+    # filter out the files based on img_id
+    participant_files = [file for file in participant_files if file.split("_")[1] == str(img_id)]
+    # filter out the files based on img_type
+    participant_files = [file for file in participant_files if file.split("_")[2] == img_type]
+    # get only the pickle files
+    best_masks = [file for file in participant_files if file.endswith(".pkl")]
+
+    for file_path in best_masks:
+        mask_id = int(file_path.split("_")[6])
+        prompt_type = file_path.split("_")[7].replace(".pkl", "")
+        with open(os.path.join(RESULTS_DIR, "masks_gaze_driven", "best", file_path), 'rb') as file:
+            best_mask = pickle.load(file)
+        
+        res[mask_id] = best_mask
+
     return res
 
 def save_as_png(mask, filename="mask.png", save_dir=""):
@@ -189,7 +214,7 @@ def find_best_mask(img_id, participant_ids, prompt_types, img_type, area_thresho
 
     for participant_id in participant_ids:
         print(participant_id)
-        res = load_image_data_types(img_id, participant_id, prompt_types, img_type)
+        res = load_masks_by_prompt(img_id, participant_id, prompt_types, img_type)
 
         prompts = list(res.keys())
         masks = res[prompts[0]]
@@ -222,14 +247,17 @@ def find_best_mask(img_id, participant_ids, prompt_types, img_type, area_thresho
                         best_prompt_type = prompt_type
                         best_area = res[prompt_type][mask].area
 
+            best_mask.prompt_type = best_prompt_type
             best_mask.plot(figsize=(2,2), title=f"{best_prompt_type}: {best_score:.4f} - {best_area:.4f}")
-            save_as_png(best_mask, filename=f"IMG_{img_id}_{img_type}_Part_{participant_id}_MASK_{mask}_{best_prompt_type}.png", save_dir=os.path.join(RESULTS_DIR, "masks_gaze_driven", "best"))
+            best_mask.path = os.path.join(RESULTS_DIR, "masks_gaze_driven", "best", f"IMG_{img_id}_{img_type}_Part_{participant_id}_MASK_{mask}_{best_prompt_type}_{best_score:.4f}.png")
+            
+            save_as_png(best_mask, filename= f"IMG_{img_id}_{img_type}_Part_{participant_id}_MASK_{mask}_{best_prompt_type}_{best_score:.4f}.png", save_dir=os.path.join(RESULTS_DIR, "masks_gaze_driven", "best"))
             save_mask(best_mask, os.path.join(RESULTS_DIR, "masks_gaze_driven", "best", f"IMG_{img_id}_{img_type}_Part_{participant_id}_MASK_{mask}_{best_prompt_type}_{best_score:.4f}.pkl"))
 
 
 def get_mask_candidates(img_id, participant_id, prompt_types, img_type):
 
-    res = load_image_data_types(img_id, participant_id, prompt_types, img_type)
+    res = load_masks_by_prompt(img_id, participant_id, prompt_types, img_type)
 
     prompts = list(res.keys())
     masks = res[prompts[0]]

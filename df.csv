@@ -1,0 +1,379 @@
+participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_type,label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,scene_desc
+2,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_2_MASK_0_cross_0.8931.png,434,502,552,589,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Laundry Area (left side):
+     - Washing machine (bottom left)
+     - Dryer (next to the washing machine)
+     - Iron and ironing board (right of the dryer, leaning against the wall)
+   - Workspace (center):
+     - White cabinets (above the workspace)
+     - Colorful thread spools (on shelves within the cabinets)
+     - Books and decorative items (on shelves)
+     - Desk with various office supplies (below the cabinets)
+     - Sewing machine (on the desk)
+     - Black office chair (in front of the desk)
+   - Living Space (right side):
+     - White sofa with cushions (right side)
+     - Floor lamp with a black shade (next to the sofa)
+     - Coffee table with a plant, teapot, and cups (in front of the sofa)
+     - Green rug (under the coffee table)
+     - Window with potted plant (behind the sofa)
+   - Decorative Elements:
+     - Framed artwork (on the wall, left side)
+     - Various decorative items and books (on shelves and desk)"
+3,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_3_MASK_0_cross_0.8244.png,5,69,473,503,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized, featuring modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Laundry Area (left side):
+     - Washing machine (bottom left)
+     - Dryer (next to the washing machine)
+     - Iron and ironing board (right of the dryer, leaning against the wall)
+   
+   - Workspace (center):
+     - White cabinets (upper section)
+     - Colorful thread spools (inside open shelves of the cabinets)
+     - Books and decorative items (inside open shelves)
+     - Desk with various items (below the cabinets)
+     - Sewing machine (on the desk)
+     - Office chair (in front of the desk)
+     - Trash bins (black and white, under the desk)
+   
+   - Living Area (right side):
+     - White sofa (bottom right)
+     - Cushions with various patterns (on the sofa)
+     - Blanket (draped over the sofa)
+     - Floor lamp (next to the sofa)
+     - Coffee table (in front of the sofa)
+     - Teapot and cups (on the coffee table)
+     - Small plant (on the coffee table)
+   
+   - Decor and Accessories:
+     - Framed artwork (hanging on the wall, left side)
+     - Potted plant (on the windowsill, right side)
+     - Window with natural light (right side)
+     - Green rug (covers the floor in the living area)
+     - Children's toys (on the floor, near the washing machine)"
+15,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_15_MASK_2_cross_0.8818.png,434,502,551,589,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn or Thread Spools: Arranged on shelves in the middle of the cabinets.
+   - Desk Area: Situated in the center, with various office supplies and a sewing machine.
+   - Black Office Chair: Positioned in front of the desk area.
+   - Ironing Board: Standing upright to the right of the desk.
+   - Table: A round white table is in the foreground, with a teapot, cups, and a small plant.
+   - Sofa: A white sofa is on the right side, with cushions and a dark throw blanket.
+   - Floor Lamp: Positioned near the sofa, with a black lampshade.
+   - Window: Located on the far right, allowing natural light into the room.
+   - Potted Plant: Placed on the windowsill.
+   - Rug: A green rug covers the floor in front of the sofa and table.
+   - Wall Art: A framed piece of art is hung on the wall to the left.
+   - Laundry Basket: A black and a white laundry basket are under the desk area.
+   - Toys: A few small toys are scattered on the floor near the washing machine."
+20,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_20_MASK_1_point_0.8915.png,36,69,485,503,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn or Thread Spools: Arranged in a row on the open shelves above the countertop.
+   - Desk Items: Various office supplies, including books, a lamp, and stationery, are on the countertop.
+   - Sewing Machine: Positioned on the right side of the countertop.
+   - Black Chair: In front of the desk area.
+   - Ironing Board: Standing upright against the wall on the right side.
+   - Table: A round white table in the foreground with a teapot, cups, and a small plant.
+   - Sofa: White sofa on the right side with cushions and a dark throw blanket.
+   - Floor Lamp: Positioned near the sofa, with a black shade.
+   - Window: On the far right, allowing natural light into the room.
+   - Potted Plant: On the windowsill.
+   - Rug: Green rug covering the floor area in front of the sofa and table.
+   - Wall Art: Framed artwork on the left wall.
+   - Laundry Basket: Black and white baskets under the countertop.
+   - Children's Toys: Small toys on the floor near the washing machine."
+21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,4,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_4_cross_0.7602.png,526,610,379,420,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Spools: Arranged on shelves within the cabinetry, above the countertop.
+   - Desk Items: Various items such as books, a lamp, and stationery are on the desk.
+   - Sewing Machine: Positioned on the right side of the desk.
+   - Office Chair: Black chair in front of the desk.
+   - Ironing Board: Standing upright to the right of the desk.
+   - Table: Round white table in the foreground, on the green rug.
+   - Teapot and Cups: On the table, with a plant and decorative items.
+   - Sofa: White sofa on the right side, with cushions and a throw blanket.
+   - Floor Lamp: Black lamp next to the sofa.
+   - Window: On the far right, allowing natural light into the room.
+   - Plant: On the windowsill, adding greenery to the space.
+   - Wall Art: Framed artwork on the left wall.
+   - Laundry Basket: Black and white baskets under the desk.
+   - Toys: Small toys on the floor near the washing machine."
+27,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_27_MASK_0_point_0.8819.png,0,45,379,453,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white cabinetry and colorful accents.
+
+2. Identified Objects:
+   - Laundry Area (left side):
+     - Washing machine (bottom left)
+     - Dryer (to the right of the washing machine)
+     - Iron and ironing board (right side, near the wall)
+   - Workspace (center):
+     - White cabinets (upper section)
+     - Colorful thread spools (inside open shelves)
+     - Books and decorative items (inside open shelves)
+     - Desk with various items (below the shelves)
+     - Black office chair (in front of the desk)
+   - Living Space (right side):
+     - White sofa (right side)
+     - Cushions with patterns (on the sofa)
+     - Black floor lamp (next to the sofa)
+     - Coffee table (center, in front of the sofa)
+     - Teapot and cups (on the coffee table)
+     - Small plant (on the coffee table)
+   - Additional Elements:
+     - Green rug (covers the floor area)
+     - Wall art (left side, above the laundry area)
+     - Window with plants (right side, behind the sofa)"
+32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,6,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_6_point_0.9622.png,81,575,477,599,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Countertop: Above the washing machine and dryer, extending across the room.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn Spools: Arranged on the shelves within the cabinets.
+   - Desk Items: Various office supplies and decorative items on the countertop, including books, a lamp, and stationery.
+   - Sewing Machine: Positioned on the right side of the countertop.
+   - Black Chair: In front of the desk area.
+   - Ironing Board: Leaning against the wall on the right side.
+   - Table: A round white table in the foreground.
+   - Teapot and Cups: On the table, with a plant and decorative items.
+   - Sofa: White sofa on the right side, with cushions and a throw blanket.
+   - Floor Lamp: Positioned near the sofa.
+   - Window: On the far right, allowing natural light into the room.
+   - Plant: On the windowsill, adding greenery to the space.
+   - Rug: Green rug covering the floor area in front of the sofa and table.
+   - Wall Art: Framed artwork on the left wall."
+38,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_38_MASK_1_cross_0.8501.png,434,502,551,589,cross,- [Washer],- Sewingmachine,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Shelves: Open shelves between the cabinets, displaying colorful cones of thread or yarn.
+   - Desk Area: Positioned under the shelves, with various office supplies.
+   - Chair: A black swivel chair is placed in front of the desk area.
+   - Ironing Board: Standing upright to the right of the desk area.
+   - Lamp: A black desk lamp is on the right side, near the window.
+   - Sofa: A white sofa with patterned cushions is on the right side of the room.
+   - Coffee Table: A round white coffee table is in front of the sofa.
+   - Teapot and Cups: A teapot and cups are on the coffee table.
+   - Plant: A potted plant is on the windowsill to the right.
+   - Rug: A green rug covers the floor in front of the sofa and coffee table.
+   - Wall Art: A framed piece of art is hung on the wall to the left.
+   - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
+   - Slippers: A pair of slippers is on the floor near the coffee table.
+   - Window: Large windows on the right side allow natural light into the room."
+43,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_43_MASK_3_point_0.8029.png,281,321,398,432,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- Sewing_machine,- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn Spools: Arranged on shelves in the middle of the cabinets.
+   - Desk Area: Situated under the cabinets, featuring various office supplies.
+   - Sewing Machine: Placed on the right side of the desk.
+   - Black Office Chair: Positioned in front of the desk.
+   - Ironing Board: Leaning against the wall on the far right.
+   - Table: A round white table is in the foreground, on a green rug.
+   - Teapot and Cups: On the table, with a plant and decorative items.
+   - Sofa: A white sofa is on the right side, with cushions and a throw blanket.
+   - Floor Lamp: Positioned next to the sofa, with a black shade.
+   - Window: On the far right, allowing natural light into the room.
+   - Potted Plant: On the windowsill, adding greenery to the space.
+   - Wall Art: A framed piece of art is hung on the left wall."
+45,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_45_MASK_3_point_0.8288.png,433,502,551,590,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- Sewing,- [Washer],- Sewing,"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Shelves: Open shelves between the cabinets, holding colorful thread spools and other items.
+   - Desk Area: Below the shelves, with various office supplies and a sewing machine.
+   - Chair: A black chair positioned in front of the desk area.
+   - Table: A round white table in the foreground, on a green rug.
+   - Teapot and Cups: On the table, with a plant and decorative items.
+   - Sofa: A white sofa on the right side, with cushions and a dark throw blanket.
+   - Floor Lamp: Positioned next to the sofa, with a black shade.
+   - Ironing Board: Standing upright near the window, with a red and white cover.
+   - Window: On the right side, allowing natural light into the room.
+   - Plant: On the windowsill, adding greenery to the space.
+   - Artwork: A framed piece on the wall to the left of the cabinets.
+   - Laundry Baskets: Two baskets, one black and one white, under the desk area.
+   - Toys: Small toys on the floor near the washing machine."
+63,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_63_MASK_0_cross_0.8024.png,434,502,550,590,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- Washer,- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
+
+2. Identified Objects:
+   - Laundry Area:
+     - Washing machine (bottom left)
+     - Dryer (next to the washing machine)
+     - Iron (on top of the dryer)
+   - Workspace:
+     - White cabinets (upper section)
+     - Colorful thread spools (inside open shelves)
+     - Books and files (inside open shelves)
+     - Desk with various items (center)
+     - Sewing machine (on the desk)
+     - Black office chair (in front of the desk)
+     - Trash bins (black and white, under the desk)
+   - Living Space:
+     - White sofa (right side)
+     - Cushions with patterns (on the sofa)
+     - Dark blanket (on the sofa)
+     - Coffee table (center)
+     - Teapot and cups (on the coffee table)
+     - Plant in a pot (on the coffee table)
+   - Decor and Accessories:
+     - Framed artwork (left wall)
+     - Floor lamp (next to the sofa)
+     - Ironing board with cover (right side, near the window)
+     - Potted plant (on the windowsill)
+     - Window with white frame (right side)
+     - Children's toys (on the floor, bottom left)
+     - Slippers (on the floor, near the coffee table)"
+66,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_66_MASK_1_cross_0.8774.png,434,502,551,589,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- Sewing,- [Washer],- [Washer],"1. Scene Overview:
+   - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and appliances. The color scheme is predominantly white with pops of color from various objects.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Cones: Arranged on the shelves within the cabinets, adding vibrant colors.
+   - Desk Items: Various office supplies like pens and books are on the desk beneath the cabinets.
+   - Sewing Machine: Positioned on the right side of the desk.
+   - Chair: A black chair is placed in front of the desk.
+   - Ironing Board: Located to the right of the desk, with a red and white cover.
+   - Table: A round white table is in the foreground, on a green rug.
+   - Teapot and Cups: A teapot and cups are on the table.
+   - Sofa: A white sofa is on the right side, with cushions and a dark throw blanket.
+   - Floor Lamp: Positioned near the sofa, with a black shade.
+   - Plant: A potted plant is on the windowsill to the right.
+   - Framed Artwork: Hanging on the wall to the left.
+   - Toys: A few toys are scattered on the floor near the washing machine.
+   - Slippers: A pair of slippers is on the floor near the table."
+76,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_76_MASK_0_point_0.9619.png,0,255,452,599,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- Sewing,- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Cones: Arranged on the shelves within the cabinets, likely for storage or decoration.
+   - Desk Items: Various office supplies and decorative items on the desk, including books, a lamp, and stationery.
+   - Sewing Machine: Positioned on the right side of the desk.
+   - Chair: A black chair is placed in front of the desk.
+   - Ironing Board: Standing upright against the wall on the right side.
+   - Table: A round white table in the foreground, on the green rug.
+   - Teapot and Cups: On the table, with a plant and decorative items.
+   - Sofa: A white sofa on the right side, with cushions and a throw blanket.
+   - Floor Lamp: Positioned near the sofa, providing light to the area.
+   - Window: On the far right, allowing natural light into the room.
+   - Plant: On the windowsill, adding greenery to the space.
+   - Wall Art: A framed piece of art on the left wall.
+   - Laundry Basket: Near the washing machine and dryer.
+   - Toys: Small toys on the floor near the washing machine."
+78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,9,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_9_cross_0.3062.png,342,405,199,246,cross,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Shelves: Open shelves in the middle of the cabinets, displaying colorful cones of thread or yarn.
+   - Desk/Countertop: Runs along the wall, serving as a workspace.
+   - Chair: A black chair is placed in front of the desk.
+   - Lamp: A black desk lamp is on the right side of the desk.
+   - Ironing Board: Positioned vertically on the far right, with a red and white cover.
+   - Trash Bins: Two bins, one black and one white, are under the desk.
+   - Sofa: A white sofa is on the right side of the image, with cushions and a dark throw blanket.
+   - Coffee Table: A round white table is in front of the sofa.
+   - Teapot and Cups: A teapot and cups are on the coffee table.
+   - Plant: A potted plant is on the windowsill to the right.
+   - Window: Large window on the right side, allowing natural light into the room.
+   - Rug: Green rug covers the floor in the center of the room.
+   - Wall Art: A framed piece of art is on the wall to the left.
+   - Toys: Small toys are on the floor near the washing machine."
+82,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_82_MASK_0_point_0.9712.png,82,576,476,599,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Cones: Arranged on the shelves within the cabinets, likely for storage or decoration.
+   - Desk Items: Various items such as books, a lamp, and stationery are on the desk beneath the cabinets.
+   - Sewing Machine: Positioned on the right side of the desk.
+   - Chair: A black swivel chair is placed in front of the desk.
+   - Trash Bins: Two bins, one black and one white, are under the desk.
+   - Ironing Board: Standing upright against the wall on the right side.
+   - Sofa: A white sofa is on the right side of the image, with cushions and a dark throw blanket.
+   - Coffee Table: A round white table in front of the sofa, with a teapot, cups, and a small plant.
+   - Floor Lamp: Positioned near the sofa, with a black shade.
+   - Potted Plant: On the windowsill to the right, adding greenery to the space.
+   - Wall Art: A framed piece of art is hung on the wall to the left.
+   - Toys: A few small toys are scattered on the floor near the washing machine.
+   - Slippers: A pair of slippers is on the floor near the coffee table."
+88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,7,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_7_point_0.9004.png,417,451,434,459,point,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview:
+   - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color and texture to the space.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Positioned next to the washing machine on the left.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Shelves: Open shelves in the middle of the cabinets, holding colorful thread spools and other items.
+   - Desk: A long desk runs beneath the cabinets, serving as a workspace.
+   - Chair: A black swivel chair is placed at the desk.
+   - Lamp: A black desk lamp is on the right side of the desk.
+   - Ironing Board: Positioned vertically against the wall on the right side.
+   - Couch: A white couch is on the right side of the image, with cushions and a throw blanket.
+   - Coffee Table: A round white coffee table is in front of the couch, on the green rug.
+   - Teapot and Cups: A teapot and cups are on the coffee table.
+   - Plant: A potted plant is on the windowsill to the right.
+   - Laundry Baskets: Two baskets, one black and one white, are under the desk.
+   - Wall Art: A framed piece of art is on the left wall.
+   - Toys: Small toys are on the floor near the washing machine.
+   - Slippers: A pair of slippers is on the floor near the coffee table."
+100,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_100_MASK_0_point_0.9675.png,0,254,452,599,point,- [Washer],- [Washer],- [Washer],- Sewingmachine,- Washer,- [Washer],- [Washer],- [Washer],- [Washer],- [Washer],"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn or Thread Cones: Arranged on shelves within the cabinets.
+   - Desk Area: Includes a sewing machine and various office supplies on the countertop.
+   - Black Chair: Positioned in front of the desk area.
+   - Ironing Board: Standing upright to the right of the desk area.
+   - Table: Round white table in the foreground, on a green rug.
+   - Teapot and Cups: Placed on the table.
+   - Plant: On the table, adding greenery to the scene.
+   - Sofa: White sofa on the right side, with cushions and a dark throw blanket.
+   - Floor Lamp: Positioned near the sofa, providing light to the area.
+   - Window: On the right side, allowing natural light into the room.
+   - Wall Art: Framed artwork on the left wall.
+   - Laundry Baskets: Black and white baskets under the desk area.
+   - Toys: Small toys on the floor near the washing machine."
