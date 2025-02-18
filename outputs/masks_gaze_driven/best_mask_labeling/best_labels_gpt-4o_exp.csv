@@ -244,7 +244,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-21,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_3_circle_0.5291.png,520,552,397,413,circle,531.2,406.2,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_3_circle_0.5291.png,520,552,397,413,circle,531.2,406.2,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -302,7 +302,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-27,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_27_MASK_0_point_0.8819.png,0,45,379,453,point,38.5,421.3,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,"1. Scene Overview:
+21,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_27_MASK_0_point_0.8819.png,0,45,379,453,point,38.5,421.3,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,"1. Scene Overview:
    - The image depicts a multifunctional room combining a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. There is a green rug on the floor, adding a touch of color and texture to the space.
 
 2. Identified Objects:
@@ -323,7 +323,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: A framed piece of art on the left wall.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the table."
-32,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_0_triangle_0.8749.png,261,323,345,429,triangle,286.6,399.4,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Bin,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_0_triangle_0.8749.png,261,323,345,429,triangle,286.6,399.4,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Bin,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -344,7 +344,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_1_cross_0.8098.png,4,67,473,502,cross,32.5,484.9,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_1_cross_0.8098.png,4,67,473,502,cross,32.5,484.9,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -365,7 +365,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_2_point_0.7738.png,570,637,0,393,point,586.6,382.5,Wall,Wall,Wall,Wall,Wall,Lamp,Lamp,Lamp,Lamp,Lamp,Wall,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_2_point_0.7738.png,570,637,0,393,point,586.6,382.5,Wall,Wall,Wall,Wall,Wall,Lamp,Lamp,Lamp,Lamp,Lamp,Wall,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -386,7 +386,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_3_circle_0.7618.png,525,585,379,401,circle,552.5,387.9,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_3_circle_0.7618.png,525,585,379,401,circle,552.5,387.9,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Clothes,Clothes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -407,7 +407,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_4_cross_0.4317.png,416,463,414,447,cross,422.1,425.9,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Cup,Teacup,Teacup,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_4_cross_0.4317.png,416,463,414,447,cross,422.1,425.9,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Cup,Teacup,Teacup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -428,7 +428,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_5_point_0.9474.png,261,323,345,429,point,279.8,419.8,Trashcan,Bin,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_5_point_0.9474.png,261,323,345,429,point,279.8,419.8,Trashcan,Bin,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -449,7 +449,28 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,data/images/1exp.jpg,6,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_6_point_0.9622.png,434,502,520,589,point,453.8,547.9,Rug,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,6,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_0_triangle_0.8527.png,434,502,551,589,triangle,452.5,569.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+   The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
+
+2. Identified Objects:
+   - Washing Machine: Located on the left side, beneath the countertop.
+   - Dryer: Next to the washing machine, also beneath the countertop.
+   - Cabinets: White cabinets are mounted on the wall above the countertop.
+   - Colorful Yarn or Thread Spools: Arranged in a row on the open shelves above the countertop.
+   - Desk Items: Various items such as books, a lamp, and stationery are on the desk.
+   - Sewing Machine: Positioned on the right side of the desk.
+   - Black Chair: In front of the desk.
+   - Ironing Board: Standing upright to the right of the desk.
+   - Black and White Bins: Located under the desk.
+   - White Sofa: On the right side of the image, with cushions and a throw blanket.
+   - Round Coffee Table: In front of the sofa, with a teapot, cups, and a plant.
+   - Floor Lamp: Positioned near the sofa.
+   - Potted Plant: On the windowsill to the right.
+   - Rug: Green rug covering the floor in front of the sofa and table.
+   - Wall Art: Framed artwork on the wall to the left.
+   - Toys: Small toys on the floor near the washing machine.
+   - Slippers: On the floor near the coffee table."
+21,1,data/images/1exp.jpg,7,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_0_triangle_0.8527.png,434,502,551,589,triangle,452.5,569.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -772,7 +793,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Pair of slippers on the rug
 
 The room is bright, with natural light coming through the window, creating a cozy and functional environment."
-78,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_0_point_0.9733.png,81,574,476,599,point,397.1,492.2,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_0_point_0.9733.png,81,574,476,599,point,397.1,492.2,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -852,7 +873,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_3_cross_0.6454.png,400,453,383,421,cross,438.5,406.3,Cup,[Cup],Cup,Bowl,Cup,Cup,Cup,Bowl,[Mug],Bowl,Cup,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_3_cross_0.6454.png,400,453,383,421,cross,438.5,406.3,Cup,Cup,Cup,Bowl,Cup,Cup,Cup,Bowl,Mug,Bowl,Cup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -872,7 +893,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_4_point_0.9450.png,81,574,476,599,point,434.7,481.4,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_4_point_0.9450.png,81,574,476,599,point,434.7,481.4,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -892,7 +913,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_5_point_0.9640.png,82,574,477,599,point,444.9,540.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_5_point_0.9640.png,82,574,477,599,point,444.9,540.6,Shoes,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,Rug,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:

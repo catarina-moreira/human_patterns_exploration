@@ -22,7 +22,7 @@ from utils.prompts import *
 import pickle
 
 
-def format_llm_answer(answer: str) -> str:
+def format_llm_answer(answer: str):
         """
         Formats a text answer from an LLM into a user-friendly HTML format.
 
