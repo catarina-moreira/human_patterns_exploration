@@ -1,5 +1,5 @@
 participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_type,X,Y,label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,best_label,scene_desc
-2,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_2_MASK_0_cross_0.8931.png,434,502,552,589,cross,483.6,565.0,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+2,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_2_MASK_0_cross_0.8931.png,434,502,552,589,cross,483.6,565,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room combining a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color, and natural light enters through a window on the right.
 
 2. Identified Objects:
@@ -32,7 +32,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
      - Framed artwork (left wall)
      - Toys (on the floor, bottom left)
      - Slippers (on the floor, near the coffee table)"
-3,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_3_MASK_0_cross_0.8244.png,5,69,473,503,cross,50.0,487.9,Toys,[Toys],Toys,Toys,Toys,[Toy],Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
+3,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_3_MASK_0_cross_0.8244.png,5,69,473,503,cross,50,487.9,Toys,[Toys],Toys,Toys,Toys,[Toy],Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -53,7 +53,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: Framed artwork on the left wall.
    - Laundry Basket: Black and white baskets under the desk.
    - Window: On the right side, allowing natural light into the room."
-15,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_15_MASK_0_point_0.9743.png,81,574,477,599,point,427.7,516.5,Rug,Shoes,Rug,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+15,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_15_MASK_0_point_0.9743.png,81,574,477,599,point,427.7,516.5,Rug,Shoes,Rug,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
 
 2. Identified Objects:
@@ -75,7 +75,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: Framed picture on the left wall.
    - Laundry Baskets: Black and white baskets under the desk area.
    - Children’s Toys: On the floor near the washing machine."
-15,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_15_MASK_1_point_0.9762.png,82,574,477,599,point,460.4,540.7,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+15,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_15_MASK_1_point_0.9762.png,82,574,477,599,point,460.4,540.7,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
 
 2. Identified Objects:
@@ -97,7 +97,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: Framed picture on the left wall.
    - Laundry Baskets: Black and white baskets under the desk area.
    - Children’s Toys: On the floor near the washing machine."
-15,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_15_MASK_2_cross_0.8818.png,434,502,551,589,cross,467.2,560.9,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+15,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_15_MASK_2_cross_0.8818.png,434,502,551,589,cross,467.2,560.9,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
 
 2. Identified Objects:
@@ -119,7 +119,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: Framed picture on the left wall.
    - Laundry Baskets: Black and white baskets under the desk area.
    - Children’s Toys: On the floor near the washing machine."
-20,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_20_MASK_0_circle_0.8091.png,434,502,551,589,circle,446.5,557.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+20,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_20_MASK_0_circle_0.8091.png,434,502,551,589,circle,446.5,557.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
 
 2. Identified Objects:
@@ -138,7 +138,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: A framed piece of art is hanging on the left wall.
    - Laundry Basket: A black and a white laundry basket are under the desk area.
    - Toys: A few small toys are on the floor near the washing machine."
-20,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_20_MASK_1_point_0.8915.png,36,69,485,503,point,43.5,498.3,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,"1. Scene Overview: 
+20,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_20_MASK_1_point_0.8915.png,36,69,485,503,point,43.5,498.3,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, and a green rug that adds a touch of color.
 
 2. Identified Objects:
@@ -157,7 +157,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
    - Wall Art: A framed piece of art is hanging on the left wall.
    - Laundry Basket: A black and a white laundry basket are under the desk area.
    - Toys: A few small toys are on the floor near the washing machine."
-21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_0_triangle_0.8527.png,434,502,551,589,triangle,452.5,569.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_0_triangle_0.8527.png,434,502,551,589,triangle,452.5,569.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -186,7 +186,7 @@ participant_id,image_id,image_path,mask_id,mask_path,xmin,xmax,ymin,ymax,prompt_
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_1_cross_0.8299.png,434,480,561,590,cross,458.9,585.5,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_1_cross_0.8299.png,434,480,561,590,cross,458.9,585.5,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -215,7 +215,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_2_point_0.8905.png,36,69,485,503,point,56.4,503.6,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_2_point_0.8905.png,36,69,485,503,point,56.4,503.6,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,Train,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -244,7 +244,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_3_circle_0.5291.png,520,552,397,413,circle,531.2,406.2,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_3_circle_0.5291.png,520,552,397,413,circle,531.2,406.2,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,Hat,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -273,7 +273,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-21,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,4,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_21_MASK_4_cross_0.7602.png,526,610,379,420,cross,560.8,401.0,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Clothes,Clothes,"1. Scene Overview: 
+21,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_21_MASK_4_cross_0.7602.png,526,610,379,420,cross,560.8,401,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Clothes,Clothes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -302,7 +302,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Various decorative items on shelves and table
 
 The room is bright and airy, with natural light coming through the window, enhancing the overall ambiance."
-27,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_27_MASK_0_point_0.8819.png,0,45,379,453,point,38.5,421.3,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,"1. Scene Overview:
+27,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_27_MASK_0_point_0.8819.png,0,45,379,453,point,38.5,421.3,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,Cart,"1. Scene Overview:
    - The image depicts a multifunctional room combining a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. There is a green rug on the floor, adding a touch of color and texture to the space.
 
 2. Identified Objects:
@@ -323,7 +323,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: A framed piece of art on the left wall.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_0_triangle_0.8749.png,261,323,345,429,triangle,286.6,399.4,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Bin,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_0_triangle_0.8749.png,261,323,345,429,triangle,286.6,399.4,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Bin,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -344,7 +344,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_1_cross_0.8098.png,4,67,473,502,cross,32.5,484.9,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_1_cross_0.8098.png,4,67,473,502,cross,32.5,484.9,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -365,7 +365,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_2_point_0.7738.png,570,637,0,393,point,586.6,382.5,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,Lamp,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_2_point_0.7738.png,570,637,0,393,point,586.6,382.5,Wall,Wall,Wall,Wall,Wall,Lamp,Lamp,Lamp,Lamp,Lamp,Wall,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -386,7 +386,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_3_circle_0.7618.png,525,585,379,401,circle,552.5,387.9,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_3_circle_0.7618.png,525,585,379,401,circle,552.5,387.9,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,Papers,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -407,7 +407,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,4,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_4_cross_0.4317.png,416,463,414,447,cross,422.1,425.9,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Cup,Teacup,Teacup,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_4_cross_0.4317.png,416,463,414,447,cross,422.1,425.9,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Teacup,Cup,Teacup,Teacup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -428,7 +428,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,5,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_5_point_0.9474.png,261,323,345,429,point,279.8,419.8,Trashcan,Bin,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_5_point_0.9474.png,261,323,345,429,point,279.8,419.8,Trashcan,Bin,Trashcan,Trashcan,Bin,Bin,Trashcan,Trashcan,Trashcan,Trashcan,Trashcan,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -449,7 +449,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-32,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,6,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_32_MASK_6_point_0.9622.png,81,575,477,599,point,453.8,547.9,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+32,1,data/images/1exp.jpg,6,outputs/masks_gaze_driven/best/IMG_1_exp_Part_32_MASK_6_point_0.9622.png,434,502,520,589,point,453.8,547.9,Rug,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features a modern design with a mix of white furniture and colorful accents.
 
 2. Identified Objects:
@@ -470,7 +470,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine.
    - Slippers: On the floor near the coffee table."
-38,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_38_MASK_0_point_0.9745.png,0,230,453,599,point,27.1,501.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
+38,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_38_MASK_0_point_0.9745.png,0,230,453,599,point,27.1,501.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and appliances. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -490,7 +490,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: A framed piece of art is hung on the left wall.
    - Laundry Baskets: Two baskets, one black and one white, are under the desk.
    - Plant: A potted plant is on the windowsill."
-38,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_38_MASK_1_cross_0.8501.png,434,502,551,589,cross,456.1,567.0,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview:
+38,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_38_MASK_1_cross_0.8501.png,434,502,551,589,cross,456.1,567,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and appliances. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -510,7 +510,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: A framed piece of art is hung on the left wall.
    - Laundry Baskets: Two baskets, one black and one white, are under the desk.
    - Plant: A potted plant is on the windowsill."
-43,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_43_MASK_0_point_0.5335.png,525,611,379,413,point,596.9,397.5,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Clothes,"1. Scene Overview: 
+43,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_43_MASK_0_point_0.5335.png,525,611,379,413,point,596.9,397.5,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Clothes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -530,7 +530,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the left wall.
    - Laundry Basket: Black and white baskets under the desk area.
    - Toys: Small toys on the floor near the washing machine."
-43,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_43_MASK_1_triangle_0.7397.png,520,613,380,423,triangle,553.9,407.1,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Laundry,Laundry,Clothes,Laundry,Clothes,"1. Scene Overview: 
+43,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_43_MASK_1_triangle_0.7397.png,520,613,380,423,triangle,553.9,407.1,Clothes,Clothes,Clothes,Laundry,Clothes,Clothes,Laundry,Laundry,Clothes,Laundry,Clothes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -550,7 +550,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the left wall.
    - Laundry Basket: Black and white baskets under the desk area.
    - Toys: Small toys on the floor near the washing machine."
-43,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_43_MASK_2_triangle_0.9419.png,366,405,404,441,triangle,389.4,431.3,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,"1. Scene Overview: 
+43,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_43_MASK_2_triangle_0.9419.png,366,405,404,441,triangle,389.4,431.3,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,Teapot,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -570,7 +570,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the left wall.
    - Laundry Basket: Black and white baskets under the desk area.
    - Toys: Small toys on the floor near the washing machine."
-43,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_43_MASK_3_point_0.8029.png,281,321,398,432,point,318.1,419.6,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,"1. Scene Overview: 
+43,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_43_MASK_3_point_0.8029.png,281,321,398,432,point,318.1,419.6,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,Plant,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -590,7 +590,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed artwork on the left wall.
    - Laundry Basket: Black and white baskets under the desk area.
    - Toys: Small toys on the floor near the washing machine."
-45,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_45_MASK_0_point_0.9617.png,80,576,477,599,point,475.0,588.7,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+45,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_45_MASK_0_point_0.9617.png,80,576,477,599,point,475,588.7,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
 
 2. Identified Objects:
@@ -611,7 +611,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Laundry Baskets: Two baskets, one black and one white, under the desk.
    - Children's Toys: On the floor to the left, near the washing machine.
    - Slippers: On the floor near the table."
-45,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_45_MASK_1_cross_0.8388.png,434,480,561,590,cross,458.4,578.0,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview: 
+45,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_45_MASK_1_cross_0.8388.png,434,480,561,590,cross,458.4,578,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
 
 2. Identified Objects:
@@ -632,7 +632,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Laundry Baskets: Two baskets, one black and one white, under the desk.
    - Children's Toys: On the floor to the left, near the washing machine.
    - Slippers: On the floor near the table."
-45,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_45_MASK_2_cross_0.7977.png,4,67,473,502,cross,38.2,483.6,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
+45,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_45_MASK_2_cross_0.7977.png,4,67,473,502,cross,38.2,483.6,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
 
 2. Identified Objects:
@@ -653,7 +653,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Laundry Baskets: Two baskets, one black and one white, under the desk.
    - Children's Toys: On the floor to the left, near the washing machine.
    - Slippers: On the floor near the table."
-45,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_45_MASK_3_point_0.8288.png,433,502,551,590,point,495.0,570.0,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+45,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_45_MASK_3_point_0.8288.png,433,502,551,590,point,495,570,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
 
 2. Identified Objects:
@@ -674,7 +674,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Laundry Baskets: Two baskets, one black and one white, under the desk.
    - Children's Toys: On the floor to the left, near the washing machine.
    - Slippers: On the floor near the table."
-63,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_63_MASK_0_cross_0.8024.png,434,502,550,590,cross,475.2,553.2,Shoes,Shoes,Slippers,Slippers,Shoes,Slippers,Shoes,Slippers,Slippers,Slippers,Slippers,"1. Scene Overview: 
+63,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_63_MASK_0_cross_0.8024.png,434,502,550,590,cross,475.2,553.2,Shoes,Shoes,Slippers,Slippers,Shoes,Slippers,Shoes,Slippers,Slippers,Slippers,Slippers,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture, with colorful accents and a green rug.
 
 2. Identified Objects:
@@ -695,7 +695,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Rug: A green rug covers the floor, adding texture and color.
    - Wall Art: A framed piece of art is hung on the wall above the washing machine.
    - Toys: A few toys are scattered on the floor near the washing machine."
-66,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_66_MASK_0_point_0.9699.png,0,241,452,599,point,31.6,465.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
+66,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_66_MASK_0_point_0.9699.png,0,241,452,599,point,31.6,465.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -716,7 +716,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed picture on the left wall.
    - Laundry Basket: Black and white baskets beneath the desk area.
    - Toys: Small toys on the floor near the washing machine."
-66,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_66_MASK_1_cross_0.8774.png,434,502,551,589,cross,467.2,561.4,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+66,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_66_MASK_1_cross_0.8774.png,434,502,551,589,cross,467.2,561.4,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a focus on functionality and style.
 
 2. Identified Objects:
@@ -737,7 +737,7 @@ The room is bright and airy, with natural light coming through the window, enhan
    - Wall Art: Framed picture on the left wall.
    - Laundry Basket: Black and white baskets beneath the desk area.
    - Toys: Small toys on the floor near the washing machine."
-76,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_76_MASK_0_point_0.9619.png,0,255,452,599,point,78.5,469.5,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
+76,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_76_MASK_0_point_0.9619.png,0,255,452,599,point,78.5,469.5,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -772,7 +772,7 @@ The room is bright and airy, with natural light coming through the window, enhan
      - Pair of slippers on the rug
 
 The room is bright, with natural light coming through the window, creating a cozy and functional environment."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_0_point_0.9733.png,81,574,476,599,point,397.1,492.2,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_0_point_0.9733.png,81,574,476,599,point,397.1,492.2,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -792,7 +792,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,10,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_10_point_0.9207.png,524,549,127,287,point,539.8,207.9,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,10,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_10_point_0.9207.png,524,549,127,287,point,539.8,207.9,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,Coat,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -812,7 +812,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_1_cross_0.8516.png,434,502,551,589,cross,458.1,557.9,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_1_cross_0.8516.png,434,502,551,589,cross,458.1,557.9,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -832,7 +832,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_2_point_0.8896.png,417,451,434,459,point,440.1,454.8,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_2_point_0.8896.png,417,451,434,459,point,440.1,454.8,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -852,7 +852,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_3_cross_0.6454.png,400,453,383,421,cross,438.5,406.3,Cup,[Cup],Cup,Bowl,Cup,Cup,Cup,Bowl,[Mug],Bowl,Cup,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_3_cross_0.6454.png,400,453,383,421,cross,438.5,406.3,Cup,[Cup],Cup,Bowl,Cup,Cup,Cup,Bowl,[Mug],Bowl,Cup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -872,7 +872,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,4,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_4_point_0.9450.png,81,574,476,599,point,434.7,481.4,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_4_point_0.9450.png,81,574,476,599,point,434.7,481.4,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -892,7 +892,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,5,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_5_point_0.9640.png,82,574,477,599,point,444.9,540.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_5_point_0.9640.png,82,574,477,599,point,444.9,540.6,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -912,7 +912,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,6,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_6_triangle_0.8350.png,434,501,552,589,triangle,462.9,565.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,6,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_6_triangle_0.8350.png,434,501,552,589,triangle,462.9,565.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -932,7 +932,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,7,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_7_point_0.8981.png,417,451,434,459,point,424.6,444.0,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,7,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_7_point_0.8981.png,417,451,434,459,point,424.6,444,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -952,7 +952,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,8,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_8_point_0.9165.png,350,376,280,303,point,364.7,286.8,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,8,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_8_point_0.9165.png,350,376,280,303,point,364.7,286.8,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,Wood,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -972,7 +972,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-78,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,9,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_78_MASK_9_cross_0.3062.png,342,405,199,246,cross,355.9,218.7,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,"1. Scene Overview: 
+78,1,data/images/1exp.jpg,9,outputs/masks_gaze_driven/best/IMG_1_exp_Part_78_MASK_9_cross_0.3062.png,342,405,199,246,cross,355.9,218.7,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,Yarn,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized with a modern and clean aesthetic, featuring white cabinetry and furniture. A green rug adds a splash of color to the predominantly white and neutral-toned room.
 
 2. Identified Objects:
@@ -992,7 +992,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Laundry Baskets: Two baskets, one black and one white, are under the desk area.
    - Wall Art: A framed piece of art is hung on the left wall.
    - Window: Located on the right side, allowing natural light into the room."
-82,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_82_MASK_0_point_0.9712.png,82,576,476,599,point,477.1,507.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
+82,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_82_MASK_0_point_0.9712.png,82,576,476,599,point,477.1,507.1,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview: 
    The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1013,7 +1013,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Wall Art: Framed artwork on the left wall.
    - Laundry Baskets: Black and white baskets under the desk.
    - Window: Large window on the right side, allowing natural light into the room."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_0_point_0.9733.png,81,574,476,599,point,423.0,500.8,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview:
+88,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_0_point_0.9733.png,81,574,476,599,point,423,500.8,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,Shoes,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1033,7 +1033,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_1_triangle_0.8068.png,434,480,561,589,triangle,463.1,585.2,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview:
+88,1,data/images/1exp.jpg,1,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_1_triangle_0.8068.png,434,480,561,589,triangle,463.1,585.2,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,Shoe,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1053,7 +1053,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,2,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_2_point_0.3833.png,44,537,302,339,point,430.4,313.2,Laundry,Laundry,Laundry,Laundry,Laundry,Washer,Laundry,Laundry,Laundry,Laundry,Laundry,"1. Scene Overview:
+88,1,data/images/1exp.jpg,2,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_2_point_0.3833.png,44,537,302,339,point,430.4,313.2,Laundry,Laundry,Laundry,Laundry,Laundry,Washer,Laundry,Laundry,Laundry,Laundry,Laundry,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1073,7 +1073,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,3,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_3_cross_0.8444.png,666,784,61,270,cross,696.5,233.9,Window,Window,Window,Window,Window,Window,Window,Window,Window,Window,Window,"1. Scene Overview:
+88,1,data/images/1exp.jpg,3,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_3_cross_0.8444.png,666,784,61,270,cross,696.5,233.9,Window,Window,Window,Window,Window,Window,Window,Window,Window,Window,Window,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1093,7 +1093,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,4,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_4_point_0.9686.png,615,799,395,547,point,771.1,523.7,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,"1. Scene Overview:
+88,1,data/images/1exp.jpg,4,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_4_point_0.9686.png,615,799,395,547,point,771.1,523.7,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,Blanket,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1113,7 +1113,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,5,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_5_point_0.9045.png,471,584,403,545,point,511.8,430.1,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,"1. Scene Overview:
+88,1,data/images/1exp.jpg,5,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_5_point_0.9045.png,471,584,403,545,point,511.8,430.1,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,Sofa,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1133,7 +1133,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,6,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_6_cross_0.5477.png,464,537,312,402,cross,516.2,382.2,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,"1. Scene Overview:
+88,1,data/images/1exp.jpg,6,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_6_cross_0.5477.png,464,537,312,402,cross,516.2,382.2,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,Chair,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1153,7 +1153,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-88,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,7,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_88_MASK_7_point_0.9004.png,417,451,434,459,point,423.6,445.8,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview:
+88,1,data/images/1exp.jpg,7,outputs/masks_gaze_driven/best/IMG_1_exp_Part_88_MASK_7_point_0.9004.png,417,451,434,459,point,423.6,445.8,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,Cup,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor. The color scheme is predominantly white with pops of color from various objects.
 
 2. Identified Objects:
@@ -1173,7 +1173,7 @@ The room is bright, with natural light coming through the window, creating a coz
    - Rug: Green rug covering the floor area around the table and sofa.
    - Wall Art: Framed artwork on the wall to the left.
    - Toys: Small toys on the floor near the washing machine."
-100,1,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\data\images\1exp.jpg,0,c:\Users\cmore\Documents\GitHub\human_patterns_exploration\outputs\masks_gaze_driven\best\IMG_1_exp_Part_100_MASK_0_point_0.9675.png,0,254,452,599,point,45.2,466.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
+100,1,data/images/1exp.jpg,0,outputs/masks_gaze_driven/best/IMG_1_exp_Part_100_MASK_0_point_0.9675.png,0,254,452,599,point,45.2,466.7,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,Toys,"1. Scene Overview:
    - The image depicts a multifunctional room that combines elements of a laundry area, workspace, and living space. The room is well-organized and features modern furniture and decor, with a bright and clean aesthetic.
 
 2. Identified Objects:
