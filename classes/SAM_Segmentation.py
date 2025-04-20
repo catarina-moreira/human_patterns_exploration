@@ -47,7 +47,7 @@ class SAM_Segmentation:
         self.predictor.set_image(self.image_data.image)
 
 
-    def compute_masks_with_prompt(self, X ,Y, ID, save_mask=False, output_image_path=None, size_threshold = 100):
+    def compute_masks_with_prompt(self, X ,Y, ID, prompt_type, save_mask=False, output_image_path=None, size_threshold = 100):
 
         prompt = np.array([X,Y], dtype=np.float32)
         prompt = prompt.flatten()
@@ -78,6 +78,7 @@ class SAM_Segmentation:
         mask_preprocessed['score'] = score
         mask_preprocessed['logits'] = logits
         mask_preprocessed['prompt'] = prompt
+        mask_preprocessed['prompt_type'] = prompt_type
         mask_preprocessed['cropped_image_with_alpha'] = cropped_image_with_alpha
         mask_preprocessed['x_min'] = x_min
         mask_preprocessed['x_max'] = x_max
@@ -88,7 +89,7 @@ class SAM_Segmentation:
         mask_preprocessed['perimeter'] = 2 * (abs(x_max-x_min) + abs(y_max-y_min))
 
         final_mask = Mask(mask_preprocessed)
-
+        
         self.image_data.masks[self.part_ID].append(final_mask)
 
         return final_mask

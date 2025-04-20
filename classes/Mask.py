@@ -22,6 +22,8 @@ class Mask:
         self.score = mask_dict['score']
         self.logits = mask_dict['logits']
         self.prompt = mask_dict['prompt']
+
+
         self.prompt_type = mask_dict['prompt_type']
         self.cropped_image_with_alpha = mask_dict['cropped_image_with_alpha']
         self.x_min = mask_dict['x_min']

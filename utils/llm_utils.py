@@ -119,7 +119,7 @@ def ollama_scene_description(img_scene_data, model: str = "llava:34b"):
     
     return scene_desc
 
-def ollama_mask_labellinh_with_context(scene_desc, img_mask_data, model: str = "llava:34b"):
+def ollama_mask_labelling_with_context(scene_desc, img_mask_data, model: str = "llava:34b"):
 
     mask_prompt = f"""You previously analyzed the main scene and described it as follows:
     {scene_desc}

@@ -68,7 +68,7 @@ def segment_image(img_id, data, condition_id, center_bias_seconds, img_type="une
                 X = [X]
                 Y = [Y]
             
-            mask = sam.compute_masks_with_prompt(X, Y, indx, size_threshold = size_threshold)
+            mask = sam.compute_masks_with_prompt(X, Y, indx, prompt_type, size_threshold = size_threshold)
             exp_img.masks[part_id][indx] = mask
              
         #flatten the masks
@@ -85,8 +85,8 @@ def load_image_data(img_id, img_type, participant_id, prompt_type="point"):
 
     # Check if the file exists
     if not os.path.exists(pickle_path):
-        raise FileNotFoundError(f"Pickle file not found: {pickle_path}")
-
+        #raise FileNotFoundError(f"Pickle file not found: {pickle_path}")
+        print(f"Pickle file not found: {pickle_path}")
     # Load the data from the pickle file
     with open(pickle_path, 'rb') as file:
         data = pickle.load(file)
