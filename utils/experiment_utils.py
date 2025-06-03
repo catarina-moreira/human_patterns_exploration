@@ -70,7 +70,7 @@ def segment_image(img_id, data, condition_id, center_bias_seconds, img_type="une
             
             mask = sam.compute_masks_with_prompt(X, Y, indx, prompt_type, size_threshold = size_threshold)
             exp_img.masks[part_id][indx] = mask
-             
+            
         #flatten the masks
         #exp_img.masks[part_id] = [item for sublist in exp_img.masks[part_id] for item in sublist]
         save_image_data(exp_img, img_id, participant_data_filtered, img_type, part_id, prompt_type=prompt_type)

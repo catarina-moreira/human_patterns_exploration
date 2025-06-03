@@ -13,7 +13,7 @@ HOME = os.getcwd()
 from PIL import Image, ImageDraw
 import scipy.ndimage as ndimage
 
-os.chdir(os.path.join(HOME, "segment-anything-2"))
+#os.chdir(os.path.join(HOME, "segment-anything-2"))
 
 import supervision as sv
 
