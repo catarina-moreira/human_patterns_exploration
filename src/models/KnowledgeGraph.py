@@ -3,7 +3,7 @@
 from src.core import ImageData
 from typing import List
 
-class KnowledgeGraph(object):
+class KnowledgeGraph:
 	def KnowledgeGraph(self):
 		pass
 

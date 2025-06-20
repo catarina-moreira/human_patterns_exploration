@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 from typing import List
 
-class LLM(object):
+class LLM:
 	def LLM(self):
 		pass
 
