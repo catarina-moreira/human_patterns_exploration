@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 from src.core import Participant
 from src.core import ImageData
-from src.core import Experiment
+from src.core import Framework
 from typing import List
 
 class FixationTask(object):
@@ -39,7 +39,7 @@ class FixationTask(object):
 		self.__data : pd.Dataframe = None
 		self.__group : int = None
 		self.__condition : int = None
-		self.experiment : Experiment = None
+		self.experiment : Framework = None
 		self.participant : Participant = None
 		self.imageData : ImageData = None
 
