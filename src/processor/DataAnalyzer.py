@@ -210,26 +210,66 @@ class DataAnalyzer:
         """Analyze differences across experimental conditions."""
         print("\n=== CONDITION ANALYSIS ===\n")
         
+        # First show the experimental structure
+        self.group_condition_structure()
+        
+        # Detailed statistics by condition
         condition_stats = self.df.groupby(['GroupLabel', 'ConditionLabel']).agg({
-            'FixationDuration': ['count', 'mean'],
-            'RelSceneFix': 'mean',
-            'IrrelSceneFix': 'mean',
-            'CntlSceneFix': 'mean'
+            'FixationDuration': ['count', 'mean', 'std'],
+            'RelSceneFix': ['sum', 'mean'],
+            'IrrelSceneFix': ['sum', 'mean'],
+            'CntlSceneFix': ['sum', 'mean']
         }).round(3)
         
-        print("Statistics by Group and Condition:")
+        print("\nDetailed statistics by Group and Condition:")
         print(condition_stats)
         
-        # Chi-square test for region preferences by condition
-        contingency_table = pd.crosstab([self.df['GroupLabel'], self.df['ConditionLabel']], 
-                                      [self.df['RelSceneFix'], self.df['IrrelSceneFix'], self.df['CntlSceneFix']])
+        # Target present vs absent comparison within each group
+        print("\nTarget Present vs Absent Analysis:")
         
-        try:
-            chi2, p_val, dof, expected = chi2_contingency(contingency_table)
-            print(f"\nChi-square test for region preferences by condition:")
-            print(f"Chi2: {chi2:.2f}, p-value: {p_val:.6f}, df: {dof}")
-        except ValueError as e:
-            print(f"Chi-square test not applicable: {e}")
+        # Exploitation group: conditions 1 vs 2
+        exploit_present = self.df[(self.df['GroupLabel'] == 'Exploitation') & (self.df['ConditionLabel'] == 'Exploit_Present')]
+        exploit_absent = self.df[(self.df['GroupLabel'] == 'Exploitation') & (self.df['ConditionLabel'] == 'Exploit_Absent')]
+        
+        print("Exploitation Group - Target Present vs Absent:")
+        print(f"Present: {len(exploit_present):,} fixations, Rel region prop: {exploit_present['RelSceneFix'].mean():.3f}")
+        print(f"Absent: {len(exploit_absent):,} fixations, Rel region prop: {exploit_absent['RelSceneFix'].mean():.3f}")
+        
+        # Statistical test for exploitation group
+        if len(exploit_present) > 0 and len(exploit_absent) > 0:
+            from scipy.stats import mannwhitneyu
+            stat, p_val = mannwhitneyu(exploit_present['RelSceneFix'], exploit_absent['RelSceneFix'], alternative='two-sided')
+            print(f"Mann-Whitney U test: U={stat:.2f}, p={p_val:.6f}")
+        
+        # Exploration group: conditions 3 vs 4  
+        explore_present = self.df[(self.df['GroupLabel'] == 'Exploration') & (self.df['ConditionLabel'] == 'Explore_Present')]
+        explore_absent = self.df[(self.df['GroupLabel'] == 'Exploration') & (self.df['ConditionLabel'] == 'Explore_Absent')]
+        
+        print("\nExploration Group - Target Present vs Absent:")
+        print(f"Present: {len(explore_present):,} fixations, Rel region prop: {explore_present['RelSceneFix'].mean():.3f}")
+        print(f"Absent: {len(explore_absent):,} fixations, Rel region prop: {explore_absent['RelSceneFix'].mean():.3f}")
+        
+        # Statistical test for exploration group
+        if len(explore_present) > 0 and len(explore_absent) > 0:
+            stat, p_val = mannwhitneyu(explore_present['RelSceneFix'], explore_absent['RelSceneFix'], alternative='two-sided')
+            print(f"Mann-Whitney U test: U={stat:.2f}, p={p_val:.6f}")
+        
+        # Compare all four conditions
+        print("\nAll Conditions Comparison (Kruskal-Wallis test):")
+        from scipy.stats import kruskal
+        condition_groups = [
+            exploit_present['RelSceneFix'],
+            exploit_absent['RelSceneFix'], 
+            explore_present['RelSceneFix'],
+            explore_absent['RelSceneFix']
+        ]
+        
+        # Filter out empty groups
+        condition_groups = [group for group in condition_groups if len(group) > 0]
+        
+        if len(condition_groups) >= 2:
+            stat, p_val = kruskal(*condition_groups)
+            print(f"Kruskal-Wallis H-statistic: {stat:.2f}, p-value: {p_val:.6f}")
         
         return condition_stats
     
@@ -328,7 +368,7 @@ class DataAnalyzer:
         return results
     
     def generate_visualizations(self, save_plots=False):
-        """Generate comprehensive visualizations."""
+        """Generate comprehensive visualizations with robust error handling."""
         print("\n=== GENERATING VISUALIZATIONS ===\n")
         
         plt.style.use('default')
@@ -336,122 +376,241 @@ class DataAnalyzer:
         
         # 1. Fixation duration distribution by group
         plt.subplot(3, 4, 1)
-        for group in self.df['GroupLabel'].unique():
-            group_data = self.df[self.df['GroupLabel'] == group]['FixationDuration']
-            plt.hist(group_data, alpha=0.7, bins=30, label=group, density=True)
-        plt.xlabel('Fixation Duration (ms)')
-        plt.ylabel('Density')
-        plt.title('Fixation Duration Distribution by Group')
-        plt.legend()
-        plt.xlim(0, 1000)
+        try:
+            for group in self.df['GroupLabel'].unique():
+                group_data = self.df[self.df['GroupLabel'] == group]['FixationDuration']
+                if len(group_data) > 0:
+                    plt.hist(group_data, alpha=0.7, bins=30, label=group, density=True)
+            plt.xlabel('Fixation Duration (ms)')
+            plt.ylabel('Density')
+            plt.title('Fixation Duration Distribution by Group')
+            plt.legend()
+            plt.xlim(0, 1000)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Duration plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Fixation Duration Distribution')
         
         # 2. Region preferences by group
         plt.subplot(3, 4, 2)
-        region_props = self.df.groupby('GroupLabel')[['RelSceneFix', 'IrrelSceneFix', 'CntlSceneFix']].mean()
-        region_props.plot(kind='bar', ax=plt.gca())
-        plt.title('Region Fixation Proportions by Group')
-        plt.ylabel('Proportion of Fixations')
-        plt.xlabel('Group')
-        plt.legend(['Relevant', 'Irrelevant', 'Control'])
-        plt.xticks(rotation=45)
+        try:
+            region_props = self.df.groupby('GroupLabel')[['RelSceneFix', 'IrrelSceneFix', 'CntlSceneFix']].mean()
+            region_props.plot(kind='bar', ax=plt.gca())
+            plt.title('Region Fixation Proportions by Group')
+            plt.ylabel('Proportion of Fixations')
+            plt.xlabel('Group')
+            plt.legend(['Relevant', 'Irrelevant', 'Control'])
+            plt.xticks(rotation=45)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Region plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Region Fixation Proportions')
         
         # 3. Spatial distribution (heatmap)
         plt.subplot(3, 4, 3)
-        plt.hist2d(self.df['X'], self.df['Y'], bins=50, cmap='YlOrRd')
-        plt.colorbar(label='Fixation Count')
-        plt.xlabel('X Coordinate')
-        plt.ylabel('Y Coordinate')
-        plt.title('Overall Spatial Distribution')
+        try:
+            plt.hist2d(self.df['X'], self.df['Y'], bins=50, cmap='YlOrRd')
+            plt.colorbar(label='Fixation Count')
+            plt.xlabel('X Coordinate')
+            plt.ylabel('Y Coordinate')
+            plt.title('Overall Spatial Distribution')
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Spatial plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Spatial Distribution')
         
         # 4. Fixation duration by region type
         plt.subplot(3, 4, 4)
-        region_data = []
-        region_labels = []
-        for region, label in [('RelSceneFix', 'Relevant'), ('IrrelSceneFix', 'Irrelevant'), ('CntlSceneFix', 'Control')]:
-            region_fixations = self.df[self.df[region] == 1]['FixationDuration']
-            region_data.append(region_fixations)
-            region_labels.append(label)
-        
-        plt.boxplot(region_data, labels=region_labels)
-        plt.ylabel('Fixation Duration (ms)')
-        plt.title('Fixation Duration by Region Type')
-        plt.xticks(rotation=45)
+        try:
+            region_data = []
+            region_labels = []
+            for region, label in [('RelSceneFix', 'Relevant'), ('IrrelSceneFix', 'Irrelevant'), ('CntlSceneFix', 'Control')]:
+                region_fixations = self.df[self.df[region] == 1]['FixationDuration']
+                if len(region_fixations) > 0:
+                    region_data.append(region_fixations)
+                    region_labels.append(label)
+            
+            if region_data:
+                plt.boxplot(region_data, labels=region_labels)
+                plt.ylabel('Fixation Duration (ms)')
+                plt.title('Fixation Duration by Region Type')
+                plt.xticks(rotation=45)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Duration by region\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Duration by Region Type')
         
         # 5. Participant-level analysis
-        if self.participants is not None:
-            plt.subplot(3, 4, 5)
-            for group in self.participants['GroupLabel'].unique():
-                group_data = self.participants[self.participants['GroupLabel'] == group]
-                plt.scatter(group_data['Prop_Rel'], group_data['Mean_Duration'], 
-                          alpha=0.7, label=group, s=60)
-            plt.xlabel('Proportion Relevant Fixations')
-            plt.ylabel('Mean Fixation Duration (ms)')
-            plt.title('Individual Differences: Relevant Fixations vs Duration')
-            plt.legend()
-            
-            # 6. Total fixations by group
-            plt.subplot(3, 4, 6)
-            self.participants.boxplot(column='Total_Fixations', by='GroupLabel', ax=plt.gca())
-            plt.suptitle('')
+        plt.subplot(3, 4, 5)
+        try:
+            if self.participants is not None:
+                for group in self.participants['GroupLabel'].unique():
+                    group_data = self.participants[self.participants['GroupLabel'] == group]
+                    plt.scatter(group_data['Prop_Rel'], group_data['Mean_Duration'], 
+                              alpha=0.7, label=group, s=60)
+                plt.xlabel('Proportion Relevant Fixations')
+                plt.ylabel('Mean Fixation Duration (ms)')
+                plt.title('Individual Differences')
+                plt.legend()
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Participant plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Individual Differences')
+        
+        # 6. Total fixations by group
+        plt.subplot(3, 4, 6)
+        try:
+            if self.participants is not None:
+                self.participants.boxplot(column='Total_Fixations', by='GroupLabel', ax=plt.gca())
+                plt.suptitle('')
+                plt.title('Total Fixations by Group')
+                plt.xlabel('Group')
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Total fixations\nplot unavailable', ha='center', va='center', transform=plt.gca().transAxes)
             plt.title('Total Fixations by Group')
-            plt.xlabel('Group')
-            
+        
         # 7. All four conditions comparison
         plt.subplot(3, 4, 7)
-        condition_means = self.df.groupby('ConditionLabel')['RelSceneFix'].mean()
-        bars = plt.bar(range(len(condition_means)), condition_means.values, 
-                      color=['skyblue', 'lightcoral', 'lightgreen', 'gold'])
-        plt.xticks(range(len(condition_means)), condition_means.index, rotation=45, ha='right')
-        plt.ylabel('Proportion Relevant Fixations')
-        plt.title('Relevant Region Fixations by All Conditions')
-        
-        # Add value labels on bars
-        for i, bar in enumerate(bars):
-            height = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.3f}', ha='center', va='bottom')
+        try:
+            condition_means = self.df.groupby('ConditionLabel')['RelSceneFix'].mean()
+            bars = plt.bar(range(len(condition_means)), condition_means.values, 
+                          color=['skyblue', 'lightcoral', 'lightgreen', 'gold'])
+            plt.xticks(range(len(condition_means)), condition_means.index, rotation=45, ha='right')
+            plt.ylabel('Proportion Relevant Fixations')
+            plt.title('Relevant Region Fixations by Condition')
+            
+            # Add value labels on bars
+            for i, bar in enumerate(bars):
+                height = bar.get_height()
+                plt.text(bar.get_x() + bar.get_width()/2., height,
+                        f'{height:.3f}', ha='center', va='bottom')
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Conditions plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Relevant Fixations by Condition')
         
         # 8. Group × Condition interaction plot
         plt.subplot(3, 4, 8)
-        interaction_data = self.df.groupby(['GroupLabel', 'ConditionLabel'])['RelSceneFix'].mean().unstack()
-        
-        for group in interaction_data.index:
-            plt.plot(range(len(interaction_data.columns)), interaction_data.loc[group], 
-                    marker='o', linewidth=2, markersize=8, label=group)
-        
-        plt.xticks(range(len(interaction_data.columns)), interaction_data.columns, rotation=45, ha='right')
-        plt.ylabel('Proportion Relevant Fixations')
-        plt.xlabel('Condition')
-        plt.title('Group × Condition Interaction')
-        plt.legend()
-        plt.grid(True, alpha=0.3)
-        plt.subplot(3, 4, 8)
-        sequence_data = []
-        for participant in self.df['ParticipantID'].unique()[:10]:  # Sample of participants
-            for item in self.df[self.df['ParticipantID'] == participant]['ItemNum'].unique()[:3]:
-                trial_data = self.df[(self.df['ParticipantID'] == participant) & 
-                                   (self.df['ItemNum'] == item)].head(20)
-                if len(trial_data) >= 10:
-                    sequence_data.append(trial_data['RelSceneFix'].cumsum().values[:20])
-        
-        if sequence_data:
-            sequence_array = np.array(sequence_data)
-            mean_sequence = np.mean(sequence_array, axis=0)
-            std_sequence = np.std(sequence_array, axis=0)
-            fixation_number = np.arange(1, len(mean_sequence) + 1)
+        try:
+            interaction_data = self.df.groupby(['GroupLabel', 'ConditionLabel'])['RelSceneFix'].mean().unstack()
             
-            plt.plot(fixation_number, mean_sequence, 'b-', linewidth=2)
-            plt.fill_between(fixation_number, mean_sequence - std_sequence, 
-                           mean_sequence + std_sequence, alpha=0.3)
-            plt.xlabel('Fixation Number')
-            plt.ylabel('Cumulative Relevant Fixations')
-            plt.title('Temporal Pattern: Relevant Region Fixations')
+            for group in interaction_data.index:
+                plt.plot(range(len(interaction_data.columns)), interaction_data.loc[group], 
+                        marker='o', linewidth=2, markersize=8, label=group)
+            
+            plt.xticks(range(len(interaction_data.columns)), interaction_data.columns, rotation=45, ha='right')
+            plt.ylabel('Proportion Relevant Fixations')
+            plt.xlabel('Condition')
+            plt.title('Group × Condition Interaction')
+            plt.legend()
+            plt.grid(True, alpha=0.3)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Interaction plot\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Group × Condition Interaction')
+        
+        # 9. Target present vs absent comparison
+        plt.subplot(3, 4, 9)
+        try:
+            present_absent_data = []
+            labels = []
+            
+            # Get data for each condition
+            exploit_present = self.df[(self.df['GroupLabel'] == 'Exploitation') & 
+                                     (self.df['ConditionLabel'] == 'Exploit_Present')]['RelSceneFix']
+            exploit_absent = self.df[(self.df['GroupLabel'] == 'Exploitation') & 
+                                    (self.df['ConditionLabel'] == 'Exploit_Absent')]['RelSceneFix']
+            explore_present = self.df[(self.df['GroupLabel'] == 'Exploration') & 
+                                     (self.df['ConditionLabel'] == 'Explore_Present')]['RelSceneFix']
+            explore_absent = self.df[(self.df['GroupLabel'] == 'Exploration') & 
+                                    (self.df['ConditionLabel'] == 'Explore_Absent')]['RelSceneFix']
+            
+            # Only add non-empty datasets
+            for data, label in [(exploit_present, 'Exploit\nPresent'), (exploit_absent, 'Exploit\nAbsent'), 
+                               (explore_present, 'Explore\nPresent'), (explore_absent, 'Explore\nAbsent')]:
+                if len(data) > 0:
+                    present_absent_data.append(data)
+                    labels.append(label)
+            
+            if present_absent_data:
+                bp = plt.boxplot(present_absent_data, labels=labels, patch_artist=True)
+                colors = ['skyblue', 'lightcoral', 'lightgreen', 'gold']
+                for i, patch in enumerate(bp['boxes']):
+                    if i < len(colors):
+                        patch.set_facecolor(colors[i])
+                
+                plt.ylabel('Relevant Region Fixations')
+                plt.title('Target Present vs Absent')
+                plt.xticks(rotation=45)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Target comparison\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Target Present vs Absent')
+        
+        # 10. Simple temporal analysis
+        plt.subplot(3, 4, 10)
+        try:
+            # Simple analysis: mean fixation over first 10 fixations per trial
+            temporal_data = []
+            for participant in self.df['ParticipantID'].unique()[:5]:
+                participant_data = self.df[self.df['ParticipantID'] == participant]
+                for item in participant_data['ItemNum'].unique()[:2]:
+                    trial_data = participant_data[participant_data['ItemNum'] == item].head(10)
+                    if len(trial_data) >= 5:
+                        temporal_data.append(trial_data['RelSceneFix'].values)
+            
+            if temporal_data:
+                # Find minimum length to avoid array issues
+                min_len = min(len(seq) for seq in temporal_data)
+                if min_len > 0:
+                    truncated_data = [seq[:min_len] for seq in temporal_data]
+                    mean_pattern = np.mean(truncated_data, axis=0)
+                    plt.plot(range(1, min_len + 1), mean_pattern, 'b-', linewidth=2)
+                    plt.xlabel('Fixation Number')
+                    plt.ylabel('Proportion Relevant')
+                    plt.title('Temporal Pattern (Sample)')
+                    plt.grid(True, alpha=0.3)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Temporal pattern\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Temporal Pattern')
+        
+        # 11. Duration by condition
+        plt.subplot(3, 4, 11)
+        try:
+            condition_durations = []
+            condition_labels = []
+            for condition in sorted(self.df['ConditionLabel'].unique()):
+                condition_data = self.df[self.df['ConditionLabel'] == condition]['FixationDuration']
+                if len(condition_data) > 0:
+                    condition_durations.append(condition_data)
+                    condition_labels.append(condition)
+            
+            if condition_durations:
+                plt.boxplot(condition_durations, labels=condition_labels)
+                plt.ylabel('Fixation Duration (ms)')
+                plt.title('Duration by Condition')
+                plt.xticks(rotation=45)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Duration by condition\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Duration by Condition')
+        
+        # 12. Region distribution
+        plt.subplot(3, 4, 12)
+        try:
+            region_comparison = self.df.groupby('GroupLabel')[['RelSceneFix', 'IrrelSceneFix', 'CntlSceneFix']].sum()
+            region_comparison_pct = region_comparison.div(region_comparison.sum(axis=1), axis=0) * 100
+            
+            region_comparison_pct.plot(kind='bar', stacked=True, ax=plt.gca(), 
+                                     color=['lightblue', 'lightcoral', 'lightgreen'])
+            plt.title('Region Distribution (%)')
+            plt.ylabel('Percentage of Fixations')
+            plt.xlabel('Group')
+            plt.legend(['Relevant', 'Irrelevant', 'Control'])
+            plt.xticks(rotation=45)
+        except Exception as e:
+            plt.text(0.5, 0.5, 'Region distribution\nunavailable', ha='center', va='center', transform=plt.gca().transAxes)
+            plt.title('Region Distribution')
         
         plt.tight_layout()
         
         if save_plots:
-            plt.savefig('eyetracking_analysis.png', dpi=300, bbox_inches='tight')
-            print("Plots saved as 'eyetracking_analysis.png'")
+            try:
+                plt.savefig('eyetracking_analysis.png', dpi=300, bbox_inches='tight')
+                print("Plots saved as 'eyetracking_analysis.png'")
+            except Exception as e:
+                print(f"Could not save plots: {e}")
         
         plt.show()
     
@@ -493,3 +652,4 @@ class DataAnalyzer:
             'participants': participant_data,
             'statistical_results': statistical_results
         }
+
