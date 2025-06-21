@@ -18,10 +18,10 @@ class FixationTask:
 	def __init__(self, participant : Participant, imageData : ImageData, data : pd.DataFrame, condition = None, group = None):
 		self.group = group
 		self.condition = condition
-		self.data = self.process_participant_data(data)
 		self.participant = participant
 		self.imageData = imageData
 		self.image = self.imageData.image
+		self.data = self.process_participant_data(data)
 		self.X = self.data['X']
 		self.Y = self.data['Y']
 		self.duration = self.data['FixationDuration']
@@ -35,17 +35,23 @@ class FixationTask:
 			filtered_data = data[(data['Condition'] == self.condition) & (data['Group'] == self.group)]
 		else:
 			filtered_data = data
+		
+		print(self.imageData.ID)
+		filtered_data = filtered_data[ (filtered_data.ParticipantID == self.participant.ID) & (filtered_data.ItemNum == self.imageData.ID) ]
+
 		return filtered_data.drop(["Condition", "Group"], axis=1)
 
 	def get_participant_ids(self, filtered_data):
-		return filtered_data['Participant_ID'].unique()
+		return filtered_data['ParticipantID'].unique()
 
 	def draw_fixations(self, alpha=0.5, figsize=(12, 8), dpi=100, savefilename=None, fix_color="#729fcf", fix_edge_color="#204a87", size = None):
 
-		x = self.fixations.X
-		y = self.fixations.Y
-		size = self.duration
-    
+		x = self.X
+		y = self.Y
+
+		if not size:
+			size = self.duration*0.2
+		
 		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
 		ax.imshow(self.image)
 		ax.scatter(x, y, s=size, c=fix_color, alpha=alpha, edgecolors=fix_edge_color)
@@ -93,7 +99,7 @@ class FixationTask:
                         ha='center', va='center', fontweight='bold', fontsize=fontsize,
                         path_effects=[path_effects.Stroke(linewidth=2, foreground='black'), path_effects.Normal()  ])
 
-        # Draw arrows
+        		# Draw arrows
 				for i in range(len(x_unique)-1):
 						ax.arrow(x_unique.iloc[i], y_unique.iloc[i], x_unique.iloc[i+1] - x_unique.iloc[i], y_unique.iloc[i+1] - y_unique.iloc[i], 
                     alpha=alpha, fc=fix_color, ec=fix_color, fill=True, shape='full',
@@ -106,12 +112,10 @@ class FixationTask:
 						plt.savefig(savefilename, bbox_inches='tight')
 				plt.show()
 
-
-
 	def draw_display(self, dispsize=None, dpi=100):
 
 		img = self.image
-		w, h = self.width, self.height
+		w, h = self.imageData.width, self.imageData.height
 
 		# If dispsize not given, use the image size
 		if dispsize is None:
@@ -154,78 +158,78 @@ class FixationTask:
 						M[j, i] = np.exp(-1.0 * (((float(i)-xo)**2/(2*sx*sx)) + ((float(j)-yo)**2/(2*sy*sy))))
 		return M
 
-		def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis"):
+	def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis"):
 
-				fix = self.data
-				img_copy = self.image.copy()
+			fix = self.data
+			img_copy = self.image.copy()
 
-				# We'll use the actual image dimensions for display size
-				dispsize = (self.width, self.height)
+			# We'll use the actual image dimensions for display size
+			dispsize = (self.imageData.width, self.imageData.height)
 
-				# Create a figure and axis by calling your image-drawing method
-				# (assuming `image.draw_display(dispsize)` returns (fig, ax))
-				fig, ax = self.draw_display(dispsize)
+			# Create a figure and axis by calling your image-drawing method
+			# (assuming `image.draw_display(dispsize)` returns (fig, ax))
+			fig, ax = self.draw_display(dispsize)
 
-				# Generate the Gaussian "kernel"
-				gwh = 200  # Gaussian window size
-				gsdwh = gwh / 6.0
-				gaus = self.gaussian(gwh, gsdwh)
+			# Generate the Gaussian "kernel"
+			gwh = 200  # Gaussian window size
+			gsdwh = gwh / 6.0
+			gaus = self.gaussian(gwh, gsdwh)
 
-        # Prepare a larger heatmap array with some border (strt)
-				strt = gwh // 2
-				heatmapsize = (dispsize[1] + 2 * strt, dispsize[0] + 2 * strt)
-				heatmap_fixations = np.zeros(heatmapsize, dtype=float)
+			# Prepare a larger heatmap array with some border (strt)
+			strt = gwh // 2
+			heatmapsize = (dispsize[1] + 2 * strt, dispsize[0] + 2 * strt)
+			heatmap_fixations = np.zeros(heatmapsize, dtype=float)
 
-				# Build the heatmap by adding Gaussian distributions at each fixation
-				for i in fix.index:
-						x_pos = strt + int(fix['X'][i]) - gwh // 2
-						y_pos = strt + int(fix['Y'][i]) - gwh // 2
+			# Build the heatmap by adding Gaussian distributions at each fixation
+			for i in fix.index:
+					x_pos = strt + int(fix['X'][i]) - gwh // 2
+					y_pos = strt + int(fix['Y'][i]) - gwh // 2
 
-						# Check if the Gaussian window goes out of bounds
-						if (not 0 <= x_pos < dispsize[0]) or (not 0 <= y_pos < dispsize[1]):
-								# Adjust for boundary
-								hadj = [0, gwh]
-								vadj = [0, gwh]
-								if x_pos < 0:
-										hadj[0] = -x_pos
-										x_pos = 0
-								elif x_pos + gwh > dispsize[0]:
-										hadj[1] = gwh - ((x_pos + gwh) - dispsize[0])
-								if y_pos < 0:
-										vadj[0] = -y_pos
-										y_pos = 0
-								elif y_pos + gwh > dispsize[1]:
-										vadj[1] = gwh - ((y_pos + gwh) - dispsize[1])
-								try:
-										heatmap_fixations[y_pos:y_pos+vadj[1], x_pos:x_pos+hadj[1]] += \
-                        gaus[vadj[0]:vadj[1], hadj[0]:hadj[1]] * self.duration[i]
-								except:
-										pass
-						else:
-								# Fully in-bounds, just add the Gaussian
-								heatmap_fixations[y_pos:y_pos+gwh, x_pos:x_pos+gwh] += gaus * self.duration[i]
+					# Check if the Gaussian window goes out of bounds
+					if (not 0 <= x_pos < dispsize[0]) or (not 0 <= y_pos < dispsize[1]):
+							# Adjust for boundary
+							hadj = [0, gwh]
+							vadj = [0, gwh]
+							if x_pos < 0:
+									hadj[0] = -x_pos
+									x_pos = 0
+							elif x_pos + gwh > dispsize[0]:
+									hadj[1] = gwh - ((x_pos + gwh) - dispsize[0])
+							if y_pos < 0:
+									vadj[0] = -y_pos
+									y_pos = 0
+							elif y_pos + gwh > dispsize[1]:
+									vadj[1] = gwh - ((y_pos + gwh) - dispsize[1])
+							try:
+									heatmap_fixations[y_pos:y_pos+vadj[1], x_pos:x_pos+hadj[1]] += \
+					gaus[vadj[0]:vadj[1], hadj[0]:hadj[1]] * self.duration[i]
+							except:
+									pass
+					else:
+							# Fully in-bounds, just add the Gaussian
+							heatmap_fixations[y_pos:y_pos+gwh, x_pos:x_pos+gwh] += gaus * self.duration[i]
 
-				# Crop the extra border
-				heatmap_fixations = heatmap_fixations[strt:dispsize[1]+strt, strt:dispsize[0]+strt]
+			# Crop the extra border
+			heatmap_fixations = heatmap_fixations[strt:dispsize[1]+strt, strt:dispsize[0]+strt]
 
-				# Optionally remove low values below average
-				nonzero_vals = heatmap_fixations[heatmap_fixations > 0]
-				if len(nonzero_vals) > 0:
-						lowbound = np.mean(nonzero_vals)
-						heatmap_fixations[heatmap_fixations < lowbound] = np.nan
+			# Optionally remove low values below average
+			nonzero_vals = heatmap_fixations[heatmap_fixations > 0]
+			if len(nonzero_vals) > 0:
+					lowbound = np.mean(nonzero_vals)
+					heatmap_fixations[heatmap_fixations < lowbound] = np.nan
 
-        # Draw the heatmap on top of the image
-				cax = ax.imshow(heatmap_fixations, cmap=cmap, alpha=alpha)
+			# Draw the heatmap on top of the image
+			cax = ax.imshow(heatmap_fixations, cmap=cmap, alpha=alpha)
 
-        # OPTIONAL: Add a colorbar to interpret intensity
-        # The fraction/pad arguments help position a smaller bar nicely
-				fig.colorbar(cax, ax=ax, fraction=0.03, pad=0.04)
+			# OPTIONAL: Add a colorbar to interpret intensity
+			# The fraction/pad arguments help position a smaller bar nicely
+			fig.colorbar(cax, ax=ax, fraction=0.03, pad=0.04)
 
-        # Title
-				ax.set_title(title or "", fontsize=12)
+			# Title
+			ax.set_title(title or "", fontsize=12)
 
-        # Save the figure if a filename is given
-				if savefilename:
-						fig.savefig(savefilename, bbox_inches='tight')
+			# Save the figure if a filename is given
+			if savefilename:
+					fig.savefig(savefilename, bbox_inches='tight')
 
-				return fig, heatmap_fixations
+			return fig, heatmap_fixations

@@ -20,7 +20,7 @@ class ImageData(object):
 
 	def __init__(self, path : str, target = None):
 		self.path = path
-		self.ID = None
+		self.ID = self.find_ID()
 		self.image = self.load()
 		self.target = target
 		self.width = None
