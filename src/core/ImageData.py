@@ -1,23 +1,55 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+
 from src.core import Mask
-from src.core import FixationTask
 from typing import List
 
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import cv2
+import os
+
+import math
+
+import matplotlib.patheffects as path_effects
+
+
 class ImageData(object):
-	def ImageData(self, path : str):
+	def ImageData(self, path : str, target = None):
 		pass
 
 	def __init__(self):
-		self.__path : str = None
-		self.__iD : int = None
-		self.__masks : dict = None
-		self.__image : np.array = None
-		self.__target : List = None
-		self.__width : float = None
-		self.__height : float = None
-		self.mask : Mask = None
-		"""# @AssociationKind Composition"""
-		self.fixationTask : FixationTask = None
-		"""# @AssociationKind Aggregation"""
+		self.path : str = None
+		self.ID = None
+		self.image = self.load()
+		self.target : List = target
+		self.width : float = None
+		self.height : float = None
+
+
+	def find_ID(self):
+		self.ID = os.path.splitext(os.path.basename(self.path))[0]
+		# if exists, extract the integer in the filename and use it as the ID. 
+		# Otherwise, use the filename as ID
+		match = re.search(r'\d+', self.ID)
+		self.ID = int(match.group()) if match else self.ID
+		return self.ID
+
+	def load(self):
+		if not os.path.isfile(self.path):
+			raise FileNotFoundError(f"Image not found: {self.path}")
+
+		image = cv2.imread(self.path, cv2.IMREAD_COLOR)
+		if image is None:
+			raise ValueError("Could not load the image with cv2")
+
+		image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+		self.height, self.width, _ = image.shape
+		return image
+
+	def show(self, figsize=(8,10)):
+			plt.grid(False)
+			plt.axis('off')
+			plt.gcf().set_size_inches(figsize[0],figsize[1])
+			plt.imshow(self.image)
+
 
