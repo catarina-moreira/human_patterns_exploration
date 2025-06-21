@@ -10,20 +10,21 @@ import os
 
 import math
 
+import re
+
 import matplotlib.patheffects as path_effects
 
 
 class ImageData(object):
-	def ImageData(self, path : str, target = None):
-		pass
 
-	def __init__(self):
-		self.path : str = None
+
+	def __init__(self, path : str, target = None):
+		self.path = path
 		self.ID = None
 		self.image = self.load()
-		self.target : List = target
-		self.width : float = None
-		self.height : float = None
+		self.target = target
+		self.width = None
+		self.height = None
 
 
 	def find_ID(self):

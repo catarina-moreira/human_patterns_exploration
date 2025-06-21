@@ -4,7 +4,7 @@ from typing import List
 
 class Participant:
     
-	def Participant(self, ID : int):
+	def __init__(self, ID : int):
 		self.ID = ID
 
 
