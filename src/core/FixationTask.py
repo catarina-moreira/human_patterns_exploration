@@ -28,6 +28,7 @@ class FixationTask:
 		self.data = process_participant_data( data, self.imageData.ID, self.participant.ID, 
 											condition = condition, group = group, seconds=seconds, 
 											rows_per_second=rows_per_second, participant_threshold=participant_threshold)
+
 		self.X = self.data['X']
 		self.Y = self.data['Y']
 		self.duration = self.data['FixationDurationNorm']
@@ -133,7 +134,6 @@ class FixationTask:
 
 	def draw_display(self, dispsize=None, dpi=300, figsize = (12,8)):
 
-		
 		img = self.image
 		w, h = self.imageData.width, self.imageData.height
 
@@ -180,7 +180,9 @@ class FixationTask:
 
 	def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis", dispsize=None, dpi = 300, figsize=(12,8)):
 
-			fix = self.data
+			fix = self.data.copy()
+   
+
 			img_copy = self.image.copy()
 
 			# We'll use the actual image dimensions for display size
