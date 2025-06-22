@@ -48,11 +48,11 @@ class DataAnalyzer:
         })
         
         # Calculate derived measures
-        self._calculate_derived_measures()
+        self.calculate_derived_measures()
         
         print(f"Dataset loaded: {len(self.df)} fixations from {self.df['ParticipantID'].nunique()} participants")
         
-    def _calculate_derived_measures(self):
+    def calculate_derived_measures(self):
         """Calculate additional measures for analysis."""
         # Region fixation indicators
         self.df['RelSceneFix'] = self.df['Rel_Scene_Region_RelSceneFix']

@@ -4,6 +4,8 @@ from src.core.Participant import Participant
 from src.core.ImageData import ImageData
 import src.utils.style as stl
 
+from src.utils.data_utils import process_participant_data
+
 import matplotlib.patheffects as path_effects
 
 from typing import List
@@ -16,34 +18,19 @@ import seaborn as sns
 
 class FixationTask:
     
-	def __init__(self, participant : Participant, imageData : ImageData, data : pd.DataFrame, condition = None, group = None):
+	def __init__(self, participant : Participant, imageData : ImageData, data : pd.DataFrame, 
+				condition = None, group = None, seconds = 1, rows_per_second = 3, participant_threshold = 3):
 		self.group = group
 		self.condition = condition
 		self.participant = participant
 		self.imageData = imageData
 		self.image = self.imageData.image
-		self.data = self.process_participant_data(data)
+		self.data = process_participant_data( data, self.imageData.ID, self.participant.ID, 
+											condition = condition, group = group, seconds=seconds, 
+											rows_per_second=rows_per_second, participant_threshold=participant_threshold)
 		self.X = self.data['X']
 		self.Y = self.data['Y']
-		self.duration = self.data['FixationDuration']
-
-	def load_data(self):
-		self.data = pd.read_csv(self.imageData.path)
-		return self.data
-
-	def process_participant_data(self, data) :
-		if not(self.group is None or self.condition is None):
-			filtered_data = data[(data['Condition'] == self.condition) & (data['Group'] == self.group)]
-		else:
-			filtered_data = data
-		
-		if "ALL" in str(self.participant.ID):
-			# in case we want to look at all the participants in this condition and group
-			filtered_data = filtered_data[ filtered_data.ItemNum == self.imageData.ID]
-		else:
-			filtered_data = filtered_data[ (filtered_data.ParticipantID == self.participant.ID) & (filtered_data.ItemNum == self.imageData.ID) ]
-
-		return filtered_data.drop(["Condition", "Group"], axis=1)
+		self.duration = self.data['FixationDurationNorm']
 
 	def get_participant_ids(self, filtered_data):
 		return filtered_data['ParticipantID'].unique()
@@ -103,7 +90,7 @@ class FixationTask:
 			y = fix['Y']
             
 			if size is None:
-				size = fix['FixationDuration']
+				size = fix['FixationDurationNorm']
 			
 		else:
 			x_unique = fix['X']
@@ -113,7 +100,7 @@ class FixationTask:
 			y = fix['Y']
 
 			if size is None:
-				size = fix['FixationDuration']
+				size = fix['FixationDurationNorm']
 
 		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
 		ax.imshow(img)

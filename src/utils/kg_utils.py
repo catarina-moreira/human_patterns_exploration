@@ -10,6 +10,15 @@ from src.models.Framework import SceneUnderstandingFramework
 from src.utils.llm_utils import create_llm_instance
 from typing import List, Dict, Optional, Tuple
 
+import os
+import pandas as pd
+from src.core.FixationTask import FixationTask
+from src.core.Participant import Participant
+from src.core.ImageData import ImageData
+from src.models.KG import KnowledgeGraph  # Import the new KG class
+from src.models.LLM import LLM, OpenAI, Ollama
+from src.models.Framework import SceneUnderstandingFramework
+from src.utils.llm_utils import create_llm_instance
 
 def process_multiple_images(image_paths: List[str], llm: LLM, masks_dict: Dict = None,
                           output_dir: str = "outputs", debug: bool = True) -> Dict:
@@ -39,41 +48,14 @@ def process_multiple_images(image_paths: List[str], llm: LLM, masks_dict: Dict =
     
     return results
 
-# Knowledge Graph Integration Example
-# Add this to your main Jupyter notebook
 
-import os
-import pandas as pd
-from src.core.FixationTask import FixationTask
-from src.core.Participant import Participant
-from src.core.ImageData import ImageData
-from src.models.KG import KnowledgeGraph  # Import the new KG class
-from src.models.LLM import LLM, OpenAI, Ollama
-from src.models.Framework import SceneUnderstandingFramework
-from src.utils.llm_utils import create_llm_instance
-
-# Configuration
-HOME = os.getcwd()
-DATA_DIR = os.path.join(HOME, "data", "experiments")
-IMAGE_DIR = os.path.join(HOME, "data", "images")
-RESULTS_DIR = os.path.join(HOME, "outputs")
-
-# Example: Single Image Knowledge Graph Generation
-def process_single_image_kg():
+def process_single_image_kg(imageData : ImageData, llm : LLM,  output_dir = "."):
     """Process a single image with knowledge graph generation"""
     
     print("=== SINGLE IMAGE KNOWLEDGE GRAPH PROCESSING ===")
     
-    # Load image
-    IMG_ID = 1
-    imgpath = os.path.join(IMAGE_DIR, f"{IMG_ID}exp.jpg")
-    imageData = ImageData(imgpath)
-    
-    # Create LLM instance
-    llm = create_llm_instance("openai", "gpt-4o")
-    
     # Create Knowledge Graph processor
-    kg = KnowledgeGraph(llm, output_dir=RESULTS_DIR)
+    kg = KnowledgeGraph(llm, output_dir=output_dir)
     
     # For now, we'll use empty masks list since MaskGenerator integration would require SAM2 setup
     # In practice, you would generate masks using MaskGenerator

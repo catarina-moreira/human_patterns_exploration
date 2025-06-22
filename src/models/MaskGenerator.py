@@ -1,8 +1,3 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-from src.core import ImageData
-from typing import List
-
 import os
 
 import torch
@@ -13,30 +8,25 @@ import pickle
 
 import matplotlib.pyplot as plt
 
-HOME = os.getcwd()  
-
 from PIL import Image, ImageDraw
 import scipy.ndimage as ndimage
 
-#os.chdir(os.path.join(HOME, "segment-anything-2"))
-
 import supervision as sv
 
-from sam2.build_sam import build_sam2
-from sam2.sam2_image_predictor import SAM2ImagePredictor
-from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
+from .build_sam import build_sam2
+from .sam2_image_predictor import SAM2ImagePredictor
+from .automatic_mask_generator import SAM2AutomaticMaskGenerator
 
 from src.core.ImageData import ImageData
 from src.core.Mask import Mask
-from src.core.Participant import Participant
-class MaskGenerator(object):
 
+class SAM2:
 
-    def __init__(self, sam_model_path, sam_model_config, image : ImageData, participant : Participant):
+    def __init__(self, sam_model_path, sam_model_config, image : ImageData, part_ID):
         self.sam_model_path = sam_model_path
         self.sam_model_config = sam_model_config
         self.image_data = image
-        self.part_ID = participant.ID
+        self.part_ID = part_ID
         self.image_data.masks[int(self.part_ID)] = []
 
         DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -156,4 +146,6 @@ class MaskGenerator(object):
 
         return cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask
     
+    
+
 

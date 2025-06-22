@@ -17,9 +17,9 @@ import scipy.ndimage as ndimage
 
 import supervision as sv
 
-from sam2.build_sam import build_sam2
-from sam2.sam2_image_predictor import SAM2ImagePredictor
-from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
+from .build_sam import build_sam2
+from .sam2_image_predictor import SAM2ImagePredictor
+from .automatic_mask_generator import SAM2AutomaticMaskGenerator
 
 from classes.ImageData import ImageData
 from classes.Mask import Mask

@@ -49,3 +49,4 @@ def download_model_config( filename ):
             f.write(chunk)
 
     print(f"Downloaded {url} to {filename}")
+
