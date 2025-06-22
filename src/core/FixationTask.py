@@ -37,8 +37,11 @@ class FixationTask:
 		else:
 			filtered_data = data
 		
-		print(self.imageData.ID)
-		filtered_data = filtered_data[ (filtered_data.ParticipantID == self.participant.ID) & (filtered_data.ItemNum == self.imageData.ID) ]
+		if "ALL" in str(self.participant.ID):
+			# in case we want to look at all the participants in this condition and group
+			filtered_data = filtered_data[ filtered_data.ItemNum == self.imageData.ID]
+		else:
+			filtered_data = filtered_data[ (filtered_data.ParticipantID == self.participant.ID) & (filtered_data.ItemNum == self.imageData.ID) ]
 
 		return filtered_data.drop(["Condition", "Group"], axis=1)
 
@@ -63,7 +66,9 @@ class FixationTask:
 		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
 		ax.imshow(self.image)
 		ax.scatter(x, y, s=size, c=fix_color, alpha=alpha, edgecolors=fix_edge_color)
-		if title:
+		if not title:
+			ax.set_title(f"Participant {self.participant.ID} Fixations for Image {self.imageData.ID}")
+		else:
 			ax.set_title(title)
 		ax.grid(False)
 		ax.axis('off')
@@ -139,7 +144,7 @@ class FixationTask:
 				plt.savefig(savefilename, bbox_inches='tight')
 		plt.show()
 
-	def draw_display(self):
+	def draw_display(self, dispsize=None, dpi=300, figsize = (12,8)):
 
 		
 		img = self.image
@@ -159,7 +164,7 @@ class FixationTask:
 		# Place the RGB image on the screen
 		screen[y:y+h, x:x+w] = img
 
-		figsize = (dispsize[0]/dpi, dispsize[1]/dpi)
+		#figsize = (dispsize[0]/dpi, dispsize[1]/dpi)
 		fig = plt.figure(figsize=figsize, dpi=dpi, frameon=False)
 		ax = plt.Axes(fig, [0, 0, 1, 1])
 		ax.set_axis_off()
@@ -186,17 +191,16 @@ class FixationTask:
 						M[j, i] = np.exp(-1.0 * (((float(i)-xo)**2/(2*sx*sx)) + ((float(j)-yo)**2/(2*sy*sy))))
 		return M
 
-	def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis"):
+	def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis", dispsize=None, dpi = 300, figsize=(12,8)):
 
 			fix = self.data
 			img_copy = self.image.copy()
 
 			# We'll use the actual image dimensions for display size
-			dispsize = (self.imageData.width, self.imageData.height)
+			if dispsize is None:
+				dispsize = (self.imageData.width, self.imageData.height)
 
-			# Create a figure and axis by calling your image-drawing method
-			# (assuming `image.draw_display(dispsize)` returns (fig, ax))
-			fig, ax = self.draw_display(dispsize)
+			fig, ax = self.draw_display(dispsize = dispsize, dpi = dpi, figsize = figsize)
 
 			# Generate the Gaussian "kernel"
 			gwh = 200  # Gaussian window size

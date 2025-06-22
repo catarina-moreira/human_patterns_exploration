@@ -18,13 +18,16 @@ import matplotlib.patheffects as path_effects
 class ImageData(object):
 
 
-	def __init__(self, path : str, target = None):
+	def __init__(self, path : str, ID = None, target = None, img_type = None):
+		
 		self.path = path
-		self.ID = self.find_ID()
-		self.image = self.load()
+		self.ID = ID if ID is not None else self.find_ID()
 		self.target = target
 		self.width = None
 		self.height = None
+		self.img_type = img_type
+		self.image = self.load()
+
 
 
 	def find_ID(self):
@@ -47,10 +50,16 @@ class ImageData(object):
 		self.height, self.width, _ = image.shape
 		return image
 
-	def show(self, figsize=(8,10)):
+	def show(self, figsize=(12,8), dpi = 300, title = None):
 			plt.grid(False)
 			plt.axis('off')
 			plt.gcf().set_size_inches(figsize[0],figsize[1])
+			plt.gcf().set_dpi(dpi)
+
+			if not title:
+				plt.title(f"Image {self.ID}") 
+			else: 
+				plt.title(title) 
+			
+
 			plt.imshow(self.image)
-
-
