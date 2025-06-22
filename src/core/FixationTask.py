@@ -32,6 +32,8 @@ class FixationTask:
 		self.X = self.data['X']
 		self.Y = self.data['Y']
 		self.duration = self.data['FixationDurationNorm']
+		self.masks = {} # mask generator will update this dictionary
+
 
 	def get_participant_ids(self, filtered_data):
 		return filtered_data['ParticipantID'].unique()

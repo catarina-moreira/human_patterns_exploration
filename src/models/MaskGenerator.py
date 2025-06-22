@@ -13,21 +13,26 @@ import scipy.ndimage as ndimage
 
 import supervision as sv
 
-from .build_sam import build_sam2
-from .sam2_image_predictor import SAM2ImagePredictor
-from .automatic_mask_generator import SAM2AutomaticMaskGenerator
+from sam2.build_sam import build_sam2
+from sam2.sam2_image_predictor import SAM2ImagePredictor
+from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
 
+from src.core import FixationTask
 from src.core.ImageData import ImageData
 from src.core.Mask import Mask
 
 class SAM2:
 
-    def __init__(self, sam_model_path, sam_model_config, image : ImageData, part_ID):
+    def __init__(self, sam_model_path, sam_model_config, task : FixationTask):
         self.sam_model_path = sam_model_path
         self.sam_model_config = sam_model_config
-        self.image_data = image
-        self.part_ID = part_ID
-        self.image_data.masks[int(self.part_ID)] = []
+        self.task = task
+        self.imageData = task.ImageData
+        self.image = self.imageData.image
+        self.imgID = self.imageData.ID
+        self.participant = self.participant
+        self.part_ID = self.participant.ID
+        self.task.masks[int(self.part_ID)] = []
 
         DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         CHECKPOINT = self.sam_model_path
@@ -41,8 +46,11 @@ class SAM2:
         self.predictor.set_image(self.image_data.image)
 
 
-    def compute_masks_with_prompt(self, X ,Y, ID, prompt_type, save_mask=False, output_image_path=None, size_threshold = 100):
+    def compute_masks_with_prompt(self, ID, prompt_type, save_mask=False, output_image_path=None, size_threshold = 100):
 
+        X = self.task.X
+        Y = self.task.Y
+        
         prompt = np.array([X,Y], dtype=np.float32)
         prompt = prompt.flatten()
         prompt = prompt.reshape(2, len(X))
@@ -65,8 +73,8 @@ class SAM2:
 
         mask_preprocessed = {}
 
-        mask_preprocessed['ID'] = "Img_" + self.image_data.ID + "_Mask_" + str(ID)
-        mask_preprocessed['img_path'] = self.image_data.path
+        mask_preprocessed['ID'] = "Img_" + self.imageData.ID + "_Mask_" + str(ID)
+        mask_preprocessed['img_path'] = self.imageData.path
         mask_preprocessed['mask'] = mask
         mask_preprocessed['mask_preprocessed'] = self.preprocess_mask(mask)
         mask_preprocessed['score'] = score
@@ -84,7 +92,7 @@ class SAM2:
 
         final_mask = Mask(mask_preprocessed)
         
-        self.image_data.masks[self.part_ID].append(final_mask)
+        self.task.masks[self.part_ID].append(final_mask)
 
         return final_mask
     
@@ -106,7 +114,7 @@ class SAM2:
     
     def crop_mask(self, mask, threshold =0, save_mask=False, output_image_path=None, size_threshold = 100):
 
-        if self.image_data.image.shape[:2] != mask.shape:
+        if self.imageData.image.shape[:2] != mask.shape:
             raise ValueError("The mask and image must have the same dimensions.")
 
         y_dim, x_dim, c_dim = self.image_data.image.shape
