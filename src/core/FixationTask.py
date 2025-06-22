@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from src.core.Participant import Participant
 from src.core.ImageData import ImageData
+import src.utils.style as stl
 
 import matplotlib.patheffects as path_effects
 
@@ -14,7 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 class FixationTask:
-
+    
 	def __init__(self, participant : Participant, imageData : ImageData, data : pd.DataFrame, condition = None, group = None):
 		self.group = group
 		self.condition = condition
@@ -44,7 +45,14 @@ class FixationTask:
 	def get_participant_ids(self, filtered_data):
 		return filtered_data['ParticipantID'].unique()
 
-	def draw_fixations(self, alpha=0.5, figsize=(12, 8), dpi=100, savefilename=None, fix_color="#729fcf", fix_edge_color="#204a87", size = None):
+	def draw_fixations(self, alpha=0.5, figsize=(12, 8), dpi=300, savefilename=None, fix_color="#729fcf", fix_edge_color="#204a87", size = None, title = None):
+
+		if not fix_color[0] == "#":
+			fix_color = stl.COLORS[fix_color][0]
+            
+		if not fix_edge_color[0] == "#":
+			fix_edge_color = stl.COLORS[fix_edge_color][0]
+
 
 		x = self.X
 		y = self.Y
@@ -55,6 +63,8 @@ class FixationTask:
 		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
 		ax.imshow(self.image)
 		ax.scatter(x, y, s=size, c=fix_color, alpha=alpha, edgecolors=fix_edge_color)
+		if title:
+			ax.set_title(title)
 		ax.grid(False)
 		ax.axis('off')
 
@@ -63,57 +73,75 @@ class FixationTask:
 				plt.savefig(savefilename, bbox_inches='tight')
 				plt.show()
 
-	def draw_scanpath(self,  width=1, alpha=0.5, alpha_font=1, figsize=(12, 8), dpi=100, savefilename=None, 
-                    fix_color="#729fcf", fix_edge_color="#204a87", font_color="white", fontsize=10, size=None):
+	def draw_scanpath(self,  width=1, alpha=0.5, alpha_font=1, figsize=(12, 8), dpi=300, savefilename=None, 
+                    fix_color="#729fcf", fix_edge_color="#204a87", font_color="#FFFFFF", fontsize=10, size=None, title = None):
+        
+        
+		if not fix_color[0] == "#":
+			fix_color = stl.COLORS[fix_color][0]
+            
+		if not fix_edge_color[0] == "#":
+			fix_edge_color = stl.COLORS[fix_edge_color][0] 
+        
+		if not font_color[0] == "#":
+			font_color = stl.COLORS[font_color][1]
         
 		img = self.image
 		fix = self.data
-
+		
 		if "Indx" in fix.columns:
-				fix_unique = fix.groupby('Indx').first().reset_index()
-				x_unique = fix_unique['X']
-				y_unique = fix_unique['Y']
+			fix_unique = fix.groupby('Indx').first().reset_index()
+			x_unique = fix_unique['X']
+			y_unique = fix_unique['Y']
 
-				x = fix['X']
-				y = fix['Y']
-        
-				if size is None:
-						size = fix['FixationDuration'] # or fix['FixationDurationNorm']
-				else:
-						x_unique = fix['X']
-						y_unique = fix['Y']
+			x = fix['X']
+			y = fix['Y']
+            
+			if size is None:
+				size = fix['FixationDuration']
+			
+		else:
+			x_unique = fix['X']
+			y_unique = fix['Y']
 
-						x = fix['X']
-						y = fix['Y']
+			x = fix['X']
+			y = fix['Y']
 
-				if size is None:
-						size = fix['FixationDuration'] # or fix['FixationDurationNorm']
+			if size is None:
+				size = fix['FixationDuration']
 
-				fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
-				ax.imshow(img)
-				ax.scatter(x, y, s=size, facecolors=fix_color, edgecolors=fix_edge_color, alpha=alpha)
+		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
+		ax.imshow(img)
+		ax.scatter(x, y, s=size, facecolors=fix_color, edgecolors=fix_edge_color, alpha=alpha)
 
-				# Draw annotations (fixation numbers)
-				for i in range(len(x_unique)):
-						ax.annotate(str(i+1), (x_unique.iloc[i], y_unique.iloc[i]-15), color=font_color, alpha=alpha_font, 
+		# Draw annotations (fixation numbers)
+		for i in range(len(x_unique)):
+				ax.annotate(str(i+1), (x_unique.iloc[i], y_unique.iloc[i]-15), color=font_color, alpha=alpha_font, 
                         ha='center', va='center', fontweight='bold', fontsize=fontsize,
-                        path_effects=[path_effects.Stroke(linewidth=2, foreground='black'), path_effects.Normal()  ])
+                        path_effects=[
+                            path_effects.Stroke(linewidth=2, foreground='black'),  # Edge color
+                            path_effects.Normal()  # Normal text rendering on top
+                        ])
 
-        		# Draw arrows
-				for i in range(len(x_unique)-1):
-						ax.arrow(x_unique.iloc[i], y_unique.iloc[i], x_unique.iloc[i+1] - x_unique.iloc[i], y_unique.iloc[i+1] - y_unique.iloc[i], 
+		# Draw arrows
+		for i in range(len(x_unique)-1):
+				ax.arrow(x_unique.iloc[i], y_unique.iloc[i], x_unique.iloc[i+1] - x_unique.iloc[i], y_unique.iloc[i+1] - y_unique.iloc[i], 
                     alpha=alpha, fc=fix_color, ec=fix_color, fill=True, shape='full',
                     width=width, head_width=8, head_length=8, overhang=0.3)
+		if not title:
+			ax.set_title(f"Participant {self.participant.ID} Scanpath for Image {self.imageData.ID}")
+		else:
+			ax.set_title(title)
+		ax.grid(False)
+		ax.axis('off')
 
-				ax.grid(False)
-				ax.axis('off')
+		if savefilename:
+				plt.savefig(savefilename, bbox_inches='tight')
+		plt.show()
 
-				if savefilename:
-						plt.savefig(savefilename, bbox_inches='tight')
-				plt.show()
+	def draw_display(self):
 
-	def draw_display(self, dispsize=None, dpi=100):
-
+		
 		img = self.image
 		w, h = self.imageData.width, self.imageData.height
 
