@@ -31,7 +31,7 @@ class FixationTask:
 
 		self.X = self.data['X']
 		self.Y = self.data['Y']
-		self.duration = self.data['FixationDurationNorm']
+		self.duration = self.data['FixationDuration']
 		self.masks = {} # mask generator will update this dictionary
 		self.time_on_target = None
 
@@ -74,7 +74,7 @@ class FixationTask:
 		target_fixations = self.data[target_mask]
 		
 		# Calculate total time on target
-		time_on_target = target_fixations['FixationDurationNorm'].sum()
+		time_on_target = target_fixations['FixationDuration'].sum()
 		
 		# Calculate additional statistics
 		total_fixation_time = self.duration.sum()
@@ -106,7 +106,7 @@ class FixationTask:
 	def get_participant_ids(self, filtered_data):
 		return filtered_data['ParticipantID'].unique()
 
-	def draw_fixations(self, alpha=0.5, figsize=(12, 8), dpi=300, savefilename=None, fix_color="#729fcf", fix_edge_color="#204a87", size = None, title = None):
+	def draw_fixations(self, df = None, alpha=0.5, figsize=(12, 8), dpi=300, savefilename=None, fix_color="#729fcf", fix_edge_color="#204a87", size = None, title = None):
 
 		if not fix_color[0] == "#":
 			fix_color = stl.COLORS[fix_color][0]
@@ -114,9 +114,13 @@ class FixationTask:
 		if not fix_edge_color[0] == "#":
 			fix_edge_color = stl.COLORS[fix_edge_color][0]
 
+		if df is None:
+			fix = self.data 
+		else:
+			fix = df  
 
-		x = self.X
-		y = self.Y
+		x = fix.X
+		y = fix.Y
 
 		if not size:
 			size = self.duration*0.2
@@ -136,7 +140,7 @@ class FixationTask:
 				plt.savefig(savefilename, bbox_inches='tight')
 				plt.show()
 
-	def draw_scanpath(self,  width=1, alpha=0.5, alpha_font=1, figsize=(12, 8), dpi=300, savefilename=None, 
+	def draw_scanpath(self, df = None, width=1, alpha=0.5, alpha_font=1, figsize=(12, 8), dpi=300, savefilename=None, 
                     fix_color="#729fcf", fix_edge_color="#204a87", font_color="#FFFFFF", fontsize=10, size=None, title = None):
         
         
@@ -149,8 +153,13 @@ class FixationTask:
 		if not font_color[0] == "#":
 			font_color = stl.COLORS[font_color][1]
         
+		if df is None:
+			fix = self.data 
+		else:
+			fix = df          
+        
 		img = self.image
-		fix = self.data
+
 		
 		if "Indx" in fix.columns:
 			fix_unique = fix.groupby('Indx').first().reset_index()
@@ -161,7 +170,7 @@ class FixationTask:
 			y = fix['Y']
             
 			if size is None:
-				size = fix['FixationDurationNorm']
+				size = fix['FixationDuration']
 			
 		else:
 			x_unique = fix['X']
@@ -171,7 +180,7 @@ class FixationTask:
 			y = fix['Y']
 
 			if size is None:
-				size = fix['FixationDurationNorm']
+				size = fix['FixationDuration']
 
 		fig, ax = plt.subplots(figsize=figsize, dpi=dpi)  
 		ax.imshow(img)
@@ -248,12 +257,12 @@ class FixationTask:
 						M[j, i] = np.exp(-1.0 * (((float(i)-xo)**2/(2*sx*sx)) + ((float(j)-yo)**2/(2*sy*sy))))
 		return M
 
-	def draw_heatmap(self, alpha=0.5, savefilename=None, title=None, cmap="viridis", dispsize=None, dpi = 300, figsize=(12,8)):
+	def draw_heatmap(self, df = None, alpha=0.5, savefilename=None, title=None, cmap="viridis", dispsize=None, dpi = 300, figsize=(12,8)):
 
-			fix = self.data.copy()
-   
-
-			img_copy = self.image.copy()
+			if df is None:
+				fix = self.data.copy()
+			else:
+				fix = df  
 
 			# We'll use the actual image dimensions for display size
 			if dispsize is None:
@@ -324,3 +333,4 @@ class FixationTask:
 					fig.savefig(savefilename, bbox_inches='tight')
 
 			return fig, heatmap_fixations
+

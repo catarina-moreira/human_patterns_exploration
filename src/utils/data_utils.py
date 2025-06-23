@@ -44,6 +44,8 @@ def process_participant_data(data, imgID, partID, condition = None, group = None
     filtered_data = normalize_fixation_duration(filtered_data)
     filtered_data = remove_center_bias(filtered_data, seconds = seconds, rows_per_second = rows_per_second, participant_threshold = participant_threshold)
     print("Participant data after center bias removal: ", str(len(filtered_data))) 
+    
+    filtered_data = add_index_column( filtered_data )
 
     return filtered_data
 
@@ -68,3 +70,22 @@ def remove_center_bias(df, seconds=1, rows_per_second=3, participant_threshold =
     # only keep the participants that have more than three fixations
     #filtered_data = filtered_data[filtered_data.groupby('ParticipantID')['FixationDuration'].transform('count') >= participant_threshold]
     return filtered_data
+
+def add_index_column(df):
+    """
+    Adds an 'Indx' column that creates sequential IDs starting from 0 for each participant.
+    For each new participant ID, the index resets to 0 and continues the series.
+    
+    Args:
+        df (pd.DataFrame): DataFrame containing eye-tracking data with 'ParticipantID' column
+        
+    Returns:
+        pd.DataFrame: DataFrame with added 'Indx' column
+    """
+    # Create a copy to avoid modifying the original DataFrame
+    df_with_index = df.copy()
+    
+    # Group by ParticipantID and create sequential index for each group
+    df_with_index['Indx'] = df_with_index.groupby('ParticipantID').cumcount() 
+    
+    return df_with_index

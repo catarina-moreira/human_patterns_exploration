@@ -15,7 +15,6 @@ import matplotlib.patheffects as path_effects
 
 class ImageData(object):
 
-
 	def __init__(self, path : str, ID = None, target : List = None, img_type : str = None):
 		
 		self.path = path
