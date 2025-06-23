@@ -33,6 +33,74 @@ class FixationTask:
 		self.Y = self.data['Y']
 		self.duration = self.data['FixationDurationNorm']
 		self.masks = {} # mask generator will update this dictionary
+		self.time_on_target = None
+
+	def compute_time_on_target(self):
+		"""
+		Computes the total time the participant fixated within the target area.
+		
+		Returns:
+		- float: Total fixation duration on target area
+		- dict: Dictionary with detailed information including:
+			- 'total_time': Total time on target
+			- 'fixation_count': Number of fixations on target
+			- 'percentage': Percentage of total fixation time spent on target
+			- 'target_fixations': DataFrame of fixations that fell within target
+		"""
+		
+		# Check if target coordinates are available
+		if self.imageData.target is None:
+			raise ValueError("No target coordinates defined for this image")
+		
+		if len(self.imageData.target) != 4:
+			raise ValueError("Target should contain exactly 4 coordinates [x1, x2, y1, y2]")
+		
+		# Get target coordinates
+		x1, x2, y1, y2 = self.imageData.target
+		
+		# Ensure coordinates are in correct order
+		x_min, x_max = min(x1, x2), max(x1, x2)
+		y_min, y_max = min(y1, y2), max(y1, y2)
+		
+		# Filter fixations that fall within the target area
+		target_mask = (
+			(self.X >= x_min) & 
+			(self.X <= x_max) & 
+			(self.Y >= y_min) & 
+			(self.Y <= y_max)
+		)
+		
+		# Get fixations on target
+		target_fixations = self.data[target_mask]
+		
+		# Calculate total time on target
+		time_on_target = target_fixations['FixationDurationNorm'].sum()
+		
+		# Calculate additional statistics
+		total_fixation_time = self.duration.sum()
+		fixation_count_on_target = len(target_fixations)
+		total_fixation_count = len(self.data)
+		percentage_time = (time_on_target / total_fixation_time * 100) if total_fixation_time > 0 else 0
+		percentage_count = (fixation_count_on_target / total_fixation_count * 100) if total_fixation_count > 0 else 0
+		
+		# Store result in instance variable for later access
+		self.time_on_target = time_on_target
+		
+		# Return detailed results
+		results = {
+			'total_time': time_on_target,
+			'fixation_count': fixation_count_on_target,
+			'total_fixations': total_fixation_count,
+			'percentage_time': percentage_time,
+			'percentage_count': percentage_count,
+			'target_fixations': target_fixations,
+			'target_coordinates': {
+				'x_min': x_min, 'x_max': x_max,
+				'y_min': y_min, 'y_max': y_max
+			}
+		}
+		
+		return results
 
 
 	def get_participant_ids(self, filtered_data):
