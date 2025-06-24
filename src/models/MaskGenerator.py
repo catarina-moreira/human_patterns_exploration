@@ -99,21 +99,20 @@ class SAM2:
                     multimask_output=True,
             )
             
-            
             # choose the mask with the highest score
             mask_index = np.argmax(scores)
             mask = masks[mask_index]
             score = scores[mask_index]
             score = round(score, 4)
             logits = logits[mask_index]
-
-            mask_filename = os.path.join(output_path, prompt_type, f"IMG_{self.imgID}_type_{self.imageData.img_type}_Part_{self.partID}_MASK_{ID}_best_{prompt_type}_mask_{score:.4f}.png")
-            cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask = self.crop_mask(mask, threshold=0, save_mask=DEBUG, output_image_path=mask_filename, size_threshold = size_threshold)
             
             # Fixed: Initialize mask_preprocessed properly outside the loop
             if prompt_type not in mask_preprocessed:
                 mask_preprocessed[prompt_type] = {}
-                
+
+            mask_filename = os.path.join(output_path, prompt_type, f"IMG_{self.imgID}_type_{self.imageData.img_type}_Part_{self.partID}_MASK_{ID}_best_{prompt_type}_mask_{score:.4f}")
+            cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask = self.crop_mask(mask, threshold=0, save_mask=False, output_image_path=mask_filename, size_threshold = size_threshold)
+            
             mask_preprocessed[prompt_type]['ID'] = "Img_" + str(self.imageData.ID) + "_Mask_" + str(ID)
             mask_preprocessed[prompt_type]['img_path'] = self.imageData.path
             mask_preprocessed[prompt_type]['mask'] = mask
@@ -130,6 +129,9 @@ class SAM2:
             mask_preprocessed[prompt_type]['cropped_mask'] = cropped_mask
             mask_preprocessed[prompt_type]['area'] = abs(x_max-x_min) * (y_max-y_min)
             mask_preprocessed[prompt_type]['perimeter'] = 2 * (abs(x_max-x_min) + abs(y_max-y_min))
+        
+        if DEBUG:
+            self.save_mask_object( Mask(mask_preprocessed[prompt_type]), mask_filename)
 
         # Find the prompt type that generated the mask with the highest score
         best_prompt_type = None
@@ -155,11 +157,11 @@ class SAM2:
         if save_mask:
             mask_filename = os.path.join(output_path, "BestMask", f"IMG_{self.imgID}_type_{self.imageData.img_type}_Part_{self.partID}_MASK_{ID}_best_{best_prompt_type}_mask_{best_score:.4f}.png")
             # Fixed: Save the Mask object properly
-            self.save_mask(best_mask_found['cropped_mask'], best_mask_found['cropped_image_with_alpha'], mask_filename)
+            self.save_mask_object(final_mask, mask_filename)
 
         return final_mask
     
-    def save_mask(self, cropped_mask, cropped_image_with_alpha, mask_filename_path):
+    def save_mask(self, mask, cropped_image_with_alpha, mask_filename_path):
         """Save debug outputs including the PNG image with alpha"""
         # get the directory path from the mask_filename_path
         directory_path = os.path.dirname(mask_filename_path)
@@ -167,9 +169,9 @@ class SAM2:
             os.makedirs(directory_path)
         
         # save the RGBA image
-        Image.fromarray(cropped_mask).save(mask_filename_path)
+        Image.fromarray(mask['cropped_image']).save(mask_filename_path)
         with open(mask_filename_path.replace(".png", ".pkl"), "wb") as f:
-            pickle.dump(cropped_mask, f)
+            pickle.dump(mask, f)
         Image.fromarray(cropped_image_with_alpha).save(mask_filename_path)
         
     def save_mask_array(self, mask_array, mask_filename_path):
@@ -197,10 +199,6 @@ class SAM2:
         # Save the complete Mask object as pickle
         with open(mask_filename_path + "_object.pkl", 'wb') as f:
             pickle.dump(mask_object, f)
-            
-        # Save the binary mask as PNG
-        binary_mask_img = (mask_object.mask * 255).astype(np.uint8)
-        Image.fromarray(binary_mask_img).save(mask_filename_path + "_binary.png")
         
         # Save the cropped image with alpha as PNG
         Image.fromarray(mask_object.cropped_image_with_alpha).save(mask_filename_path + "_cropped.png")

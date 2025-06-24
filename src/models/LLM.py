@@ -51,11 +51,11 @@ class LLM:
 class OpenAI(LLM):
     """Enhanced OpenAI implementation with vision capabilities"""
     
-    def __init__(self, model: str = "gpt-4o", api_key_path: str = "API_Keys/openai.txt"):
+    def __init__(self, model: str = "gpt-4o", api_key_path: str = "API_Keys/openai.txt", temperature = 0.1):
         super().__init__(model)
         self.api_key_path = api_key_path
         self.client = self.initialize_client()
-        self.temperature = 0.1
+        self.temperature = temperature
     
     def initialize_client(self):
         """Initialize OpenAI client with API key"""
@@ -151,7 +151,7 @@ class OpenAI(LLM):
                 
                 Respond with just the object name (one word).
                 """
-            else:
+            else: # no context
                 mask_prompt = """Analyze this image showing a masked portion from a larger scene.
                 Your task:
                 1. Identify the primary object in the masked region.
@@ -212,9 +212,10 @@ class OpenAI(LLM):
 class Ollama(LLM):
     """Enhanced Ollama implementation with vision capabilities"""
     
-    def __init__(self, model: str = "llava:34b"):
+    def __init__(self, model: str = "llava:34b", temperature: float = 0.1):
         super().__init__(model)
         self.test_connection()
+        self.temperature = temperature
     
     def test_connection(self):
         """Test Ollama connection"""
