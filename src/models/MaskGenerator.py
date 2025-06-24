@@ -130,8 +130,8 @@ class SAM2:
             mask_preprocessed[prompt_type]['area'] = abs(x_max-x_min) * (y_max-y_min)
             mask_preprocessed[prompt_type]['perimeter'] = 2 * (abs(x_max-x_min) + abs(y_max-y_min))
         
-        if DEBUG:
-            self.save_mask_object( Mask(mask_preprocessed[prompt_type]), mask_filename)
+            if DEBUG:
+                self.save_mask_object( Mask(mask_preprocessed[prompt_type]), mask_filename)
 
         # Find the prompt type that generated the mask with the highest score
         best_prompt_type = None
