@@ -125,22 +125,15 @@ class OpenAI(LLM):
             return f"Error: {str(e)}"
     
     def label_mask(self, mask: Mask, image_data: ImageData, use_context: bool = True, 
-                   custom_prompt: str = None, **kwargs) -> str:
+                custom_prompt: str = None, context = None, **kwargs) -> str:
         """Label a mask using OpenAI GPT-4V with optional scene context"""
         
-        # Get mask image path
-        if hasattr(mask, 'cropped_image_path'):
-            mask_image_path = mask.cropped_image_path
-        else:
-            # Fallback: assume mask has been saved with standard naming
-            mask_image_path = f"temp_mask_{mask.ID}.png"
-            if not os.path.exists(mask_image_path):
-                raise FileNotFoundError(f"Mask image not found: {mask_image_path}")
+        mask_image_path = mask.mask_path
         
         if custom_prompt is None:
             if use_context and self.scene_context:
                 mask_prompt = f"""You previously analyzed the main scene and described it as follows:
-                {self.scene_context['description']}
+                {context}
                 
                 Now, analyze the new image, which is a **masked portion** from the main scene.
                 Your task:
@@ -186,7 +179,7 @@ class OpenAI(LLM):
             self.processing_times.append(processing_time)
             
             print(f"Mask labeling completed in {processing_time:.2f} seconds")
-            return self._clean_label(label)
+            return self.clean_label(label)
             
         except Exception as e:
             print(f"Error in mask labeling: {e}")

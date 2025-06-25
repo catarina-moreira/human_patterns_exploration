@@ -19,6 +19,7 @@ class Mask:
         self.mask = mask_dict['mask']
 
         self.img_path = mask_dict['img_path']
+        self.mask_path = mask_dict['mask_path']
         self.ID = mask_dict['ID']
         self.score = mask_dict['score']
         self.logits = mask_dict['logits']

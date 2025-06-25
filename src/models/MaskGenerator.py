@@ -115,6 +115,7 @@ class SAM2:
             
             mask_preprocessed[prompt_type]['ID'] = "Img_" + str(self.imageData.ID) + "_Mask_" + str(ID)
             mask_preprocessed[prompt_type]['img_path'] = self.imageData.path
+            mask_preprocessed[prompt_type]['mask_path'] = mask_filename
             mask_preprocessed[prompt_type]['mask'] = mask
             mask_preprocessed[prompt_type]['mask_preprocessed'] = self.preprocess_mask(mask)
             mask_preprocessed[prompt_type]['score'] = score
@@ -151,11 +152,13 @@ class SAM2:
             # Fallback: if no masks were generated, create empty dict or raise error
             raise ValueError("No masks were generated for any prompt type")
 
+        mask_filename = os.path.join(output_path, "BestMask", f"IMG_{self.imgID}_type_{self.imageData.img_type}_Part_{self.partID}_MASK_{ID}_best_{best_prompt_type}_mask_{best_score:.4f}")
+        best_mask_found['mask_path'] = mask_filename + ".png"
+    
         final_mask = Mask(best_mask_found)
         self.task.masks[self.partID].append(final_mask)
-        
         if save_mask:
-            mask_filename = os.path.join(output_path, "BestMask", f"IMG_{self.imgID}_type_{self.imageData.img_type}_Part_{self.partID}_MASK_{ID}_best_{best_prompt_type}_mask_{best_score:.4f}.png")
+            
             # Fixed: Save the Mask object properly
             self.save_mask_object(final_mask, mask_filename)
 
@@ -197,11 +200,11 @@ class SAM2:
             os.makedirs(directory_path)
         
         # Save the complete Mask object as pickle
-        with open(mask_filename_path + "_object.pkl", 'wb') as f:
+        with open(mask_filename_path + ".pkl", 'wb') as f:
             pickle.dump(mask_object, f)
         
         # Save the cropped image with alpha as PNG
-        Image.fromarray(mask_object.cropped_image_with_alpha).save(mask_filename_path + "_cropped.png")
+        Image.fromarray(mask_object.cropped_image_with_alpha).save(mask_filename_path+".png")
 
     def preprocess_mask(self, mask, size_threshold=100):
 
