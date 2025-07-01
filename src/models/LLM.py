@@ -128,7 +128,7 @@ class OpenAI(LLM):
                 custom_prompt: str = None, context = None, **kwargs) -> str:
         """Label a mask using OpenAI GPT-4V with optional scene context"""
         
-        mask_image_path = mask.mask_path
+        mask_image_path = mask.path
         
         if custom_prompt is None:
             if use_context and self.scene_context:
@@ -319,7 +319,7 @@ class Ollama(LLM):
             self.processing_times.append(processing_time)
             
             print(f"Mask labeling completed in {processing_time:.2f} seconds")
-            return self._clean_label(label)
+            return self.clean_label(label)
             
         except Exception as e:
             print(f"Error in mask labeling: {e}")

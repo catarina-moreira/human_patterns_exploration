@@ -19,9 +19,9 @@ class Mask:
         self.mask = mask_dict['mask']
 
         self.img_path = mask_dict['img_path']
-        self.mask_path = mask_dict['mask_path']
+        self.path = mask_dict['mask_path']
         self.ID = mask_dict['ID']
-        self.score = mask_dict['score']
+        self.score = float(mask_dict['score'])
         self.logits = mask_dict['logits']
         self.prompt = mask_dict['prompt']
 
@@ -32,10 +32,12 @@ class Mask:
         self.y_min = mask_dict['y_min']
         self.y_max = mask_dict['y_max']
         self.cropped_mask = mask_dict['cropped_mask']
-        self.area = abs(self.x_max-self.x_min) * (self.y_max-self.y_min)
-        self.perimeter = 2 * (abs(self.x_max-self.x_min) + abs(self.y_max-self.y_min))
-        self.path = ""
+
+        self.area = float(abs(self.x_max-self.x_min) * (self.y_max-self.y_min))
+        self.perimeter = float( 2 * (abs(self.x_max-self.x_min) + abs(self.y_max-self.y_min)))
+        
         self.labels = []
+        self.isTarget = False
 
     def __str__(self):
         return (f"Mask(ID='{self.ID}', Score={self.score:.2f}, "
