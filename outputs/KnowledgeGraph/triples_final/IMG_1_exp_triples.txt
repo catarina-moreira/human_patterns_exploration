@@ -1,0 +1,51 @@
+Washing Machine, IS_NEXT_TO, Dryer
+Storage Cabinets, ARE_ABOVE, Washing Machine
+Desk, EXTENDS_FROM, Washing Machine
+Chair, IS_IN_FRONT_OF, Desk
+Coffee Table, IS_IN_FRONT_OF, Sofa
+Sofa, IS_TO_THE_RIGHT_OF, Coffee Table
+Rug, IS_UNDER, Coffee Table
+Rug, IS_UNDER, Sofa
+Lamp, IS_ON, Desk
+Small Plant, IS_ON, Coffee Table
+Large Plant, IS_ON, Desk
+Decorative Items, ARE_ON, Coffee Table
+Art Piece, IS_HANGING_ABOVE, Storage Cabinets
+Washing Machine, HAS_COLOR, White
+Dryer, HAS_COLOR, White
+Storage Cabinets, HAVE_COLOR, White
+Desk, HAS_COLOR, White
+Chair, HAS_COLOR, Black
+Coffee Table, HAS_SHAPE, Circular
+Sofa, HAS_COLOR, White
+Rug, HAS_COLOR, Green
+Lamp, HAS_COLOR, Black
+Decorative Items, HAVE_COLOR, Mixed
+Washing Machine, IS_USED_FOR, Laundry
+Dryer, IS_USED_FOR, Laundry
+Storage Cabinets, ARE_USED_FOR, Storage
+Desk, IS_USED_FOR, Workspace
+Chair, IS_USED_FOR, Seating
+Coffee Table, IS_USED_FOR, Holding_items
+Sofa, IS_USED_FOR, Relaxation
+Rug, IS_USED_FOR, Adding_warmth
+Plants, ARE_USED_FOR, Aesthetics
+Lamp, IS_USED_FOR, Lighting
+Decorative Items, ARE_USED_FOR, Decoration
+Washing Machine, HAS_SHAPE, Rectangular
+Dryer, HAS_SHAPE, Rectangular
+Storage Cabinets, HAVE_SHAPE, Rectangular
+Desk, HAS_SHAPE, Long_and_Rectangular
+Chair, HAS_SHAPE, Ergonomic
+Coffee Table, HAS_SHAPE, Circular
+Sofa, HAS_SHAPE, Rectangular
+Rug, HAS_SHAPE, Rectangular
+Small Plant, HAS_SHAPE, Round
+Large Plant, HAS_SHAPE, Cylindrical
+Lamp, HAS_SHAPE, Tall
+Distance_between_Washing_Machine_and_Dryer, IS_SHORT, True
+Distance_between_Desk_and_Chair, IS_NEAR, True
+Distance_between_Coffee_Table_and_Sofa, IS_NEAR, True
+Size_of_Coffee_Table, IS_MEDIUM, True
+Size_of_Sofa, IS_LARGE, True
+Size_of_Rug, IS_LARGE, True

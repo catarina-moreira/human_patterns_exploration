@@ -13,6 +13,10 @@ from src.core.ImageData import ImageData
 from src.core.Mask import Mask
 from src.models.LLM import LLM
 
+
+
+
+
 class KnowledgeGraph:
     """
     Enhanced Knowledge Graph implementation for scene understanding and spatial reasoning
@@ -24,69 +28,109 @@ class KnowledgeGraph:
         self.output_dir = output_dir
         self.graph = nx.DiGraph()
         self.triples = []
+        self.triples_raw = None         # for debug
+        self.triples_cleaned = None       # for debug
         self.bbox_info = {}
-        self.scene_description = imageData.description
+        self.scene_description = image_data.description
         self.relations_count = defaultdict(int)
         
         # Ensure output directories exist
         self.results_dir = os.path.join(output_dir, "results")
-        self.kg_dir = os.path.join(output_dir, "knowledge_graphs")
-        self.matrix_dir = os.path.join(output_dir, "knowledge_matrices")
-        
-        for directory in [self.results_dir, self.kg_dir, self.matrix_dir]:
+        self.kg_dir = os.path.join(output_dir, "KnowledgeGraph")
+        self.matrix_dir = os.path.join(self.kg_dir, "knowledge_matrices")
+        self.triples_raw_dir = os.path.join(self.kg_dir, "triples_raw")
+        self.triples_cleaned_dir = os.path.join(self.kg_dir, "triples_cleaned")
+        self.triples_final_dir = os.path.join(self.kg_dir, "triples_final")
+
+        for directory in [self.results_dir, self.kg_dir, self.matrix_dir, self.triples_raw_dir, self.triples_cleaned_dir, self.triples_final_dir]:
             os.makedirs(directory, exist_ok=True)
     
-    def create_mask_dict(self, debug: bool = True) -> Dict:
+    def load_triples(self, filepath: str) -> List[Tuple[str, str, str]]:
+        """
+        Load and parse triples from a text file.
+        Handles markdown table format and returns list of (subject, relation, object) tuples.
+        """
+
+        parsed_triples = []
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            print(f"Error: File {filepath} not found")
+            return []
+            
+        for line in lines:
+            line = line.strip()
+
+            tokens = line.split(", ")
+                
+            if len(tokens) == 3:
+                subject = tokens[0].strip()
+                relation = tokens[1].strip().upper()
+                obj = tokens[2].strip()
+                
+                if subject and relation and obj:
+                    parsed_triples.append((subject, relation, obj))
+
+            else:
+                print("[ERROR]The triple is not well formated")
+                print(line)
+                return []
+        
+        # Store the triples in the instance
+        self.triples = parsed_triples
+        
+        print(f"Successfully loaded {len(parsed_triples)} triples from {filepath}")
+        return parsed_triples
+        
+    
+    def create_mask_dict(self, masks, debug: bool = True) -> Dict:
         """
         Create a dictionary of mask bounding boxes and labels
         """
 
-
-
-
-        
-        bbox_dict = {}
-        
         for i, mask in enumerate(masks):
             if hasattr(mask, 'x_min') and hasattr(mask, 'labels') and mask.labels:
-                bbox_dict[f"mask_{i}"] = {
-                    'label': mask.labels[0] if isinstance(mask.labels, list) else mask.labels,
+                self.bbox_info[f"mask_{i}"] = {
+                    'label': mask.most_freq_label,
+                    'label_prob': mask.most_freq_prob,
                     'bbox': {
-                        'x_min': mask.x_min,
-                        'x_max': mask.x_max,
-                        'y_min': mask.y_min,
-                        'y_max': mask.y_max
-                    },
-                    'area': mask.area if hasattr(mask, 'area') else 0,
-                    'score': mask.score if hasattr(mask, 'score') else 0
+                        'x_min': int(mask.x_min),
+                        'x_max': int(mask.x_max),
+                        'y_min': int(mask.y_min),
+                        'y_max': int(mask.y_max)
+                    }
                 }
         
         if debug:
-            print(f"Created bbox dictionary with {len(bbox_dict)} masks")
-        
-        return bbox_dict
+            print(f"Created bbox dictionary with {len(self.bbox_info)} masks")
     
     def generate_spatial_analysis(self, masks: List[Mask], debug: bool = True) -> str:
         """
         Generate spatial relationship analysis using LLM
         """
-        bbox_dict = self.create_mask_dict(image_data, masks, debug)
-        self.bbox_info = bbox_dict
+        # update the self.bbox_info dictionary with mask info
+        self.create_mask_dict(masks, debug)
         
         spatial_prompt = f"""Consider the following dictionary that contains a set of objects in the scene. 
         Analyze the spatial relationships between these objects based on their positions. 
         Analyze the properties of the objects (ex: shape, color, complexity, functionality, etc.).
         Analyze the functionality of the objects.
-        These are the bounding boxes: {bbox_dict}
+        These are the bounding boxes: {self.bbox_info}
         
-        Scene context: {scene_description}"""
+        Scene context: {self.scene_description}"""
+
+        if debug:
+            print("Debug mode enabled-----------------------------------------")
+            print("Prompt for Spatial Analysis:")
+            print(spatial_prompt)
+            print("------------------------------------------------------------\n\n")
         
         try:
             # Use the LLM's describe_scene method with custom prompt
-            analysis = self.llm.describe_scene(image_data, custom_prompt=spatial_prompt)
-            
-            if debug:
-                print("Spatial analysis completed")
+            analysis = self.llm.describe_scene(self.image_data, custom_prompt=spatial_prompt)
             
             return analysis
             
@@ -94,13 +138,12 @@ class KnowledgeGraph:
             print(f"Error in spatial analysis: {e}")
             return f"Error: {str(e)}"
     
-    def generate_triples(self, image_data: ImageData, masks: List[Mask], 
-                        scene_description: str, debug: bool = True) -> str:
+    def generate_triples(self, masks: List[Mask], debug: bool = True) -> str:
         """
         Generate knowledge graph triples from scene analysis
         """
         # First get spatial analysis
-        bbox_info = self.generate_spatial_analysis(image_data, masks, scene_description, debug)
+        bbox_info = self.generate_spatial_analysis(masks, debug)
         
         triples_prompt = f"""Please generate triples to build a scene graph for the following scene. 
         Use your visual understanding and prior knowledge to enrich the scene graph. 
@@ -129,20 +172,35 @@ class KnowledgeGraph:
             (Cabinets, have_color, White)
             
         Please generate similar triples for the given scene. Return only the triples in the format (subject, RELATION, object)."""
-        
+
+        if debug:
+            print("Debug mode enabled-----------------------------------------")
+            print("Prompt for Tripple Extraction:")
+            print(triples_prompt)
+            print("------------------------------------------------------------\n\n")
+
         try:
             # Use the LLM's describe_scene method with custom prompt
-            triples_text = self.llm.describe_scene(image_data, custom_prompt=triples_prompt)
+            self.triples_raw = self.llm.describe_scene(self.image_data, custom_prompt=triples_prompt)
+
+            # save the triples into a text file
+            path = os.path.join(self.triples_raw_dir, f"IMG_{IMG_ID}_{IMG_TYPE}_triples_raw.txt")
+            with open(path, "w") as f:
+                f.write(self.triples_raw)
             
             # Clean up the triples text
-            triples_text = self._clean_triples_text(triples_text)
+            self.triples_cleaned = self.clean_triples_text(self.triples_raw)
+
+            path = os.path.join(self.triples_cleaned_dir, f"IMG_{IMG_ID}_{IMG_TYPE}_triples_cleaned.txt")
+            with open(path, "w") as f:
+                f.write(self.triples_cleaned)
             
             if debug:
                 print("Triples generation completed")
-                print(f"Generated triples: {triples_text[:200]}...")
+                print(f"Generated triples: {self.triples_cleaned[:200]}...")
             
-            return triples_text
-            
+            return self.triples_cleaned
+
         except Exception as e:
             print(f"Error in triples generation: {e}")
             return f"Error: {str(e)}"
@@ -159,97 +217,500 @@ class KnowledgeGraph:
         triples_text = triples_text.replace(")  ", ")")
         triples_text = triples_text.replace(")   (", ")  (")
         triples_text = triples_text.replace(")(", ")  (")
+        triples_text = triples_text.replace(")", ")\n")
         
         return triples_text.strip()
     
     def parse_triples(self, triples_text: str) -> List[Tuple[str, str, str]]:
         """
-        Parse triples text into structured format
+        Parse triples text into structured format.
+        Handles numbered list format and various LLM output variations.
         """
-        # Split triples
-        triples_list = triples_text.split(')  (')
-        
-        if len(triples_list) == 1:
-            triples_list = triples_list[0].split(')(')
-        
         parsed_triples = []
         
-        for triple in triples_list:
-            # Clean triple
-            triple = triple.replace("(", "").replace(")", "")
-            tokens = triple.split(', ')
+        # Split into lines and process each line
+        lines = triples_text.strip().split('\n')
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+                
+            # Remove numbering (e.g., "1. ", "42. ", etc.)
+            line = re.sub(r'^\d+\.\s*', '', line)
+            
+            # Extract content within parentheses using regex
+            # This handles cases where there might be extra spaces or formatting
+            match = re.search(r'\(([^)]+)\)', line)
+            if not match:
+                continue
+                
+            triple_content = match.group(1)
+            
+            # Split by comma and clean up
+            tokens = [token.strip() for token in triple_content.split(',')]
             
             if len(tokens) >= 3:
                 subject = tokens[0].strip()
                 predicate = tokens[1].strip().upper()
-                obj = tokens[2].strip()
+                # Handle cases where object might contain commas
+                obj = ', '.join(tokens[2:]).strip()
                 
-                parsed_triples.append((subject, predicate, obj))
-                self.relations_count[predicate] += 1
+                # Clean up any remaining quotes or extra whitespace
+                subject = subject.strip('"\'')
+                predicate = predicate.strip('"\'')
+                obj = obj.strip('"\'')
+                
+                if subject and predicate and obj:
+                    parsed_triples.append((subject, predicate, obj))
+                    if hasattr(self, 'relations_count'):
+                        self.relations_count[predicate] += 1
         
-        self.triples = parsed_triples
+        if hasattr(self, 'triples'):
+            self.triples = parsed_triples
+
+        path = os.path.join(self.triples_final_dir,  f"IMG_{IMG_ID}_{IMG_TYPE}_triples.txt")
+        with open(path, "w") as f:
+            f.write("\n".join(f"{s}, {p}, {o}" for s, p, o in parsed_triples))
+
+
         return parsed_triples
     
-    def build_graph(self, triples: List[Tuple[str, str, str]]) -> nx.DiGraph:
+    def build_graph(self) -> nx.DiGraph:
         """
         Build NetworkX graph from triples
         """
         self.graph = nx.DiGraph()
         
-        for subject, predicate, obj in triples:
-            self.graph.add_edge(subject, obj, label=predicate)
+        for subject, predicate, obj in self.triples:
+            self.graph.add_edge(subject, obj, label=predicate.upper())
         
         return self.graph
     
-    def plot_knowledge_graph(self, image_id: str, figsize: Tuple[int, int] = (12, 8),
-                           save: bool = True, show: bool = True) -> None:
+    def plot_knowledge_graph(self, figsize: Tuple[int, int] = (16, 12),
+                        save: bool = True, show: bool = True, 
+                        layout_algorithm: str = "spring", 
+                        iterations: int = 2000, k_param = 3.0, scale = 2.0) -> None:
         """
-        Plot and save knowledge graph visualization
+        Plot and save professional knowledge graph visualization suitable for research publications
+        
+        Args:
+            figsize: Figure size tuple
+            save: Whether to save the plot
+            show: Whether to display the plot
+            layout_algorithm: Layout algorithm ('spring', 'circular', 'kamada_kawai', 'shell')
+            iterations: Number of iterations for spring layout
         """
+        
+        image_id = self.image_data.ID
+
         if not self.graph.nodes():
             print("No graph to plot. Build graph first.")
             return
         
-        # Create layout
-        pos = nx.spring_layout(self.graph, k=1.2, iterations=100)
+        # Create figure with high DPI for publication quality
+        fig, ax = plt.subplots(figsize=figsize, dpi=300)
         
-        # Create plot
-        plt.figure(figsize=figsize)
+        # Choose layout algorithm based on graph size and structure
+        num_nodes = len(self.graph.nodes())
         
-        # Draw nodes and edges
-        nx.draw(self.graph, pos, with_labels=True, node_color="lightblue", 
-               node_size=3000, font_size=10, font_weight="bold", edge_color="gray")
+        if layout_algorithm == "spring":
+            # Use spring layout with optimized parameters for better node separation
+            pos = nx.spring_layout(
+                self.graph, 
+                k=k_param/np.sqrt(num_nodes),  # Optimal distance between nodes
+                iterations=iterations,
+                weight=None,
+                scale=scale,
+                center=(0, 0),
+                dim=2,
+                seed=42  # For reproducible layouts
+            )
+        elif layout_algorithm == "kamada_kawai":
+            pos = nx.kamada_kawai_layout(self.graph, scale=2.0)
+        elif layout_algorithm == "circular":
+            pos = nx.circular_layout(self.graph, scale=2.0)
+        elif layout_algorithm == "shell":
+            pos = nx.shell_layout(self.graph, scale=2.0)
+        else:
+            pos = nx.spring_layout(self.graph, k=3.0/np.sqrt(num_nodes), iterations=iterations)
         
-        # Draw edge labels
-        edge_labels = nx.get_edge_attributes(self.graph, 'label')
-        nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=edge_labels, 
-                                    font_color="red", font_size=8)
+        # Fine-tune positions to avoid overlaps
+        pos = self._adjust_node_positions(pos, min_distance=0.3)
         
-        plt.title(f"Knowledge Graph for Image {image_id}", fontsize=14)
+        # Calculate node sizes based on degree centrality
+        node_degrees = dict(self.graph.degree())
+        max_degree = max(node_degrees.values()) if node_degrees else 1
+        node_sizes = [3000 + (node_degrees.get(node, 0) / max_degree) * 2000 
+                    for node in self.graph.nodes()]
+        
+        # Create color scheme for different node types (if applicable)
+        node_colors = self._get_node_colors()
+        
+        # Draw edges with improved styling
+        edge_weights = []
+        edge_colors = []
+        edge_styles = []
+        
+        for u, v, data in self.graph.edges(data=True):
+            relation = data.get('label', 'UNKNOWN')
+            edge_weights.append(self._get_edge_weight(relation))
+            edge_colors.append(self._get_edge_color(relation))
+            edge_styles.append(self._get_edge_style(relation))
+        
+        # Draw edges with varying thickness and style
+        for i, (u, v, data) in enumerate(self.graph.edges(data=True)):
+            nx.draw_networkx_edges(
+                self.graph, pos,
+                edgelist=[(u, v)],
+                width=edge_weights[i],
+                edge_color=edge_colors[i],
+                style=edge_styles[i],
+                alpha=0.7,
+                arrows=True,
+                arrowsize=25,
+                arrowstyle='->',
+                connectionstyle="arc3,rad=0.1",  # Curved edges to avoid overlap
+                ax=ax
+            )
+        
+        # Draw nodes with professional styling
+        nx.draw_networkx_nodes(
+            self.graph, pos,
+            node_size=node_sizes,
+            node_color=node_colors,
+            alpha=0.9,
+            linewidths=2.0,
+            edgecolors='black',
+            ax=ax
+        )
+        
+        # Draw node labels with better formatting
+        labels = {node: self._format_node_label(node) for node in self.graph.nodes()}
+        nx.draw_networkx_labels(
+            self.graph, pos,
+            labels=labels,
+            font_size=10,
+            font_weight='bold',
+            font_family='Arial',
+            font_color='black',
+            ax=ax
+        )
+        
+        # Draw edge labels with improved positioning
+        edge_labels = {}
+        for u, v, data in self.graph.edges(data=True):
+            relation = data.get('label', 'UNKNOWN')
+            edge_labels[(u, v)] = self._format_edge_label(relation)
+        
+        # Position edge labels to avoid overlap
+        edge_label_pos = self._calculate_edge_label_positions(pos, edge_labels)
+        
+        for edge, label in edge_labels.items():
+            if edge in edge_label_pos:
+                x, y = edge_label_pos[edge]
+                ax.text(x, y, label,
+                    fontsize=8,
+                    fontweight='normal',
+                    ha='center',
+                    va='center',
+                    bbox=dict(boxstyle='round,pad=0.3', 
+                            facecolor='white', 
+                            edgecolor='gray',
+                            alpha=0.8),
+                    rotation=0)
+        
+        # Set professional styling
+        ax.set_title(f'Knowledge Graph: Scene Understanding\nImage ID: {image_id}', 
+                    fontsize=16, fontweight='bold', pad=20)
+        
+        # Remove axes and clean up the plot
+        ax.set_axis_off()
+        
+        # Add subtle grid for better readability (optional)
+        # ax.grid(True, alpha=0.1, linestyle='--', linewidth=0.5)
+        
+        # Adjust layout to prevent clipping
         plt.tight_layout()
         
+        # Add legend for edge types
+        self._add_edge_legend(ax)
+        
+        # Add statistics box
+        self._add_statistics_box(ax, num_nodes, len(self.graph.edges()))
+        
         if save:
-            output_path = os.path.join(self.kg_dir, f"{image_id}_knowledge_graph.png")
-            plt.savefig(output_path, bbox_inches='tight', dpi=300)
+            output_path = os.path.join(self.kg_dir, f"{image_id}_knowledge_graph_professional.png")
+            plt.savefig(output_path, 
+                    bbox_inches='tight', 
+                    dpi=300, 
+                    facecolor='white',
+                    edgecolor='none',
+                    format='png')
+            
+            # Also save as PDF for publications
+            pdf_path = os.path.join(self.kg_dir, f"{image_id}_knowledge_graph_professional.pdf")
+            plt.savefig(pdf_path, 
+                    bbox_inches='tight', 
+                    format='pdf',
+                    facecolor='white',
+                    edgecolor='none')
             
             # Save graph as pickle
-            pickle_path = os.path.join(self.kg_dir, f"{image_id}_knowledge_graph.pkl")
+            pickle_path = os.path.join(self.kg_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_graph.pkl")
             with open(pickle_path, 'wb') as f:
                 pickle.dump(self.graph, f)
             
-            print(f"Knowledge graph saved to {output_path}")
+            print(f"Professional knowledge graph saved to {output_path}")
+            print(f"PDF version saved to {pdf_path}")
         
         if show:
             plt.show()
         else:
             plt.close()
+
+    def _adjust_node_positions(self, pos: Dict, min_distance: float = 0.3) -> Dict:
+        """
+        Adjust node positions to prevent overlapping using force-directed approach
+        """
+        adjusted_pos = pos.copy()
+        nodes = list(pos.keys())
+        
+        for _ in range(50):  # Iterative adjustment
+            forces = {node: np.array([0.0, 0.0]) for node in nodes}
+            
+            for i, node1 in enumerate(nodes):
+                for j, node2 in enumerate(nodes[i+1:], i+1):
+                    pos1 = np.array(adjusted_pos[node1])
+                    pos2 = np.array(adjusted_pos[node2])
+                    
+                    distance = np.linalg.norm(pos2 - pos1)
+                    
+                    if distance < min_distance and distance > 0:
+                        # Calculate repulsive force
+                        direction = (pos1 - pos2) / distance
+                        force_magnitude = (min_distance - distance) * 0.1
+                        
+                        forces[node1] += direction * force_magnitude
+                        forces[node2] -= direction * force_magnitude
+            
+            # Apply forces
+            for node in nodes:
+                adjusted_pos[node] = (
+                    adjusted_pos[node][0] + forces[node][0],
+                    adjusted_pos[node][1] + forces[node][1]
+                )
+        
+        return adjusted_pos
+
+    def _get_node_colors(self) -> List[str]:
+        """
+        Get color scheme for nodes based on their properties or types
+        """
+        # Default color scheme - can be customized based on node properties
+        colors = []
+        color_map = {
+            'object': '#4CAF50',      # Green for objects
+            'location': '#2196F3',    # Blue for locations  
+            'attribute': '#FF9800',   # Orange for attributes
+            'action': '#9C27B0',      # Purple for actions
+            'default': '#607D8B'      # Blue-gray for others
+        }
+        
+        for node in self.graph.nodes():
+            # Classify node type based on common patterns
+            node_type = self._classify_node_type(node)
+            colors.append(color_map.get(node_type, color_map['default']))
+        
+        return colors
+
+    def _classify_node_type(self, node: str) -> str:
+        """
+        Classify node type based on its name and relationships
+        """
+        node_lower = node.lower()
+        
+        # Location indicators
+        if any(word in node_lower for word in ['room', 'kitchen', 'bedroom', 'floor', 'wall', 'corner']):
+            return 'location'
+        
+        # Attribute indicators  
+        if any(word in node_lower for word in ['color', 'shape', 'size', 'material', 'texture']):
+            return 'attribute'
+            
+        # Action indicators
+        if any(word in node_lower for word in ['moving', 'sitting', 'standing', 'lying']):
+            return 'action'
+            
+        # Default to object
+        return 'object'
+
+    def _get_edge_weight(self, relation: str) -> float:
+        """
+        Get edge thickness based on relation type
+        """
+        weight_map = {
+            'IS_ON': 3.0,
+            'IS_NEAR': 2.5,
+            'IS_UNDER': 3.0,
+            'HAS_COLOR': 1.5,
+            'HAS_SHAPE': 1.5,
+            'IS_USED_FOR': 2.0,
+            'IS_PART_OF': 2.5,
+            'CONTAINS': 2.0
+        }
+        return weight_map.get(relation, 2.0)
+
+    def _get_edge_color(self, relation: str) -> str:
+        """
+        Get edge color based on relation type
+        """
+        color_map = {
+            'IS_ON': '#E53E3E',       # Red for spatial (on)
+            'IS_UNDER': '#E53E3E',    # Red for spatial (under)
+            'IS_NEAR': '#38A169',     # Green for proximity
+            'HAS_COLOR': '#3182CE',   # Blue for properties
+            'HAS_SHAPE': '#3182CE',   # Blue for properties
+            'IS_USED_FOR': '#805AD5', # Purple for functional
+            'IS_PART_OF': '#D69E2E',  # Orange for composition
+            'CONTAINS': '#D69E2E'     # Orange for composition
+        }
+        return color_map.get(relation, '#718096')
+
+    def _get_edge_style(self, relation: str) -> str:
+        """
+        Get edge style based on relation type
+        """
+        style_map = {
+            'IS_ON': '-',         # Solid for strong spatial
+            'IS_UNDER': '-',      # Solid for strong spatial
+            'IS_NEAR': '--',      # Dashed for proximity
+            'HAS_COLOR': ':',     # Dotted for properties
+            'HAS_SHAPE': ':',     # Dotted for properties
+            'IS_USED_FOR': '-.',  # Dash-dot for functional
+            'IS_PART_OF': '-',    # Solid for composition
+            'CONTAINS': '-'       # Solid for composition
+        }
+        return style_map.get(relation, '-')
+
+    def _format_node_label(self, node: str) -> str:
+        """
+        Format node labels for better readability
+        """
+        # Replace underscores with spaces and capitalize
+        formatted = node.replace('_', ' ').title()
+        
+        # Limit length for readability
+        if len(formatted) > 15:
+            formatted = formatted[:12] + '...'
+        
+        return formatted
+
+    def _format_edge_label(self, relation: str) -> str:
+        """
+        Format edge labels for better readability
+        """
+        # Convert to readable format
+        formatted = relation.replace('_', ' ').lower()
+        formatted = formatted.replace('is ', '').replace('has ', '').replace('are ', '')
+        
+        # Shorten common relations
+        short_map = {
+            'on': 'on',
+            'under': 'under', 
+            'near': 'near',
+            'color': 'color',
+            'shape': 'shape',
+            'used for': 'used for',
+            'part of': 'part of',
+            'contains': 'contains'
+        }
+        
+        return short_map.get(formatted, formatted)
+
+    def _calculate_edge_label_positions(self, pos: Dict, edge_labels: Dict) -> Dict:
+        """
+        Calculate optimal positions for edge labels to minimize overlap
+        """
+        label_positions = {}
+        
+        for (u, v), label in edge_labels.items():
+            if u in pos and v in pos:
+                # Calculate midpoint of edge
+                x1, y1 = pos[u]
+                x2, y2 = pos[v]
+                
+                # Offset the label slightly to avoid overlap with edge
+                mid_x = (x1 + x2) / 2
+                mid_y = (y1 + y2) / 2
+                
+                # Add very small perpendicular offset to stay close to edge
+                dx = x2 - x1
+                dy = y2 - y1
+                length = np.sqrt(dx**2 + dy**2)
+                
+                if length > 0:
+                    # Much smaller perpendicular vector for closer positioning
+                    perp_x = -dy / length * 0.02  # Reduced from 0.1 to 0.02
+                    perp_y = dx / length * 0.02   # Reduced from 0.1 to 0.02
+                    
+                    label_positions[(u, v)] = (mid_x + perp_x, mid_y + perp_y)
+                else:
+                    label_positions[(u, v)] = (mid_x, mid_y)
+        
+        return label_positions
+
+    def _add_edge_legend(self, ax) -> None:
+        """
+        Add legend for edge types and colors
+        """
+        legend_elements = []
+        
+        # Create legend entries for main relation types
+        relation_info = [
+            ('Spatial Relations', '#E53E3E', '-'),
+            ('Proximity Relations', '#38A169', '--'),
+            ('Property Relations', '#3182CE', ':'),
+            ('Functional Relations', '#805AD5', '-.'),
+            ('Composition Relations', '#D69E2E', '-')
+        ]
+        
+        for label, color, style in relation_info:
+            legend_elements.append(plt.Line2D([0], [0], color=color, linestyle=style,
+                                            linewidth=2, label=label))
+        
+        ax.legend(handles=legend_elements, 
+                loc='upper right', 
+                bbox_to_anchor=(1.0, 1.0),
+                frameon=True,
+                fancybox=True,
+                shadow=True,
+                fontsize=10)
+
+    def _add_statistics_box(self, ax, num_nodes: int, num_edges: int) -> None:
+        """
+        Add statistics box to the plot
+        """
+        stats_text = f"Nodes: {num_nodes}\nEdges: {num_edges}\nDensity: {num_edges/max(1, num_nodes*(num_nodes-1)):.3f}"
+        
+        ax.text(0.02, 0.02, stats_text,
+            transform=ax.transAxes,
+            fontsize=10,
+            verticalalignment='bottom',
+            horizontalalignment='left',
+            bbox=dict(boxstyle='round,pad=0.5',
+                        facecolor='lightgray',
+                        alpha=0.8))
     
-    def plot_relationship_matrix(self, image_id: str, cmap_color: str = "viridis",
+    def plot_relationship_matrix(self, cmap_color: str = "viridis",
                                figsize: Tuple[int, int] = (12, 10), save: bool = True, 
                                show: bool = True) -> None:
         """
         Plot relationship matrix heatmap
         """
+
+        image_id = self.image_data.ID
+
         if not self.triples:
             print("No triples to plot. Generate triples first.")
             return
@@ -303,7 +764,7 @@ class KnowledgeGraph:
                   title="Relationships", fontsize=10)
         
         if save:
-            output_path = os.path.join(self.matrix_dir, f"{image_id}_knowledge_matrix.png")
+            output_path = os.path.join(self.matrix_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_matrix.png")
             plt.savefig(output_path, bbox_inches='tight', dpi=300)
             print(f"Relationship matrix saved to {output_path}")
         
@@ -312,10 +773,12 @@ class KnowledgeGraph:
         else:
             plt.close()
     
-    def get_adjacency_matrix(self, image_id: str, save: bool = True) -> pd.DataFrame:
+    def get_adjacency_matrix(self, save: bool = True) -> pd.DataFrame:
         """
         Generate and save adjacency matrix
         """
+
+        image_id = self.image_data.ID
         if not self.graph.nodes():
             print("No graph available. Build graph first.")
             return pd.DataFrame()
@@ -339,7 +802,7 @@ class KnowledgeGraph:
             matrix_df.loc[row['Source'], row['Target']] = 1  # Binary matrix
         
         if save:
-            output_path = os.path.join(self.matrix_dir, f"{image_id}_adjacency_matrix.csv")
+            output_path = os.path.join(self.matrix_dir, f"IMG_{image_id}_{self.image_data.img_type}_adjacency_matrix.csv")
             matrix_df.to_csv(output_path)
             print(f"Adjacency matrix saved to {output_path}")
         
@@ -396,13 +859,15 @@ class KnowledgeGraph:
             print(f"Error in reasoning: {e}")
             return f"Error: {str(e)}"
     
-    def process_image_complete(self, image_data: ImageData, masks: List[Mask], 
-                             scene_description: str = None, debug: bool = True) -> Dict:
+    def process_image_complete(self, masks: List[Mask],  debug: bool = True) -> Dict:
         """
         Complete knowledge graph processing pipeline
         """
         print(f"Processing knowledge graph for image {image_data.ID}")
         
+        image_data = self.image_data
+        scene_description = image_data.description
+
         # Get scene description if not provided
         if scene_description is None:
             scene_description = self.llm.describe_scene(image_data)

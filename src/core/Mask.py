@@ -38,6 +38,8 @@ class Mask:
         
         self.labels = []
         self.isTarget = False
+        self.most_freq_label = None
+        self.most_freq_prob = 0.0
 
     def __str__(self):
         return (f"Mask(ID='{self.ID}', Score={self.score:.2f}, "
@@ -45,6 +47,13 @@ class Mask:
                 f"BoundingBox=({self.x_min}, {self.y_min}) -> ({self.x_max}, {self.y_max}), "
                 f"Path='{self.path}')")
 
+
+    def get_most_frequent_label(self):
+        if self.labels:
+            label_counts = {label: self.labels.count(label) for label in set(self.labels)}
+            self.most_freq_label, self.most_freq_prob = max(label_counts.items(), key=lambda item: item[1])
+            self.most_freq_prob /= len(self.labels)
+        return self.most_freq_label
 
     def plot_mask(self, figsize=(2,2)):
 

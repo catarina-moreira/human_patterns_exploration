@@ -374,3 +374,4 @@ data/images/96exp.jpg
 /sam2
 /segment-anything-2
 segment_anything_model2/
+/outputs/Masks
