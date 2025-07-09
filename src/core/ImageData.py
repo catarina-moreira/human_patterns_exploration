@@ -25,6 +25,7 @@ class ImageData(object):
 		self.img_type = img_type
 		self.image = self.load()
 		self.target = target
+		self.description = None
 
 	def find_ID(self):
 		self.ID = os.path.splitext(os.path.basename(self.path))[0]
@@ -56,7 +57,6 @@ class ImageData(object):
 				plt.title(f"Image {self.ID}") 
 			else: 
 				plt.title(title) 
-			
 
 			plt.imshow(self.image)
 

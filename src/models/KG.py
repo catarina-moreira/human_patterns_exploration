@@ -18,14 +18,14 @@ class KnowledgeGraph:
     Enhanced Knowledge Graph implementation for scene understanding and spatial reasoning
     """
     
-    def __init__(self, llm: LLM, imageData : imageData, output_dir: str = "outputs"):
+    def __init__(self, llm: LLM, image_data: ImageData, output_dir: str = "outputs"):
         self.llm = llm
-        self.imageData = imageData
+        self.image_data = image_data
         self.output_dir = output_dir
         self.graph = nx.DiGraph()
         self.triples = []
         self.bbox_info = {}
-        self.scene_description = ""
+        self.scene_description = imageData.description
         self.relations_count = defaultdict(int)
         
         # Ensure output directories exist
@@ -36,10 +36,15 @@ class KnowledgeGraph:
         for directory in [self.results_dir, self.kg_dir, self.matrix_dir]:
             os.makedirs(directory, exist_ok=True)
     
-    def create_mask_dict(self, image_data: ImageData, masks: List[Mask], debug: bool = True) -> Dict:
+    def create_mask_dict(self, debug: bool = True) -> Dict:
         """
         Create a dictionary of mask bounding boxes and labels
         """
+
+
+
+
+        
         bbox_dict = {}
         
         for i, mask in enumerate(masks):
@@ -61,8 +66,7 @@ class KnowledgeGraph:
         
         return bbox_dict
     
-    def generate_spatial_analysis(self, image_data: ImageData, masks: List[Mask], 
-                                scene_description: str, debug: bool = True) -> str:
+    def generate_spatial_analysis(self, masks: List[Mask], debug: bool = True) -> str:
         """
         Generate spatial relationship analysis using LLM
         """
@@ -143,7 +147,7 @@ class KnowledgeGraph:
             print(f"Error in triples generation: {e}")
             return f"Error: {str(e)}"
     
-    def _clean_triples_text(self, triples_text: str) -> str:
+    def clean_triples_text(self, triples_text: str) -> str:
         """
         Clean and normalize triples text
         """

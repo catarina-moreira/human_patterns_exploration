@@ -24,10 +24,15 @@ from src.core.Participant import Participant
 class LLM:
     """Enhanced LLM base class with vision capabilities"""
     
-    def __init__(self, model: str):
+    def __init__(self, model: str, results_dir : str = "outputs"):
         self.model = model
         self.scene_context = None
         self.processing_times = []
+        self.results_dir = os.path.join(os.getcwd(), results_dir, "scene_descriptions")
+        
+        # check if directory exists
+        if not os.path.exists(self.results_dir):    
+            os.makedirs(self.results_dir, exist_ok=True)
     
     @abstractmethod
     def describe_scene(self, image_data: ImageData, **kwargs) -> str:
@@ -56,6 +61,11 @@ class OpenAI(LLM):
         self.api_key_path = api_key_path
         self.client = self.initialize_client()
         self.temperature = temperature
+        self.results_dir = os.path.join(self.results_dir, "openai_results")
+
+        if not os.path.exists(self.results_dir):
+            os.makedirs(self.results_dir)
+
     
     def initialize_client(self):
         """Initialize OpenAI client with API key"""
@@ -89,7 +99,6 @@ class OpenAI(LLM):
             scene_prompt = custom_prompt
         
         img_base64 = self.encode_image(image_data.path)
-        
         start_time = time.time()
         
         try:
@@ -110,7 +119,6 @@ class OpenAI(LLM):
             processing_time = time.time() - start_time
             self.processing_times.append(processing_time)
             
-            # Store context for future mask labeling
             self.scene_context = {
                 'description': scene_description,
                 'image_id': image_data.ID,
@@ -118,6 +126,11 @@ class OpenAI(LLM):
             }
             
             print(f"Scene description completed in {processing_time:.2f} seconds")
+
+            # save the scene_description into a file
+            with open(os.path.join(self.results_dir, f"IMG_{image_data.ID}_{image_data.img_type}_ descr.txt"), "w") as file:
+                file.write(scene_description)
+
             return scene_description
             
         except Exception as e:
@@ -209,6 +222,10 @@ class Ollama(LLM):
         super().__init__(model)
         self.test_connection()
         self.temperature = temperature
+        self.results_dir = os.path.join(self.results_dir, "ollama_results")
+
+        if not os.path.exists(self.results_dir):
+            os.makedirs(self.results_dir)
     
     def test_connection(self):
         """Test Ollama connection"""
@@ -255,6 +272,10 @@ class Ollama(LLM):
                 'image_id': image_data.ID,
                 'timestamp': time.time()
             }
+
+            with open(os.path.join(self.results_dir, f"IMG_{image_data.ID}_{image_data.img_type}_ descr.txt"), "w") as file:
+                file.write(scene_description)
+
             
             print(f"Scene description completed in {processing_time:.2f} seconds")
             return scene_description

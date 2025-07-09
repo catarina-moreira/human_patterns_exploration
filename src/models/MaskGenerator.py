@@ -106,7 +106,6 @@ class SAM2:
             score = round(score, 4)
             logits = logits[mask_index]
             
-            # Fixed: Initialize mask_preprocessed properly outside the loop
             if prompt_type not in mask_preprocessed:
                 mask_preprocessed[prompt_type] = {}
 
@@ -128,9 +127,7 @@ class SAM2:
             mask_preprocessed[prompt_type]['y_min'] = y_min
             mask_preprocessed[prompt_type]['y_max'] = y_max
             mask_preprocessed[prompt_type]['cropped_mask'] = cropped_mask
-            #mask_preprocessed[prompt_type]['area'] = abs(x_max-x_min) * (y_max-y_min)
-            #mask_preprocessed[prompt_type]['perimeter'] = 2 * (abs(x_max-x_min) + abs(y_max-y_min))
-        
+
             if DEBUG:
                 self.save_mask_object( Mask(mask_preprocessed[prompt_type]), mask_filename)
 
@@ -157,6 +154,7 @@ class SAM2:
     
         final_mask = Mask(best_mask_found)
         self.task.masks[self.partID].append(final_mask)
+
         if save_mask:
             
             # Fixed: Save the Mask object properly
@@ -258,13 +256,5 @@ class SAM2:
         if save_mask:
             
             self.save_mask(cropped_image, cropped_image_with_alpha, output_image_path)
-
-            # if not os.path.exists(output_image_path):
-            #     os.makedirs(output_image_path)
-            # save the RGBA image
-            # Image.fromarray(cropped_image).save(output_image_path.replace("image_with_alpha", "mask") + "_thre_" + str(threshold) + ".png")
-            # with open(output_image_path + ".pkl", "wb") as f:
-            #   pickle.dump(cropped_mask, f)
-            #Image.fromarray(cropped_image_with_alpha).save(output_image_path + ".png")
 
         return cropped_image_with_alpha, x_min, x_max, y_min, y_max, cropped_mask

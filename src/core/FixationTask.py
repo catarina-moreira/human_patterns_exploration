@@ -32,8 +32,17 @@ class FixationTask:
 		self.X = self.data['X']
 		self.Y = self.data['Y']
 		self.duration = self.data['FixationDuration']
-		self.masks = {} # mask generator will update this dictionary
+		self.masks = {}
 		self.time_on_target = None
+
+	def load_masks(self, mask_directory):
+
+		for mask_file in os.listdir(mask_direct):
+			if mask_file.endswith('.pkl'):
+				mask_path = os.path.splitext(mask_file)[0]
+
+				self.masks[mask_name] = np
+
 
 	def compute_time_on_target(self):
 		"""
