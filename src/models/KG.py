@@ -156,7 +156,7 @@ class KnowledgeGraph:
         6. Distance Relationships: Describing the distance between objects.
         7. Size Relationships: Describing the size of objects.
         
-        Scene description: {scene_description}
+        Scene description: {self.scene_description}
         Spatial analysis: {bbox_info}
         
         Please return only the triples in the format (subject, RELATION, object). Avoid including numbers in the triples.
