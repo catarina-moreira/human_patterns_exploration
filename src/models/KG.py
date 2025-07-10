@@ -184,14 +184,14 @@ class KnowledgeGraph:
             self.triples_raw = self.llm.describe_scene(self.image_data, custom_prompt=triples_prompt)
 
             # save the triples into a text file
-            path = os.path.join(self.triples_raw_dir, f"IMG_{IMG_ID}_{IMG_TYPE}_triples_raw.txt")
+            path = os.path.join(self.triples_raw_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_triples_raw.txt")
             with open(path, "w") as f:
                 f.write(self.triples_raw)
             
             # Clean up the triples text
             self.triples_cleaned = self.clean_triples_text(self.triples_raw)
 
-            path = os.path.join(self.triples_cleaned_dir, f"IMG_{IMG_ID}_{IMG_TYPE}_triples_cleaned.txt")
+            path = os.path.join(self.triples_cleaned_dir, f"IM G_{self.image_data.ID}_{self.image_data.img_type}_triples_cleaned.txt")
             with open(path, "w") as f:
                 f.write(self.triples_cleaned)
             
@@ -269,7 +269,7 @@ class KnowledgeGraph:
         if hasattr(self, 'triples'):
             self.triples = parsed_triples
 
-        path = os.path.join(self.triples_final_dir,  f"IMG_{IMG_ID}_{IMG_TYPE}_triples.txt")
+        path = os.path.join(self.triples_final_dir,  f"IMG_{self.image_data.ID}_{self.image_data.img_type}_triples.txt")
         with open(path, "w") as f:
             f.write("\n".join(f"{s}, {p}, {o}" for s, p, o in parsed_triples))
 
@@ -863,7 +863,7 @@ class KnowledgeGraph:
         """
         Complete knowledge graph processing pipeline
         """
-        print(f"Processing knowledge graph for image {image_data.ID}")
+        print(f"Processing knowledge graph for image {self.image_data.ID}")
         
         image_data = self.image_data
         scene_description = image_data.description
