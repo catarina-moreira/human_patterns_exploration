@@ -28,8 +28,8 @@ class KnowledgeGraph:
         self.output_dir = output_dir
         self.graph = nx.DiGraph()
         self.triples = []
-        self.triples_raw = None         # for debug
-        self.triples_cleaned = None       # for debug
+        self.triples_raw = None             # for debug
+        self.triples_cleaned = None         # for debug
         self.bbox_info = {}
         self.scene_description = image_data.description
         self.relations_count = defaultdict(int)
@@ -191,7 +191,7 @@ class KnowledgeGraph:
             # Clean up the triples text
             self.triples_cleaned = self.clean_triples_text(self.triples_raw)
 
-            path = os.path.join(self.triples_cleaned_dir, f"IM G_{self.image_data.ID}_{self.image_data.img_type}_triples_cleaned.txt")
+            path = os.path.join(self.triples_cleaned_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_triples_cleaned.txt")
             with open(path, "w") as f:
                 f.write(self.triples_cleaned)
             
@@ -290,7 +290,7 @@ class KnowledgeGraph:
     def plot_knowledge_graph(self, figsize: Tuple[int, int] = (16, 12),
                         save: bool = True, show: bool = True, 
                         layout_algorithm: str = "spring", 
-                        iterations: int = 2000, k_param = 3.0, scale = 2.0) -> None:
+                        iterations: int = 2000, k_param = 3.0, scale = 2.0, min_distance = 0.3) -> None:
         """
         Plot and save professional knowledge graph visualization suitable for research publications
         
@@ -327,16 +327,16 @@ class KnowledgeGraph:
                 seed=42  # For reproducible layouts
             )
         elif layout_algorithm == "kamada_kawai":
-            pos = nx.kamada_kawai_layout(self.graph, scale=2.0)
+            pos = nx.kamada_kawai_layout(self.graph, scale=scale)
         elif layout_algorithm == "circular":
-            pos = nx.circular_layout(self.graph, scale=2.0)
+            pos = nx.circular_layout(self.graph, scale=scale)
         elif layout_algorithm == "shell":
-            pos = nx.shell_layout(self.graph, scale=2.0)
+            pos = nx.shell_layout(self.graph, scale=scale)
         else:
-            pos = nx.spring_layout(self.graph, k=3.0/np.sqrt(num_nodes), iterations=iterations)
+            pos = nx.spring_layout(self.graph, k=k_param/np.sqrt(num_nodes), iterations=iterations)
         
         # Fine-tune positions to avoid overlaps
-        pos = self._adjust_node_positions(pos, min_distance=0.3)
+        pos = self._adjust_node_positions(pos, min_distance=min_distance)
         
         # Calculate node sizes based on degree centrality
         node_degrees = dict(self.graph.degree())
