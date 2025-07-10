@@ -6,7 +6,10 @@ import seaborn as sns
 import cv2
 import os
 
+from src.core.Mask import Mask
+
 import math
+import pickle
 
 import re
 
@@ -26,6 +29,7 @@ class ImageData(object):
 		self.image = self.load()
 		self.target = target
 		self.description = None
+		self.masks = []
 
 	def find_ID(self):
 		self.ID = os.path.splitext(os.path.basename(self.path))[0]
@@ -35,6 +39,27 @@ class ImageData(object):
 		self.ID = int(match.group()) if match else self.ID
 		return self.ID
 
+	def load_scene_description(self, path):
+		with open(path, 'r') as file:
+			self.description = file.read()
+		self.description = self.description.strip()
+
+	def load_img_masks(self, masks_path_dir):
+
+		mask_files = os.listdir(masks_path_dir)
+		mask_files = [file for file in mask_files if file.endswith('.pkl')]
+		mask_files = [file for file in mask_files if f"IMG_{self.ID}_type_{self.img_type}" in file]
+		for file in mask_files:
+			try:
+				with open(os.path.join(masks_path_dir, file), 'rb') as mask_file:
+					mask_data = pickle.load(mask_file)
+			except Exception as e:
+				print("[ERROR] Mask file ", os.path.join(masks_path_dir, file), "could not be loaded")
+				return None
+					
+			mask_data.get_most_frequent_label()
+			self.masks.append(mask_data)
+		
 	def load(self):
 		if not os.path.isfile(self.path):
 			raise FileNotFoundError(f"Image not found: {self.path}")

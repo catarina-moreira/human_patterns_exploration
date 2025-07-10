@@ -10,8 +10,6 @@ import pickle
 
 import supervision as sv
 
-from src.core.ImageData import ImageData
-
 class Mask:
 
     def __init__(self, mask_dict : dict ):
