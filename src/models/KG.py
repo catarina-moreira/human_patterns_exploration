@@ -1,3 +1,4 @@
+from nt import system
 import os
 import pickle
 import pandas as pd
@@ -34,17 +35,47 @@ class KnowledgeGraph:
         self.scene_description = image_data.description
         self.relations_count = defaultdict(int)
         
+        # try to load the image scene description from a file
+        # if it does not exist, generate it using LLM
+        if self.scene_description is None:
+            scene_descr_path = os.path.join(self.scene_descr_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_descr.txt")
+            self.scene_description = self.load_txt_file( scene_descr_path )
+
+            if self.scene_descr_dir is None:
+                print("[ERROR] Scene description file not found and no description provided in image data. Generating scene description with LLMs")
+                self.scene_description = self.llm.generate_scene_description(image_data)
+                self.save_txt_file(scene_descr_path, self.scene_description)
+        
         # Ensure output directories exist
         self.results_dir = os.path.join(output_dir, "results")
+        self.rankings_dir = os.path.join(self.results_dir, "rankings")
+        self.img_rankings = os.path.join(self.rankings_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}")
         self.kg_dir = os.path.join(output_dir, "KnowledgeGraph")
         self.matrix_dir = os.path.join(self.kg_dir, "knowledge_matrices")
         self.triples_raw_dir = os.path.join(self.kg_dir, "triples_raw")
         self.triples_cleaned_dir = os.path.join(self.kg_dir, "triples_cleaned")
         self.triples_final_dir = os.path.join(self.kg_dir, "triples_final")
+        self.scene_descr_dir = os.path.join(self.output_dir, "SceneDescriptions", llm.provider.lower() + "_results")
 
-        for directory in [self.results_dir, self.kg_dir, self.matrix_dir, self.triples_raw_dir, self.triples_cleaned_dir, self.triples_final_dir]:
+        for directory in [self.results_dir, self.img_rankings, self.kg_dir, self.matrix_dir, self.triples_raw_dir, self.triples_cleaned_dir, self.triples_final_dir, self.scene_descr_dir]:
             os.makedirs(directory, exist_ok=True)
     
+    def load_txt_file( self, filepath ):
+        try:
+            with open(filepath, "r", encoding="utf-8") as file:
+                return file.read().strip()
+        except Exception as e:
+            print(f"Error reading text file: {str(e)}")
+            return None
+
+    def save_txt_file(self, filepath: str, content: str) -> None:
+        try:
+            with open(filepath, "w", encoding="utf-8") as file:
+                file.write(content)
+        except Exception as e:
+            print(f"Error writing text file: {str(e)}")
+
+
     def load_triples(self, filepath: str) -> List[Tuple[str, str, str]]:
         """
         Load and parse triples from a text file.
@@ -85,7 +116,6 @@ class KnowledgeGraph:
         print(f"Successfully loaded {len(parsed_triples)} triples from {filepath}")
         return parsed_triples
         
-    
     def create_mask_dict(self, masks, debug: bool = True) -> Dict:
         """
         Create a dictionary of mask bounding boxes and labels
@@ -181,7 +211,8 @@ class KnowledgeGraph:
 
         try:
             # Use the LLM's describe_scene method with custom prompt
-            self.triples_raw = self.llm.describe_scene(self.image_data, custom_prompt=triples_prompt)
+            system_prompt = "You are an AI Assistant with expertise in extracting knowledge graph triples from textual scene descriptions."
+            self.triples_raw = self.llm.text_query( query=triples_prompt, system_prompt = system_prompt )
 
             # save the triples into a text file
             path = os.path.join(self.triples_raw_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_triples_raw.txt")
@@ -275,6 +306,73 @@ class KnowledgeGraph:
 
 
         return parsed_triples
+
+    def rank_locations_by_likelihood(self, target: str, num_trials: int = 50, num_loc_sample: int = 10, save_dir: Optional[str] = None, debug: bool = True):
+        """
+        For a given target and list of locations, run multiple trials where the LLM ranks the most and least likely locations.
+        Returns two dictionaries: most_likely and least_likely.
+        """
+        most_likely = {}
+        least_likely = {}
+
+        for trial in range(1, num_trials + 1):
+            sampled_locations = random.sample(self.bbox_info, num_loc_sample)
+            query = (
+                f"Given these locations {sampled_locations} which are the MOST and LEAST likely places to find {target}? "
+                "1. Provide a ranked list of THREE locations for each. "
+                "2. Ensure you ALWAYS provide a ranked list of THREE locations for MOST LIKELY. "
+                "3. Ensure you ALWAYS provide a ranked list of THREE locations for LEAST LIKELY. "
+                "4. Do not use conjunction e.g. AND, OR, NOT, WITH, etc. "
+                "5. Do not use quotation marks or string quotes. "
+                "6. Do not use attributes with the locations. "
+                "7. Do not use Solution or Storage in the locations. "
+                "8. Do not use Properties in the locations. "
+                "9. Do not use COLORS in the locations. "
+                "10. The same location cannot be in both lists. "
+                "11. The output should have the format LIKEST: [location1, location2, location3]; UNLIKELIEST: [location1, location2, location3]"
+            )
+
+            answer = self.llm.query_knowledge_graph(
+                query=query,
+                triples=triples,
+                temperature=self.llm.temperature
+            )
+
+            # Parse the answer
+            most, least = self._parse_likelihood_answer(answer)
+            most_likely[trial] = most
+            least_likely[trial] = least
+
+            if debug:
+                print(f"Trial {trial}:")
+                print(f"\tMost likely: {most}")
+                print(f"\tLeast likely: {least}\n")
+
+        if self.img_rankings:
+            with open(os.path.join(self.img_rankings, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_most_likely.pkl"), "wb") as f:
+                pickle.dump(most_likely, f)
+            with open(os.path.join(save_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_least_likely.pkl"), "wb") as f:
+                pickle.dump(least_likely, f)
+
+        return most_likely, least_likely
+    
+    def _parse_likelihood_answer(self, answer: str):
+        """
+        Parse the LLM's answer to extract the most and least likely locations.
+        """
+        # Example expected format:
+        # LIKEST: [location1, location2, location3]; UNLIKELIEST: [location1, location2, location3]
+        most, least = [], []
+        try:
+            most_match = re.search(r"LIKEST:\s*\[([^\]]+)\]", answer)
+            least_match = re.search(r"UNLIKELIEST:\s*\[([^\]]+)\]", answer)
+            if most_match:
+                most = [loc.strip() for loc in most_match.group(1).split(",")]
+            if least_match:
+                least = [loc.strip() for loc in least_match.group(1).split(",")]
+        except Exception as e:
+            print(f"Error parsing answer: {e}")
+        return most, least
     
     def build_graph(self) -> nx.DiGraph:
         """
@@ -808,56 +906,7 @@ class KnowledgeGraph:
         
         return matrix_df
     
-    def triple_to_sentence(self, triple: Tuple[str, str, str]) -> str:
-        """
-        Convert a triple to natural language sentence
-        """
-        subject, predicate, obj = triple
-        
-        # Handle different predicate formats
-        if predicate.startswith("IS_"):
-            predicate = predicate.replace("IS_", "is ")
-        elif predicate.startswith("ARE_"):
-            predicate = predicate.replace("ARE_", "are ")
-        elif predicate.startswith("HAS_"):
-            predicate = predicate.replace("HAS_", "has ")
-        elif predicate.startswith("HAVE_"):
-            predicate = predicate.replace("HAVE_", "have ")
-        
-        predicate = predicate.replace("_", " ").lower()
-        
-        return f"The {subject.lower()} {predicate} the {obj.lower()}."
     
-    def ask_reasoning_question(self, query: str, temperature: float = 0.0) -> str:
-        """
-        Answer reasoning questions based on the knowledge graph
-        """
-        if not self.triples:
-            return "No knowledge graph available. Generate triples first."
-        
-        # Convert triples to natural language
-        sentences = [self.triple_to_sentence(triple) for triple in self.triples]
-        knowledge_base = " ".join(sentences)
-        
-        reasoning_prompt = f"""Consider the following knowledge base: {knowledge_base}
-        
-        Question: {query}
-        
-        Please answer based on the spatial and semantic relationships in the knowledge base.
-        Do not use colors, properties, or attributes in the locations."""
-        
-        try:
-            temp_image = ImageData("dummy_path.jpg")  # This won't be used for vision
-            answer = self.llm.describe_scene(temp_image, custom_prompt=reasoning_prompt)
-            
-            # Clean answer
-            answer = answer.replace("\n", " ").replace("*", "").strip()
-            
-            return answer
-            
-        except Exception as e:
-            print(f"Error in reasoning: {e}")
-            return f"Error: {str(e)}"
     
     def process_image_complete(self, masks: List[Mask],  debug: bool = True) -> Dict:
         """
@@ -869,6 +918,7 @@ class KnowledgeGraph:
         scene_description = image_data.description
 
         # Get scene description if not provided
+        scene_descr_path = os.path.join(self.output_dir, )
         if scene_description is None:
             scene_description = self.llm.describe_scene(image_data)
         

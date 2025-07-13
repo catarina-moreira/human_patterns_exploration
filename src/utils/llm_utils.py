@@ -39,3 +39,4 @@ def create_llm_instance(provider: str = "openai", model: str = None, **kwargs) -
         return Ollama(model=model, **kwargs)
     else:
         raise ValueError(f"Unknown provider: {provider}")
+

@@ -52,7 +52,6 @@ class LLM:
 # =============================================================================
 # 2. ENHANCED OPENAI IMPLEMENTATION
 # =============================================================================
-
 class OpenAI(LLM):
     """Enhanced OpenAI implementation with vision capabilities"""
     
@@ -60,6 +59,7 @@ class OpenAI(LLM):
         super().__init__(model)
         self.api_key_path = api_key_path
         self.client = self.initialize_client()
+        self.llm_provider = "OpenAI"
         self.temperature = temperature
         self.results_dir = os.path.join(self.results_dir, "openai_results")
 
@@ -82,6 +82,79 @@ class OpenAI(LLM):
         """Encode image as base64 string"""
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode("utf-8")
+    
+    def text_query(self, query: str, system_prompt: str = None, **kwargs) -> str:
+        """Make a general text query to the LLM"""
+        
+        if system_prompt is None:
+            system_prompt = "You are a helpful AI assistant."
+        
+        start_time = time.time()
+        
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                temperature=self.temperature,
+                **kwargs
+            )
+            
+            answer = response.choices[0].message.content
+            processing_time = time.time() - start_time
+            self.processing_times.append(processing_time)
+            
+            print(f"Text query completed in {processing_time:.2f} seconds")
+            return answer
+            
+        except Exception as e:
+            print(f"Error in text query: {e}")
+            return f"Error: {str(e)}"
+    
+    def query_knowledge_graph(self, triples: List[Tuple[str, str, str]], query: str, **kwargs) -> str:
+        """Generate an answer based on knowledge graph triples and a text query"""
+        
+        # Format the triples into a readable knowledge base
+        kg_text = "Knowledge Graph Information:\\n"
+        for i, (subject, predicate, object_) in enumerate(triples, 1):
+            kg_text += f"{i}. {subject} {predicate} {object_}\\n"
+        
+        system_prompt = """You are an AI assistant that answers questions based strictly on the provided knowledge graph information. 
+        You must only use the facts explicitly stated in the knowledge graph. 
+        If the information needed to answer the question is not present in the knowledge graph, clearly state that the information is not available.
+        Do not use any external knowledge or make assumptions beyond what is explicitly provided."""
+        
+        full_query = f"""{kg_text}
+
+Question: {query}
+
+Please answer the question based only on the information provided in the knowledge graph above."""
+        
+        start_time = time.time()
+        
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": full_query}
+                ],
+                temperature=self.temperature,
+                **kwargs
+            )
+            
+            answer = response.choices[0].message.content
+            processing_time = time.time() - start_time
+            self.processing_times.append(processing_time)
+            
+            print(f"Knowledge graph query completed in {processing_time:.2f} seconds")
+            return answer
+            
+        except Exception as e:
+            print(f"Error in knowledge graph query: {e}")
+            return f"Error: {str(e)}"
     
     def describe_scene(self, image_data: ImageData, custom_prompt: str = None, **kwargs) -> str:
         """Generate detailed scene description using OpenAI GPT-4V"""
@@ -135,6 +208,78 @@ class OpenAI(LLM):
             
         except Exception as e:
             print(f"Error in scene description: {e}")
+            return f"Error: {str(e)}"
+
+
+    def text_query(self, query: str, system_prompt: str = None, **kwargs) -> str:
+        """Make a general text query to the LLM"""
+        
+        if system_prompt is None:
+            system_prompt = "You are a helpful AI assistant."
+        
+        start_time = time.time()
+        
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                temperature=self.temperature,
+                **kwargs
+            )
+            
+            answer = response.choices[0].message.content
+            processing_time = time.time() - start_time
+            self.processing_times.append(processing_time)
+            
+            print(f"Text query completed in {processing_time:.2f} seconds")
+            return answer
+            
+        except Exception as e:
+            print(f"Error in text query: {e}")
+            return f"Error: {str(e)}"
+
+    def query_knowledge_graph(self, triples: List[Tuple[str, str, str]], query: str, **kwargs) -> str:
+        """Generate an answer based on knowledge graph triples and a text query"""
+        
+        # Format the triples into a readable knowledge base
+        kg_text = "Knowledge Graph Information:\\n"
+        for i, (subject, predicate, object_) in enumerate(triples, 1):
+            kg_text += f"{i}. {subject} {predicate} {object_}\\n"
+        
+        system_prompt = """You are an AI assistant that answers questions based strictly on the provided knowledge graph information. 
+        You must only use the facts explicitly stated in the knowledge graph. 
+        If the information needed to answer the question is not present in the knowledge graph, clearly state that the information is not available.
+        Do not use any external knowledge or make assumptions beyond what is explicitly provided."""
+        
+        full_query = f"""{kg_text}
+                Question: {query}
+                Please answer the question based only on the information provided in the knowledge graph above."""
+        
+        start_time = time.time()
+        
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": full_query}
+                ],
+                temperature=self.temperature,
+                **kwargs
+            )
+            
+            answer = response.choices[0].message.content
+            processing_time = time.time() - start_time
+            self.processing_times.append(processing_time)
+            
+            print(f"Knowledge graph query completed in {processing_time:.2f} seconds")
+            return answer
+            
+        except Exception as e:
+            print(f"Error in knowledge graph query: {e}")
             return f"Error: {str(e)}"
     
     def label_mask(self, mask: Mask, image_data: ImageData, use_context: bool = True, 
@@ -222,6 +367,7 @@ class Ollama(LLM):
         super().__init__(model)
         self.test_connection()
         self.temperature = temperature
+        self.llm_provider = "Ollama"
         self.results_dir = os.path.join(self.results_dir, "ollama_results")
 
         if not os.path.exists(self.results_dir):
