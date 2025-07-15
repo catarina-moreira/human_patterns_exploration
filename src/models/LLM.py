@@ -59,7 +59,7 @@ class OpenAI(LLM):
         super().__init__(model)
         self.api_key_path = api_key_path
         self.client = self.initialize_client()
-        self.llm_provider = "OpenAI"
+        self.provider = "OpenAI"
         self.temperature = temperature
         self.results_dir = os.path.join(self.results_dir, "openai_results")
 

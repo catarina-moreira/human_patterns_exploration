@@ -843,9 +843,9 @@ class KnowledgeGraph:
         
         # Add grid lines
         ax.hlines(range(len(directional_heatmap_data) + 1), *ax.get_xlim(), 
-                 color="#e5e7e9", linewidth=1)
+                color="#e5e7e9", linewidth=1)
         ax.vlines(range(len(directional_heatmap_data) + 1), *ax.get_ylim(), 
-                 color="#e5e7e9", linewidth=1)
+                color="#e5e7e9", linewidth=1)
         
         plt.title(f'Relationship Matrix for Image {image_id}', fontsize=14)
         plt.xticks(rotation=90)
@@ -859,7 +859,7 @@ class KnowledgeGraph:
             plt.plot([], [], label=label_with_count, color=color, linewidth=15)
         
         plt.legend(loc='upper right', bbox_to_anchor=(1.25, 1), 
-                  title="Relationships", fontsize=10)
+                title="Relationships", fontsize=10)
         
         if save:
             output_path = os.path.join(self.matrix_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_matrix.png")
@@ -964,7 +964,7 @@ class KnowledgeGraph:
         
         return results
     
-    def save_state(self, filepath: str) -> None:
+    def save(self, filepath: str) -> None:
         """
         Save the complete knowledge graph state
         """
