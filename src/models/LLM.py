@@ -28,7 +28,7 @@ class LLM:
         self.model = model
         self.scene_context = None
         self.processing_times = []
-        self.results_dir = os.path.join(os.getcwd(), results_dir, "scene_descriptions")
+        self.results_dir = os.path.join(os.getcwd(), results_dir, "SceneDescriptions")
         
         # check if directory exists
         if not os.path.exists(self.results_dir):    

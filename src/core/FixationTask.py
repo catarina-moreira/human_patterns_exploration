@@ -18,14 +18,14 @@ import seaborn as sns
 
 class FixationTask:
     
-	def __init__(self, participant : Participant, imageData : ImageData, data : pd.DataFrame, 
+	def __init__(self, participant : Participant, image_data : ImageData, data : pd.DataFrame, 
 				condition = None, group = None, seconds = 1, rows_per_second = 3, participant_threshold = 3):
 		self.group = group
 		self.condition = condition
 		self.participant = participant
-		self.imageData = imageData
-		self.image = self.imageData.image
-		self.data = process_participant_data( data, self.imageData.ID, self.participant.ID, 
+		self.image_data = image_data
+		self.image = self.image_data.image
+		self.data = process_participant_data( data, self.image_data.ID, self.participant.ID, 
 											condition = condition, group = group, seconds=seconds, 
 											rows_per_second=rows_per_second, participant_threshold=participant_threshold)
 
@@ -35,37 +35,21 @@ class FixationTask:
 		self.masks = {}
 		self.time_on_target = None
 
-	def load_masks(self, mask_directory):
-
-		for mask_file in os.listdir(mask_direct):
-			if mask_file.endswith('.pkl'):
-				mask_path = os.path.splitext(mask_file)[0]
-
-				self.masks[mask_name] = np
-
+	def load_participant_masks(self, best_masks_dir):
+		self.image_data.load_img_masks( best_masks_dir, part_id=self.participant.ID )
+		self.masks = self.image_data.masks
 
 	def compute_time_on_target(self):
-		"""
-		Computes the total time the participant fixated within the target area.
-		
-		Returns:
-		- float: Total fixation duration on target area
-		- dict: Dictionary with detailed information including:
-			- 'total_time': Total time on target
-			- 'fixation_count': Number of fixations on target
-			- 'percentage': Percentage of total fixation time spent on target
-			- 'target_fixations': DataFrame of fixations that fell within target
-		"""
 		
 		# Check if target coordinates are available
-		if self.imageData.target is None:
+		if self.image_data.target is None:
 			raise ValueError("No target coordinates defined for this image")
 		
-		if len(self.imageData.target) != 4:
+		if len(self.image_data.target) != 4:
 			raise ValueError("Target should contain exactly 4 coordinates [x1, x2, y1, y2]")
 		
 		# Get target coordinates
-		x1, x2, y1, y2 = self.imageData.target
+		x1, x2, y1, y2 = self.image_data.target
 		
 		# Ensure coordinates are in correct order
 		x_min, x_max = min(x1, x2), max(x1, x2)
@@ -138,7 +122,7 @@ class FixationTask:
 		ax.imshow(self.image)
 		ax.scatter(x, y, s=size, c=fix_color, alpha=alpha, edgecolors=fix_edge_color)
 		if not title:
-			ax.set_title(f"Participant {self.participant.ID} Fixations for Image {self.imageData.ID}")
+			ax.set_title(f"Participant {self.participant.ID} Fixations for Image {self.image_data.ID}")
 		else:
 			ax.set_title(title)
 		ax.grid(False)
@@ -210,7 +194,7 @@ class FixationTask:
                     alpha=alpha, fc=fix_color, ec=fix_color, fill=True, shape='full',
                     width=width, head_width=8, head_length=8, overhang=0.3)
 		if not title:
-			ax.set_title(f"Participant {self.participant.ID} Scanpath for Image {self.imageData.ID}")
+			ax.set_title(f"Participant {self.participant.ID} Scanpath for Image {self.image_data.ID}")
 		else:
 			ax.set_title(title)
 		ax.grid(False)
@@ -223,7 +207,7 @@ class FixationTask:
 	def draw_display(self, dispsize=None, dpi=300, figsize = (12,8)):
 
 		img = self.image
-		w, h = self.imageData.width, self.imageData.height
+		w, h = self.image_data.width, self.image_data.height
 
 		# If dispsize not given, use the image size
 		if dispsize is None:
@@ -275,7 +259,7 @@ class FixationTask:
 
 			# We'll use the actual image dimensions for display size
 			if dispsize is None:
-				dispsize = (self.imageData.width, self.imageData.height)
+				dispsize = (self.image_data.width, self.image_data.height)
 
 			fig, ax = self.draw_display(dispsize = dispsize, dpi = dpi, figsize = figsize)
 
