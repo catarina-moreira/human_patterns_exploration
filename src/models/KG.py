@@ -14,7 +14,7 @@ from src.core.ImageData import ImageData
 from src.core.Mask import Mask
 from src.models.LLM import LLM
 
-
+import random
 
 from src.utils.data_utils import *
 
@@ -339,8 +339,7 @@ class KnowledgeGraph:
 
             answer = self.llm.query_knowledge_graph(
                 query=query,
-                triples=triples,
-                temperature=self.llm.temperature
+                triples=self.triples
             )
 
             # Parse the answer
@@ -560,7 +559,7 @@ class KnowledgeGraph:
                     edgecolor='none')
             
             # Save graph as pickle
-            pickle_path = os.path.join(self.kg_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_graph.pkl")
+            pickle_path = os.path.join(self.kg_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_graph_nx.pkl")
             with open(pickle_path, 'wb') as f:
                 pickle.dump(self.graph, f)
             
@@ -971,7 +970,6 @@ class KnowledgeGraph:
             'bbox_info': self.bbox_info,
             'num_nodes': len(graph.nodes()),
             'num_edges': len(graph.edges()),
-            'graph' : graph
         }
         
         results_path =  os.path.join(self.kg_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_graph.pkl")
@@ -1000,11 +998,11 @@ class KnowledgeGraph:
         with open(filepath, 'rb') as f:
             state = pickle.load(f)
 
-        self.graph = state.get('graph', nx.DiGraph())
-        self.triples = state.get('triples', [])
+        self.triples = state.get('parsed_triples', [])
         self.bbox_info = state.get('bbox_info', {})
         self.scene_description = state.get('scene_description', "")
         self.num_edges = state.get('num_edges', 0)
         self.num_nodes = state.get('num_nodes', 0)
+        self.graph = self.build_graph()
 
 

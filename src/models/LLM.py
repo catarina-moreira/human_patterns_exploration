@@ -128,9 +128,9 @@ class OpenAI(LLM):
         
         full_query = f"""{kg_text}
 
-Question: {query}
+                        Question: {query}
 
-Please answer the question based only on the information provided in the knowledge graph above."""
+                        Please answer the question based only on the information provided in the knowledge graph above."""
         
         start_time = time.time()
         
@@ -150,6 +150,8 @@ Please answer the question based only on the information provided in the knowled
             self.processing_times.append(processing_time)
             
             print(f"Knowledge graph query completed in {processing_time:.2f} seconds")
+
+            print(answer)
             return answer
             
         except Exception as e:

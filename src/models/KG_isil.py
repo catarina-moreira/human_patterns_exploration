@@ -13,6 +13,8 @@ from src.core.ImageData import ImageData
 from src.core.Mask import Mask
 from src.models.LLM import LLM
 
+import random
+
 ######################## SINGULARIZE THE OBJECTS
 def singularize(label: str) -> str:
     if label.endswith('ies'):
