@@ -23,12 +23,12 @@ class KnowledgeGraph:
     Enhanced Knowledge Graph implementation for scene understanding and spatial reasoning
     """
     
-    def __init__(self, llm: LLM, image_data: ImageData, output_dir: str = "outputs"):
+    def __init__(self, llm: LLM, image_data: ImageData, output_dir: str = "outputs", sim_threshold = 0.92):
         self.llm = llm
         self.image_data = image_data
 
         print("Disambiguating scene masks...")
-        labels = self.image_data.get_scene_masks()
+        labels = self.image_data.get_scene_masks(sim_threshold=sim_threshold)
 
         self.output_dir = output_dir
         self.graph = nx.DiGraph()
