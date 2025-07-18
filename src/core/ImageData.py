@@ -1,6 +1,7 @@
 from typing import List
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import cv2
@@ -16,10 +17,26 @@ import re
 import matplotlib.patheffects as path_effects
 import matplotlib.patches as patches
 
+import Levenshtein
+
+import nltk
+
+print("Downloading required NLTK data...")
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng') 
+nltk.download('wordnet')
+nltk.download('omw-1.4') 
+print("NLTK data downloaded successfully!")
+
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
 
 class ImageData(object):
 
-	def __init__(self, path : str, ID = None, target : List = None, img_type : str = None):
+	def __init__(self, path : str, ID = None, target : List = None, img_type : str = None, results_dir = os.path.join(".", "outputs", "SceneDescriptions", "openai_results")):
 		
 		self.path = path
 		self.ID = ID if ID is not None else self.find_ID()
@@ -29,8 +46,10 @@ class ImageData(object):
 		self.img_type = img_type
 		self.image = self.load()
 		self.target = target
-		self.description = None
+		self.results_dir = results_dir
+		self.description = self.load_scene_description()	
 		self.masks = []
+		self.mask_labels = None
 
 	def find_ID(self):
 		self.ID = os.path.splitext(os.path.basename(self.path))[0]
@@ -40,10 +59,20 @@ class ImageData(object):
 		self.ID = int(match.group()) if match else self.ID
 		return self.ID
 
-	def load_scene_description(self, path):
-		with open(path, 'r') as file:
-			self.description = file.read()
-		self.description = self.description.strip()
+	def load_scene_description(self):
+
+		scene_filename = f"IMG_{self.ID}_{self.img_type}_descr.txt"
+		description = None
+		try:
+			with open(os.path.join(self.results_dir, scene_filename), 'r') as file:
+				description = file.read()
+			return description.strip()
+		except FileNotFoundError as e:
+			
+			print(f"[WARNING] Scene description file not found. Please run LLM.describe_scene")
+			print(f"File path: {os.path.join(self.results_dir, scene_filename)}")
+			return description
+
 
 	def load_img_masks(self, masks_path_dir, part_id = None):
 
@@ -131,10 +160,14 @@ class ImageData(object):
 		return highlighted_image
 
 
-	def plot_masks(self, bboxes_dict, figsize=(12, 8), dpi=300, title=None, 
+	def plot_mask_labels(self, figsize=(12, 8), dpi=300, title=None, 
                line_thickness=2, font_size=10, show_labels=True, alpha=0.7):
 
-		
+		bboxes_dict = self.mask_labels
+		if bboxes_dict is None or len(bboxes_dict) == 0:
+			print("You did not compute the unique mask labels. Run ImageData.get_scene_masks()")
+			return
+
 		def _check_label_overlap(pos1, pos2, text1, text2, font_size):
 			"""Check if two label positions would overlap"""
 			# Approximate text dimensions (rough estimation)
@@ -415,70 +448,120 @@ class ImageData(object):
 		
 		return display_image
 
-	def plot_mask_details(self, mask_objects, figsize=(15, 10), max_masks_per_row=4):
-		"""
-		Plot detailed view of individual masks with their cropped images and metadata.
+	
+	def get_wordnet_pos(self, word):
+		"""Map POS tag to first character lemmatize() accepts"""
+		tag = nltk.pos_tag([word])[0][1][0].upper()
+		tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R": wordnet.ADV}
+		return tag_dict.get(tag, wordnet.NOUN)
+
+
+	def disambiguate_overlapping_masks(self, grouped_df : pd.DataFrame, sim_threshold=0.93):
+
+		# Find and handle lemma duplicates
+		plurals = []
+		labels_to_remove = set()
+		processed_pairs = set() 
 		
-		Parameters:
-		- mask_objects: List of Mask objects
-		- figsize: Figure size for display (default: (15,10))
-		- max_masks_per_row: Maximum number of masks per row (default: 4)
-		"""
-		if not mask_objects:
-			print("No masks to display")
-			return
+		lemmatizer = WordNetLemmatizer()
 		
-		n_masks = len(mask_objects)
-		n_cols = min(max_masks_per_row, n_masks)
-		n_rows = (n_masks + n_cols - 1) // n_cols  # Ceiling division
-		
-		fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
-		
-		# Handle single row case
-		if n_rows == 1:
-			axes = axes.reshape(1, -1) if n_cols > 1 else np.array([[axes]])
-		elif n_cols == 1:
-			axes = axes.reshape(-1, 1)
-		
-		# Sort masks by score (highest first)
-		sorted_masks = sorted(mask_objects, key=lambda x: x.score, reverse=True)
-		
-		for i, mask_obj in enumerate(sorted_masks):
-			row = i // n_cols
-			col = i % n_cols
-			ax = axes[row, col]
+		# Compute area for comparison
+		grouped_df['area'] = (grouped_df['x_max'] - grouped_df['x_min']) * (grouped_df['y_max'] - grouped_df['y_min'])
+
+		for i in range(len(grouped_df)):
+			label1_orig = grouped_df.iloc[i]['label']
 			
-			# Display the cropped image with alpha
-			if hasattr(mask_obj, 'cropped_image_with_alpha') and mask_obj.cropped_image_with_alpha is not None:
-				ax.imshow(mask_obj.cropped_image_with_alpha)
-			else:
-				# Fallback to cropped mask
-				ax.imshow(mask_obj.cropped_mask, cmap='gray')
+			# Skip if this label is already marked for removal
+			if label1_orig in labels_to_remove:
+				continue
+				
+			# Get the lemmatized version
+			label1_lemma = lemmatizer.lemmatize(label1_orig, self.get_wordnet_pos(label1_orig))
 			
-			ax.axis('off')
-			
-			# Create detailed title
-			title_parts = []
-			
-			if mask_obj.most_freq_label:
-				title_parts.append(f"Label: {mask_obj.most_freq_label}")
-			elif mask_obj.prompt:
-				title_parts.append(f"Prompt: {mask_obj.prompt[:15]}...")  # Truncate long prompts
-			else:
-				title_parts.append(f"ID: {mask_obj.ID}")
-			
-			title_parts.append(f"Score: {mask_obj.score:.3f}")
-			title_parts.append(f"Area: {mask_obj.area:.0f}")
-			
-			ax.set_title('\n'.join(title_parts), fontsize=8)
+			for j in range(i + 1, len(grouped_df)):  # Start from i+1 to avoid self-comparison and duplicates
+				label2_orig = grouped_df.iloc[j]['label']
+				
+				# Skip if this label is already marked for removal
+				if label2_orig in labels_to_remove:
+					continue
+				
+				# Create a pair key to avoid processing the same pair twice
+				pair_key = tuple(sorted([label1_orig, label2_orig]))
+				if pair_key in processed_pairs:
+					continue
+				processed_pairs.add(pair_key)
+				
+				# Get the lemmatized version
+				label2_lemma = lemmatizer.lemmatize(label2_orig, self.get_wordnet_pos(label2_orig))
+				
+				similarity = Levenshtein.jaro_winkler(label1_lemma, label2_lemma)
+				
+				if (label1_lemma == label2_lemma) or (similarity > sim_threshold):
+					
+					# Find which label has the smaller area
+					area1 = grouped_df.iloc[i]['area']
+					area2 = grouped_df.iloc[j]['area']
+					
+					if area1 > area2:
+						label_to_remove = label1_orig
+						label_to_keep = label2_orig
+					else:
+						label_to_remove = label2_orig
+						label_to_keep = label1_orig
+					
+					labels_to_remove.add(label_to_remove)
+					plurals.append((label1_orig, label2_orig, f"kept: {label_to_keep}"))
+					
+					print(f"  -> Lemma match! Removing '{label_to_remove}', keeping '{label_to_keep}'")
+
+		grouped_df = grouped_df[~grouped_df['label'].isin(labels_to_remove)].reset_index(drop=True)
 		
-		# Hide unused subplots
-		for i in range(n_masks, n_rows * n_cols):
-			row = i // n_cols
-			col = i % n_cols
-			axes[row, col].axis('off')
+		# Drop the area column as it's no longer needed
+		grouped_df.drop(columns=['area'], inplace=True)
+
+		# for debugging
+		print(f"\nPlural/duplicate pairs found: {plurals}")
+
+		return grouped_df
+
+
+	def get_scene_masks(self, sim_threshold=0.93):
+
+		columns = ["label", "x_min", "x_max", "y_min", "y_max"]
+		df_masks = pd.DataFrame(columns=columns)
 		
-		plt.suptitle(f"Mask Details for Image {self.ID}", fontsize=14)
-		plt.tight_layout()
-		plt.show()
+		# Extract mask data
+		for indx in range(len(self.masks)):
+			mask = self.masks[indx]
+			df_masks.loc[indx] = [mask.most_freq_label, mask.x_min, mask.x_max, mask.y_min, mask.y_max]
+
+		# Order by label alphabetically
+		df_masks = df_masks.sort_values(by="label")
+		df_masks.reset_index(drop=True, inplace=True)
+
+		# Group by label and take average of coordinates
+		grouped_df = df_masks.groupby('label').agg({
+			'x_min': 'min', 
+			'x_max': 'min', 
+			'y_min': 'min', 
+			'y_max': 'min'
+		}).reset_index()
+
+		# Round coordinates
+		for col in ['x_min', 'x_max', 'y_min', 'y_max']:
+			grouped_df[col] = grouped_df[col].round(4)
+		
+		grouped_df = self.disambiguate_overlapping_masks( grouped_df, sim_threshold=sim_threshold )
+		
+		print(f"Final unique labels: {sorted(grouped_df['label'].unique())}")
+		
+		# convert to dictionary where the label is the key
+		label_dict = grouped_df.set_index('label').T.to_dict('list')
+
+		self.mask_labels = label_dict
+		
+		return label_dict
+
+	
+
 	

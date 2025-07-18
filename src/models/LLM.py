@@ -201,7 +201,7 @@ Please answer the question based only on the information provided in the knowled
             print(f"Scene description completed in {processing_time:.2f} seconds")
 
             # save the scene_description into a file
-            with open(os.path.join(self.results_dir, f"IMG_{image_data.ID}_{image_data.img_type}_ descr.txt"), "w") as file:
+            with open(os.path.join(self.results_dir, f"IMG_{image_data.ID}_{image_data.img_type}_descr.txt"), "w") as file:
                 file.write(scene_description)
 
             return scene_description

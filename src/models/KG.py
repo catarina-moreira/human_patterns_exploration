@@ -16,7 +16,7 @@ from src.models.LLM import LLM
 
 
 
-
+from src.utils.data_utils import *
 
 class KnowledgeGraph:
     """
@@ -26,6 +26,10 @@ class KnowledgeGraph:
     def __init__(self, llm: LLM, image_data: ImageData, output_dir: str = "outputs"):
         self.llm = llm
         self.image_data = image_data
+
+        print("Disambiguating scene masks...")
+        labels = self.image_data.get_scene_masks()
+
         self.output_dir = output_dir
         self.graph = nx.DiGraph()
         self.triples = []
@@ -35,20 +39,10 @@ class KnowledgeGraph:
         self.scene_description = image_data.description
         self.relations_count = defaultdict(int)
         
-        # try to load the image scene description from a file
-        # if it does not exist, generate it using LLM
-        if self.scene_description is None:
-            scene_descr_path = os.path.join(self.scene_descr_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}_descr.txt")
-            self.scene_description = self.load_txt_file( scene_descr_path )
 
-            if self.scene_descr_dir is None:
-                print("[ERROR] Scene description file not found and no description provided in image data. Generating scene description with LLMs")
-                self.scene_description = self.llm.generate_scene_description(image_data)
-                self.save_txt_file(scene_descr_path, self.scene_description)
-        
+
         # Ensure output directories exist
-        self.results_dir = os.path.join(output_dir, "results")
-        self.rankings_dir = os.path.join(self.results_dir, "rankings")
+        self.rankings_dir = os.path.join(output_dir, "rankings")
         self.img_rankings = os.path.join(self.rankings_dir, f"IMG_{self.image_data.ID}_{self.image_data.img_type}")
         self.kg_dir = os.path.join(output_dir, "KnowledgeGraph")
         self.matrix_dir = os.path.join(self.kg_dir, "knowledge_matrices")
@@ -57,7 +51,7 @@ class KnowledgeGraph:
         self.triples_final_dir = os.path.join(self.kg_dir, "triples_final")
         self.scene_descr_dir = os.path.join(self.output_dir, "SceneDescriptions", llm.provider.lower() + "_results")
 
-        for directory in [self.results_dir, self.img_rankings, self.kg_dir, self.matrix_dir, self.triples_raw_dir, self.triples_cleaned_dir, self.triples_final_dir, self.scene_descr_dir]:
+        for directory in [self.img_rankings, self.kg_dir, self.matrix_dir, self.triples_raw_dir, self.triples_cleaned_dir, self.triples_final_dir, self.scene_descr_dir]:
             os.makedirs(directory, exist_ok=True)
     
     def load_txt_file( self, filepath ):
@@ -121,21 +115,26 @@ class KnowledgeGraph:
         Create a dictionary of mask bounding boxes and labels
         """
 
-        for i, mask in enumerate(masks):
-            if hasattr(mask, 'x_min') and hasattr(mask, 'labels') and mask.labels:
-                self.bbox_info[f"mask_{i}"] = {
-                    'label': mask.most_freq_label,
-                    'label_prob': mask.most_freq_prob,
-                    'bbox': {
-                        'x_min': int(mask.x_min),
-                        'x_max': int(mask.x_max),
-                        'y_min': int(mask.y_min),
-                        'y_max': int(mask.y_max)
-                    }
-                }
+        #for i, mask in enumerate(masks):
+        #    if hasattr(mask, 'x_min') and hasattr(mask, 'labels') and mask.labels:
+        #        self.bbox_info[f"mask_{i}"] = {
+        #            'label': mask.most_freq_label,
+        #            'label_prob': mask.most_freq_prob,
+        #            'bbox': {
+        #                'x_min': int(mask.x_min),
+        #                'x_max': int(mask.x_max),
+        #                'y_min': int(mask.y_min),
+        #                'y_max': int(mask.y_max)
+        #            }
+        #        }
         
+
+        # only consider unique masks
+        self.bbox_info = self.image_data.mask_labels
+
         if debug:
             print(f"Created bbox dictionary with {len(self.bbox_info)} masks")
+
     
     def generate_spatial_analysis(self, masks: List[Mask], debug: bool = True) -> str:
         """
@@ -168,10 +167,13 @@ class KnowledgeGraph:
             print(f"Error in spatial analysis: {e}")
             return f"Error: {str(e)}"
     
-    def generate_triples(self, masks: List[Mask], debug: bool = True) -> str:
+    def generate_triples(self, debug: bool = True) -> str:
         """
         Generate knowledge graph triples from scene analysis
         """
+
+        masks = self.image_data.masks
+
         # First get spatial analysis
         bbox_info = self.generate_spatial_analysis(masks, debug)
         
@@ -189,7 +191,8 @@ class KnowledgeGraph:
         Scene description: {self.scene_description}
         Spatial analysis: {bbox_info}
         
-        Please return only the triples in the format (subject, RELATION, object). Avoid including numbers in the triples.
+        Please return only the triples in the format (subject, RELATION, object). Avoid including numbers in the triples. 
+        The subject and the object MUST be a SINGLE word. The relation MUST contain a VERB.
         
         Example:
             (Slippers, are_on, Rug)
@@ -315,8 +318,10 @@ class KnowledgeGraph:
         most_likely = {}
         least_likely = {}
 
+        mask_labels = list(self.image_data.mask_labels.keys())
+
         for trial in range(1, num_trials + 1):
-            sampled_locations = random.sample(self.bbox_info, num_loc_sample)
+            sampled_locations = random.sample(mask_labels, num_loc_sample)
             query = (
                 f"Given these locations {sampled_locations} which are the MOST and LEAST likely places to find {target}? "
                 "1. Provide a ranked list of THREE locations for each. "
@@ -908,73 +913,82 @@ class KnowledgeGraph:
     
     
     
-    def process_image_complete(self, masks: List[Mask],  debug: bool = True) -> Dict:
+    def process_image_complete(self, num_iter,  debug: bool = True) -> Dict:
         """
         Complete knowledge graph processing pipeline
         """
         print(f"Processing knowledge graph for image {self.image_data.ID}")
         
         image_data = self.image_data
-        scene_description = image_data.description
-
-        # Get scene description if not provided
-        scene_descr_path = os.path.join(self.output_dir, )
-        if scene_description is None:
-            scene_description = self.llm.describe_scene(image_data)
-        
-        self.scene_description = scene_description
         
         # Generate triples
-        triples_text = self.generate_triples(image_data, masks, scene_description, debug)
+        # running this 3x so we can get a more enriched KG
+        all_triples = []
+        for i in range(num_iter):
+
+            print(f"\n\nGenerating triples for iteration {i + 1}...")
+            triples_raw = self.generate_triples(debug=debug)  
+            triples_cleaned = self.clean_triples_text(triples_raw)
+            lines = triples_cleaned.strip().split('\n')
+            print("\nTotal triples generated:", str(len(lines)))
+
+            for line in lines:
+                # Remove parentheses and spaces, then split by comma
+                triple = tuple(item.strip().replace('(', '').replace(')', '') for item in line.split(','))
+                all_triples.append(triple)
+
+        print("\nGenerated triples:", str(len(all_triples)))
+        
+        # Remove duplicates
+        triples_final = list(set(all_triples))
+        self.triples = triples_final
+        print("Generated triples after removing duplicates: ", str(len(triples_final)))
+
+        path = os.path.join(self.triples_final_dir,  f"IMG_{self.image_data.ID}_{self.image_data.img_type}_triples.txt")
+        with open(path, "w") as f:
+            f.write("\n".join(f"{s}, {p}, {o}" for s, p, o in triples_final))
         
         # Parse triples
-        parsed_triples = self.parse_triples(triples_text)
+        #parsed_triples = self.parse_triples(triples_text)
         
         # Build graph
-        graph = self.build_graph(parsed_triples)
+        graph = self.build_graph()
         
         # Create visualizations
-        image_id = str(image_data.ID)
-        self.plot_knowledge_graph(image_id, save=True, show=debug)
-        self.plot_relationship_matrix(image_id, save=True, show=debug)
+        image_id = str(self.image_data.ID)
+        self.plot_knowledge_graph(save=True, show=True)
+        self.plot_relationship_matrix(save=True, show=True)
         
         # Get adjacency matrix
-        adj_matrix = self.get_adjacency_matrix(image_id, save=True)
+        adj_matrix = self.get_adjacency_matrix(save=True)
         
         # Save complete results
         results = {
-            'image_id': image_data.ID,
-            'scene_description': scene_description,
-            'triples_text': triples_text,
-            'parsed_triples': parsed_triples,
+            'image_id': self.image_data.ID,
+            'scene_description': self.image_data.description,
+            'parsed_triples': triples_final,
+            'adj_matrix' : adj_matrix,
             'bbox_info': self.bbox_info,
             'num_nodes': len(graph.nodes()),
             'num_edges': len(graph.edges()),
-            'relations_count': dict(self.relations_count)
+            'graph' : graph
         }
         
-        results_path = os.path.join(self.results_dir, f"kg_results_{image_id}.pkl")
+        results_path =  os.path.join(self.kg_dir, f"IMG_{image_id}_{self.image_data.img_type}_knowledge_graph.pkl")
         with open(results_path, 'wb') as f:
             pickle.dump(results, f)
         
         if debug:
             print(f"Knowledge graph processing complete for image {image_data.ID}")
-            print(f"Generated {len(parsed_triples)} triples")
+            print(f"Generated {len(triples_final)} triples")
             print(f"Graph has {len(graph.nodes())} nodes and {len(graph.edges())} edges")
         
         return results
     
-    def save(self, filepath: str) -> None:
+    def save(self, state, filepath: str) -> None:
         """
         Save the complete knowledge graph state
         """
-        state = {
-            'graph': self.graph,
-            'triples': self.triples,
-            'bbox_info': self.bbox_info,
-            'scene_description': self.scene_description,
-            'relations_count': dict(self.relations_count)
-        }
         
         with open(filepath, 'wb') as f:
             pickle.dump(state, f)
@@ -985,10 +999,12 @@ class KnowledgeGraph:
         """
         with open(filepath, 'rb') as f:
             state = pickle.load(f)
-        
+
         self.graph = state.get('graph', nx.DiGraph())
         self.triples = state.get('triples', [])
         self.bbox_info = state.get('bbox_info', {})
         self.scene_description = state.get('scene_description', "")
-        self.relations_count = defaultdict(int, state.get('relations_count', {}))
+        self.num_edges = state.get('num_edges', 0)
+        self.num_nodes = state.get('num_nodes', 0)
+
 

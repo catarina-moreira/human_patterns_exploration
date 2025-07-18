@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+import os
+
+from src.core.ImageData import ImageData
+from src.utils.llm_utils import create_llm_instance
 
 
 def load_data(data_path : str):
@@ -89,3 +93,18 @@ def add_index_column(df):
     df_with_index['Indx'] = df_with_index.groupby('ParticipantID').cumcount() 
     
     return df_with_index
+
+def load_image_data( img_path, img_type, llm_provider = "openai", llm_model = "gpt-4o-mini", temperature = 0.1, target = None):
+
+    image_data = ImageData(path=img_path, img_type=img_type, target=target)
+
+    if image_data.description is None:
+        print("No image description available. Generating one...")
+        llm = create_llm_instance(llm_provider, llm_model, temperature=temperature)
+        image_data.description = llm.describe_scene(image_data=image_data)
+    
+    return image_data
+
+
+
+
