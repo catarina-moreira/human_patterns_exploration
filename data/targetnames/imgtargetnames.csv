@@ -1,31 +1,31 @@
-image_id,target,
-1,shoes,
-2,trunk,
-3,toy block,
-4,teddy bear,
-5,shoes,
-6,shoes,
-7,shoes,
-8,guitar,
-9,trunk,
-10,teddy bear,
-11,stool,
-12,rug,
-13,shoes,
-14,stool,
-15,dollhouse,
-16,hamper,
-17,pencil holder,
-18,wood pile,
-19,laundry basket,
-20,stool,
-21,laundry basket,
-22,soccer ball,
-23,martini glass,
-24,laundry basket,
-25,rug,
-26,garbage can,
-27,radiator,
-28,garbage can,
-29,rainboots,
-30,slippers,
+img_id,target,x_min,x_max,y_min,y_max
+1,shoes,536,586,428,470
+2,trunk,174,270,284,341
+3,toy block,577,609,274,306
+4,teddy bear,651,684,201,241
+5,shoes,131,209,16,74
+6,shoes,135,216,257,311
+7,shoes,2,78,343,401
+8,guitar,146,229,60,257
+9,trunk,641,725,280,456
+10,teddy bear,8,56,235,294
+11,stool,692,764,304,439
+12,rug,144,409,318,398
+13,shoes,547,599,384,433
+14,stool,659,712,217,298
+15,dollhouse,467,579,1,147
+16,hamper,151,260,292,373
+17,pencil holder,5,56,23,97
+18,wood pile,711,776,297,345
+19,laundry basket,89,214,256,401
+20,stool,678,791,329,484
+21,laundry basket,0,85,103,248
+22,soccer ball,632,689,392,431
+23,martini glass,762,799,49,124
+24,laundry basket,435,539,136,193
+25,rug,313,327,148,395
+26,garbage can,0,70,92,228
+27,radiator,1,78,0,120
+28,garbage can,524,570,106,182
+29,rainboots,747,799,127,190
+30,slippers,545,613,86,124
